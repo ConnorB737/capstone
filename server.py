@@ -18,5 +18,13 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
     socketio.emit('my_response', json, callback=messageReceived)
 
+# @app.route("/typo/dictionaries/en_US/en_US.aff")
+# def aff():
+    # return Response(open("/typo/dictionaries/en_US/en_US.aff").read(), mimetype='text/plain')
+    
+# @app.route("/typo/dictionaries/en_US/en_US.dic")
+# def dic():
+    # return Response(open("/typo/dictionaries/en_US/en_US.dic").read(), mimetype='text/plain')
+
 if __name__ == '__main__':
     socketio.run(app, debug=True)

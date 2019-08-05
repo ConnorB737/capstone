@@ -51,8 +51,28 @@
             };
         </script>
 		
+        
+        
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+        
+        <script src="typo/typo.js"></script>
+        <script type="text/javascript">
+            /*var dictionary = new Typo("en_US", false, false, { dictionaryPath: "https://github.com/cfinke/Typo.js/blob/master/typo/dictionaries" });
+			*/
+			
+		$.get( 'typo/dictionaries/en_US/en_US.aff', function ( affData ) {					
+			$.get( 'typo/dictionaries/en_US/en_US.dic', function ( wordsData ) {				
+					dictionary = new Typo( "en_US", affData, wordsData );
+			
+						alert(dictionary.check('true'));
+					} );
+				} );
+			
+            
+
+        </script>
+        
 		<script type="text/javascript">
 
 		var socket = io.connect('http://' + document.domain + ':' + location.port);
