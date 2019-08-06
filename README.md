@@ -15,7 +15,13 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
-3. Run the server:
+3. Start a local database:
+
+```
+$ docker run -d -e POSTGRES_USER=scrabble -e POSTGRES_PASSWORD=scrabble -e POSTGRES_DB=scrabble -p 5432:5432 postgres
+```
+
+4. Run the server:
 
 ```
 $ python server.py
