@@ -3,7 +3,7 @@
     <head>
         <title>15x15</title>
 		<!-- <link rel="stylesheet" type="text/css" href="./style.css"> -->
-		
+
 		<style>
 		body{
 			margin: 50px 0;
@@ -12,11 +12,9 @@
 		  border-collapse: collapse;
 		  margin: 0 auto;
 		}
-
 		table, th, td {
 		  border: 1px solid black;
 		}
-
 		th, td {
 			padding:0;
 			margin:0;
@@ -24,18 +22,16 @@
 			height: 50px;
 			text-align: center;
 		}
-
 		td:hover{
 			background-color: blue;
 		}
 		</style>
-		
+
         <script type="text/javascript">
 			function zeroPad(num, places) {
 			  var zero = places - num.toString().length + 1;
 			  return Array(+(zero > 0 && zero)).join("0") + num;
 			}
-
             window.onload = function() {
                 var table = document.getElementById("board");
                 for(var i = 0; i < 15; i++){
@@ -50,11 +46,10 @@
                 }
             };
         </script>
-		
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
 		<script type="text/javascript">
-
 		var socket = io.connect('http://' + document.domain + ':' + location.port);
 		
 		socket.on('connect', function() {
@@ -92,4 +87,4 @@
     <body>
         <table id="board"></table>
     </body>     
-</html>
+</html> 

@@ -31,3 +31,11 @@ def attach_controller(app):
             raise NotFound()
         else:
             return render_template("board.html")
+
+    # @app.route("/typo/dictionaries/en_US/en_US.aff")
+    # def aff():
+    # return Response(open("/typo/dictionaries/en_US/en_US.aff").read(), mimetype='text/plain')
+
+    # @app.route("/typo/dictionaries/en_US/en_US.dic")
+    # def dic():
+    # return Response(open("/typo/dictionaries/en_US/en_US.dic").read(), mimetype='text/plain')
