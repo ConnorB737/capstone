@@ -1,30 +1,35 @@
-
-from flask import Flask, render_template
+from flask import Flask
 from flask_socketio import SocketIO
+from pony.flask import Pony
+from pony.orm import set_sql_debug
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'vnkdjnfjknfl1232#'
-socketio = SocketIO(app)
+from models.database import db
 
-@app.route('/')
-def sessions():
-    return render_template('board.html')
+socketio = SocketIO()
 
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received.')
 
-@socketio.on('my_event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
-    socketio.emit('my_response', json, callback=messageReceived)
+def create_app():
+    app = Flask(__name__)
+    app.config["SECRET_KEY"] = "vnkdjnfjknfl1232#"
+    socketio.init_app(app)
 
-# @app.route("/typo/dictionaries/en_US/en_US.aff")
-# def aff():
-    # return Response(open("/typo/dictionaries/en_US/en_US.aff").read(), mimetype='text/plain')
-    
-# @app.route("/typo/dictionaries/en_US/en_US.dic")
-# def dic():
-    # return Response(open("/typo/dictionaries/en_US/en_US.dic").read(), mimetype='text/plain')
+    from controllers.api_controller import attach_controller as attach_api_controller
+    attach_api_controller(app)
 
-if __name__ == '__main__':
+    from controllers.game_events_controller import attach_controller as attach_game_controller
+    attach_game_controller(socketio)
+
+    from controllers.word_events_controller import attach_controller as attach_word_controller
+    attach_word_controller(socketio)
+
+    set_sql_debug(True)
+    db.generate_mapping(create_tables=True)
+
+    Pony(app)
+
+    return app
+
+
+if __name__ == "__main__":
+    app = create_app()
     socketio.run(app, debug=True)
