@@ -17,6 +17,8 @@ $ pip install -r requirements.txt
 
 3. Start a local database:
 
+NOTE: Only do this if postgres is configured as the database provider in `config.py`.
+
 ```
 $ docker run -d -e POSTGRES_USER=scrabble -e POSTGRES_PASSWORD=scrabble -e POSTGRES_DB=scrabble -p 5432:5432 postgres
 ```
