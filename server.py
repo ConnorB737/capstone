@@ -26,7 +26,7 @@ def create_app():
     db.generate_mapping(create_tables=True)
 
     Pony(app)
-
+    
     return app
 
 

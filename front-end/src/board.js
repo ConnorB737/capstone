@@ -13,7 +13,7 @@ export class Board extends React.Component {
         for (let i=0; i<15; i++){
             let children =[]
             for (let j=0; j<15; j++){
-                children.push(<Square />);
+                children.push(<Square/>);
             }
             gameBoard.push(<div className="board-row">{children}</div>)
         }
