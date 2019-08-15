@@ -4,6 +4,8 @@ from pony.flask import Pony
 from pony.orm import set_sql_debug
 
 from models.database import db
+from models.user import login_manager
+from seed import seed_database_for_development
 
 socketio = SocketIO()
 
@@ -25,11 +27,16 @@ def create_app():
     set_sql_debug(True)
     db.generate_mapping(create_tables=True)
 
+    login_manager.init_app(app)
+    login_manager.login_view = 'login'
+
     Pony(app)
+
+    seed_database_for_development()
 
     return app
 
 
 if __name__ == "__main__":
     app = create_app()
-    socketio.run(app, debug=True)
+    socketio.run(app, debug=True, port=5000)
