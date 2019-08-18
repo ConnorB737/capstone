@@ -9,12 +9,21 @@ import {E} from "./tile/E";
 import {F} from "./tile/F";
 
 
-export class Game extends React.Component {
+export class Game extends Component {
+
+    componentDidMount() {
+        this.props.getGames(this.props.socket);
+    }
+
     render() {
+        const gamesList = this.props.games.map(game => {
+            return (<li>{game.id} </li>);
+        });
+
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board />
+                    <Board/>
                 </div>
                 <div className="game-info">
                     <div>
@@ -31,34 +40,40 @@ export class Game extends React.Component {
                         <A/>
                     </div>
 
-                    <div draggable="true" >
+                    <div draggable="true">
                         <B/>
                     </div>
 
-                    <div draggable="true" >
+                    <div draggable="true">
                         <C/>
                     </div>
 
-                    <div  draggable="true">
+                    <div draggable="true">
                         <D/>
                     </div>
 
-                    <div  draggable="true">
+                    <div draggable="true">
                         <E/>
                     </div>
 
-                    <div  draggable="true">
+                    <div draggable="true">
                         <F/>
                     </div>
 
                     <div className="controls">
-                        <button className="button" >Shuffle</button>
+                        <button className="button">Shuffle</button>
                         {/*onClick={this.handleRandom}*/}
                     </div>
 
                 </div>
+                <div id="gamesList">
+                    <h3>Games</h3>
+                    <ul>
+                        { gamesList }
+                    </ul>
+                </div>
             </div>
-        )
+        );
     }
 }
 

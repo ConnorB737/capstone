@@ -7,6 +7,8 @@ class EventType(enum.Enum):
     """
 
     # Events related to starting a game
+    GET_GAMES = "get_games"
+    GAMES_LIST = "games_list"
     JOIN_GAME = "join_game"
     GAME_JOINED = "game_joined"
 
