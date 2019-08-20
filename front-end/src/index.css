@@ -15,7 +15,7 @@ code {
 #board table {
   /* border-collapse: collapse; */
   position: absolute;
-  left: 460px;
+  left: 470px;
   margin: 0 auto;
 }
 #board th, #board td {
@@ -33,7 +33,7 @@ code {
 
 #leftBar {
   position: absolute;
-  left: 250px;
+  left: 260px;
   width: 200px;
   height: 560px;
   background-color: lightskyblue;
@@ -49,7 +49,7 @@ code {
 
 #rightBar {
   position: absolute;
-  left: 1060px;
+  left: 1070px;
   width: 200px;
   height: 560px;
   background-color: aquamarine;
@@ -78,7 +78,7 @@ code {
   text-align: center;
   position: absolute;
   top: 650px;
-  left: 610px;
+  left: 620px;
 }
 
 #functionBar table {
