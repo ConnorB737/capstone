@@ -12,7 +12,6 @@ class Board extends Component {
                 score: 0,
             },
             opponent: [],
-            wordsPlayed: ["hello", " world"], // contain history
         }
     }
 
@@ -37,9 +36,7 @@ class Board extends Component {
     render() {
         let boardSate = this.state.boardSate;
 
-        let wordsPlayedList = this.state.wordsPlayed.map((word) => 
-            <li key={word.toString()}> {word} </li>
-        )
+
 
         return (
             <div>
@@ -52,26 +49,7 @@ class Board extends Component {
                         </tbody>
                     </table>
                 </div>
-                <div id="rightBar">
-                    <div id="wordsPlayed">
-                        <div id="wordsPlayedNav">
-                        <h3>Words Played</h3>
-                        </div>
-                        <ul>{wordsPlayedList}</ul>
-                    </div>
-                    <hr/>
-                    <div id="scoreBar">
-                        <div id="scoreBarNav">
-                            <h3>Score:</h3>
-                        </div>
-                    </div>
-                    <hr/>
-                    <div id="bag">
-                        <div id="bagNav">
-                        <h3>Tiles Left:</h3>
-                        </div>
-                    </div>
-                </div>
+    
                 <div id="functionBar">
                     <div>
                         <table>
