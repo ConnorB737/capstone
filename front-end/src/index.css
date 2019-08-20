@@ -1,21 +1,96 @@
-body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+/* body {
+  margin: 50px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
-ol, ul {
-  padding-left: 30px;
+#board table {
+  /* border-collapse: collapse; */
+  position: absolute;
+  left: 400px;
+  margin: 0 auto;
+}
+#board th, #board td {
+  border: 1px solid black;
+}
+#board th, #board td {
+  padding:0;
+  margin:0;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  border-radius: 10%;
+  background-color: lightgoldenrodyellow;
 }
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
+#rightBar {
+  position: absolute;
+  left: 1000px;
+  width: 200px;
+  height: 560px;
+  /* border: 1px solid black; */
+  /* border-radius: 5%; */
+  background-color: aquamarine;
 }
 
-.status {
-  margin-bottom: 10px;
+#wordsPlayedNav {
+  text-align: center;
 }
+
+#wordsPlayed {
+  height: 250px;
+}
+
+#scoreBar {
+  height: 150px;
+}
+#scoreBarNav{
+  text-align: center;
+}
+
+#bagNav{
+  text-align: center;
+}
+
+#functionBar {
+  text-align: center;
+  position: absolute;
+  top: 650px;
+  left: 550px;
+}
+
+#functionBar table {
+  margin: 0 auto;
+  background-color: white;
+  border-spacing: 10px;
+}
+
+#functionBar th, #functionBar td {
+  border: 1px solid black;
+  padding:0px;
+  margin:0px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  border-radius: 25%;
+}
+#functionBar button {
+  margin: 5px;
+  background-color: lightpink;
+  border-radius: 25%;
+  text-align: center;
+  width: 50px;
+  height: 30px;
+}
+
 
 .square {
   background:wheat;
@@ -35,112 +110,3 @@ ol, ul {
     margin-top: 160px;
     margin-right: 50px;
 }
-
-
-.A{
-  /*background: #282c34;*/
-  /*background:url("/scrabble/src/letter/A.jpg") no-repeat 34px center;*/
-
-  height: 40px;
-  margin-right: 5px;
-  margin-top: 20px;
-  padding: 0;
-  /*text-align: center;*/
-  width: 40px;
-}
-.B{
-  height: 40px;
-  margin-right: 5px;
-  margin-top: 20px;
-  padding: 0;
-  width: 40px;
-}
-.C{
-  height: 40px;
-  margin-right: 5px;
-  margin-top: 20px;
-  padding: 0;
-  /*text-align: center;*/
-  width: 40px;
-}
-.D{
-  height: 40px;
-    /*margin-left: 60px;*/
-  margin-right: 5px;
-  margin-top: 20px;
-  padding: 0;
-  /*text-align: center;*/
-  width: 40px;
-}
-.E{
-  height: 40px;
-  margin-right: 5px;
-  margin-top: 20px;
-  padding: 0;
-  /*text-align: center;*/
-  width: 40px;
-}
-.F{
-  height: 40px;
-  margin-right: 5px;
-  margin-top: 20px;
-  padding: 0;
-  /*text-align: center;*/
-  width: 40px;
-}
-.controls{
-  margin-top: 30px;
-}
-.square:focus {
-  outline: none;
-}
-
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
-
-.game{
-  display: flex;
-  flex-direction: row;
-  margin: auto;
-  width:900px;
-  padding: 10px;
-}
-
-.game-board{
-    margin-right: 10px;
-    margin-left: 100px;
-}
-
-.game-info {
-  margin-left: 20px;
-}
-
-/*.first-mile{*/
-  /*margin-top: 40px;*/
-  /*margin-left: 50px;*/
-  /*margin-right: 15px;*/
-/*}*/
-/*.second-mile{*/
-  /*margin-top: 40px;*/
-  /*margin-right: 15px;*/
-  /*!*color: black;*!*/
-/*}*/
-/*.third-mile{*/
-  /*margin-top: 40px;*/
-  /*margin-right: 15px;*/
-/*}*/
-
-/*.fourth-mile{*/
-  /*margin-top: 40px;*/
-  /*margin-right: 15px;*/
-/*}*/
-/*.fifth-mile{*/
-  /*margin-top: 40px;*/
-  /*margin-right: 15px;*/
-/*}*/
-/*.sixth-mile{*/
-  /*margin-top: 40px;*/
-  /*margin-right: 15px;*/
-/*}*/
-
