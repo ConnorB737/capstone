@@ -14,7 +14,8 @@ export class Game extends Component {
         const gamesList = this.props.games.map(game => {
             return (<li>{game.id} </li>);
         });
-
+        
+        
         const wordsPlayed = ["hello", " world"] // contain history
         let wordsPlayedList = wordsPlayed.map((word) => 
         <li key={word.toString()}> {word} </li>)
@@ -31,6 +32,7 @@ export class Game extends Component {
                         <ul>
                             { gamesList }
                         </ul>
+                        boardTiles
                     </div>
                     <hr/>
                     <div id="scoreBar">

@@ -12,6 +12,12 @@ export const getGames = (socket) => {
     };
 };
 
+export const getBoard = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_BOARD);
+    };
+};
+
 export const updateGamesList = (data) => {
     return {
         type: types.UPDATE_GAMES_LIST,

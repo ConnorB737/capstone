@@ -4,6 +4,7 @@ from flask_socketio import SocketIO
 from pony.orm import select, db_session
 
 from models.game import Game
+from models.board import BoardState
 from models.types import EventType
 
 
@@ -23,3 +24,11 @@ def attach_controller(socketio: SocketIO):
         })
         print(f"Sending response: {response}")
         socketio.emit(EventType.GAMES_LIST.value, response)
+
+    # @socketio.on(EventType.GET_BOARD.value)
+    # def get_board():
+    #     print(f"Received {EventType.GET_BOARD.value} event")
+    #     response = "testing"
+    #
+    #     print(f"Sending response: {response}")
+    #     socketio.emit(EventType.GET_BOARD.value, response)

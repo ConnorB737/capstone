@@ -2,6 +2,7 @@ import { updateGamesList } from "./actions";
 
 export const socketEvents = {
     GET_GAMES: 'get_games',
+    GET_BOARD: 'get_board',
     GAMES_LIST: 'games_list',
 };
 
