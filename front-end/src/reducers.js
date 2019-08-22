@@ -7,6 +7,11 @@ const reducer = (state, action) => {
                 ...state,
                 games: action.games,
             };
+		case types.UPDATE_BOARD:
+			return {
+				...state,
+				serverBoard: action.serverBoard,
+			};
         default:
             return state;
     }

@@ -10,15 +10,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getGames: (socket) => dispatch(getGames(socket)),
-});
-
-const mapBoardToProps = dispatch => ({
   getBoard: (socket) => dispatch(getBoard(socket)),
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-    mapBoardToProps,
 )(Game);
 

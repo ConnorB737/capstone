@@ -8,6 +8,7 @@ export class Game extends Component {
 
     componentDidMount() {
         this.props.getGames(this.props.socket);
+        this.props.getBoard(this.props.socket);
     }
 
     render() {
@@ -15,6 +16,7 @@ export class Game extends Component {
             return (<li>{game.id} </li>);
         });
         
+		const sBoard = this.props.serverBoard; //this.props.serverBoard is the board received from the server
         
         const wordsPlayed = ["hello", " world"] // contain history
         let wordsPlayedList = wordsPlayed.map((word) => 
@@ -32,13 +34,13 @@ export class Game extends Component {
                         <ul>
                             { gamesList }
                         </ul>
-                        boardTiles
                     </div>
                     <hr/>
                     <div id="scoreBar">
                         <div id="scoreBarNav">
                             <h3>Score:</h3>
                         </div>
+						<p> { sBoard } </p>
                     </div>
                 </div>
 
