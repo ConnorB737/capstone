@@ -88,7 +88,7 @@ code {
 }
 
 #functionBar th, #functionBar td {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   padding:0px;
   margin:0px;
   width: 35px;
@@ -106,19 +106,9 @@ code {
 }
 
 
-.square {
-  background:wheat;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 40px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 40px;
+#tile {
+  width: 35px;
+  border-radius: 25%;
 }
 .tiles{
     margin-top: 160px;

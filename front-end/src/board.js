@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Tile } from './tile';
 
 class Board extends Component {
     
@@ -13,6 +14,10 @@ class Board extends Component {
             },
             opponent: [],
         }
+    }
+    
+    renderTile(i) {
+        return <Tile value={i} />
     }
 
     // componentWillMount() {
@@ -36,8 +41,6 @@ class Board extends Component {
     render() {
         let boardSate = this.state.boardSate;
 
-
-
         return (
             <div>
                 <div id="board">
@@ -55,12 +58,12 @@ class Board extends Component {
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>{this.state.rackList[0]}</td>
-                                    <td>{this.state.rackList[1]}</td>
-                                    <td>{this.state.rackList[2]}</td>
-                                    <td>{this.state.rackList[3]}</td>
-                                    <td>{this.state.rackList[4]}</td>
-                                    <td>{this.state.rackList[5]}</td>
+                                    <td>{this.renderTile(this.state.rackList[0])}</td>
+                                    <td>{this.renderTile(this.state.rackList[1])}</td>
+                                    <td>{this.renderTile(this.state.rackList[2])}</td>
+                                    <td>{this.renderTile(this.state.rackList[3])}</td>
+                                    <td>{this.renderTile(this.state.rackList[4])}</td>
+                                    <td>{this.renderTile(this.state.rackList[5])}</td>
                                 </tr>
                             </tbody>
                         </table>
