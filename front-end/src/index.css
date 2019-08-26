@@ -12,16 +12,19 @@ code {
     monospace;
 }
 
+/* .game {
+  text-align: center;
+} */
+
 #board table {
-  /* border-collapse: collapse; */
   position: absolute;
   left: 470px;
   margin: 0 auto;
+  /* border-spacing: 0ch; */
 }
+
 #board th, #board td {
   border: 1px solid black;
-}
-#board th, #board td {
   padding:0;
   margin:0;
   width: 35px;
@@ -61,6 +64,7 @@ code {
 
 #wordsPlayed {
   height: 350px;
+  text-align: start;
 }
 
 #scoreBar {
@@ -88,14 +92,12 @@ code {
 }
 
 #functionBar th, #functionBar td {
-  /* border: 1px solid black; */
-  padding:0px;
-  margin:0px;
   width: 35px;
   height: 35px;
   text-align: center;
-  border-radius: 25%;
+  border-radius: 10%;
 }
+
 #functionBar button {
   margin: 5px;
   background-color: lightpink;
@@ -105,12 +107,8 @@ code {
   height: 30px;
 }
 
-
 #tile {
   width: 35px;
-  border-radius: 25%;
-}
-.tiles{
-    margin-top: 160px;
-    margin-right: 50px;
+  /* height: 35px; */
+  border-radius: 10%;
 }
