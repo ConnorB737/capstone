@@ -7,8 +7,7 @@ class Board extends Component {
         super(props)
         this.state = {
             rackList: [],
-            boardSate: [[[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []], [[], [], [], [], [], [], [], [], [], [], [], [], [], [], []]]
-            ,  // right now just empty nested 15 by 15 lists, could replaced by lists send from backend.
+            boardSate: Array(15).fill(0).map(row => new Array(15).fill(null)),
             player: {
                 name: "",
                 score: 0,
@@ -21,20 +20,6 @@ class Board extends Component {
         return <Tile value={i} />
     }
 
-
-    // create empty 15 by 15 nested lists
-    // initBoardState = () => {
-    //     let board = []
-    //     for (let i=0; i<15; i++) {
-    //         let row = []
-    //         for (let j=0; j<15; j++) {
-    //             row.push([])
-    //         }
-    //         board.push(row)
-    //     }
-    //     return board;
-    // }
-
     onDragOver = (ev) => {
         ev.preventDefault();
     }
@@ -45,8 +30,6 @@ class Board extends Component {
         let i=coordinate[0];
         let j=coordinate[1];
         state[i][j] = value;
-        // console.log("i: ", i);
-        // console.log("value: ", value);
         this.setState({
             boardSate: state,
         })

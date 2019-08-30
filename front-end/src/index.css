@@ -20,10 +20,12 @@ code {
   position: absolute;
   left: 470px;
   margin: 0 auto;
-  /* border-spacing: 0ch; */
+}
+#board tr {
+  align-content: center;
 }
 
-#board th, #board td {
+ #board td {
   border: 1px solid black;
   padding:0;
   margin:0;
@@ -32,6 +34,7 @@ code {
   text-align: center;
   border-radius: 10%;
   background-color: lightgoldenrodyellow;
+  line-height: 0;
 }
 
 #leftBar {
@@ -108,7 +111,7 @@ code {
 }
 
 #tile {
-  width: 35px;
-  /* height: 35px; */
+  width: 34px;
+  height: 34px;
   border-radius: 10%;
 }
