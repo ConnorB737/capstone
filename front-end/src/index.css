@@ -12,16 +12,21 @@ code {
     monospace;
 }
 
+/* .game {
+  text-align: center;
+} */
+
 #board table {
-  /* border-collapse: collapse; */
   position: absolute;
   left: 470px;
   margin: 0 auto;
 }
-#board th, #board td {
-  border: 1px solid black;
+#board tr {
+  align-content: center;
 }
-#board th, #board td {
+
+ #board td {
+  border: 1px solid black;
   padding:0;
   margin:0;
   width: 35px;
@@ -29,6 +34,7 @@ code {
   text-align: center;
   border-radius: 10%;
   background-color: lightgoldenrodyellow;
+  line-height: 0;
 }
 
 #leftBar {
@@ -61,6 +67,7 @@ code {
 
 #wordsPlayed {
   height: 350px;
+  text-align: start;
 }
 
 #scoreBar {
@@ -88,14 +95,12 @@ code {
 }
 
 #functionBar th, #functionBar td {
-  border: 1px solid black;
-  padding:0px;
-  margin:0px;
   width: 35px;
   height: 35px;
   text-align: center;
-  border-radius: 25%;
+  border-radius: 10%;
 }
+
 #functionBar button {
   margin: 5px;
   background-color: lightpink;
@@ -105,22 +110,8 @@ code {
   height: 30px;
 }
 
-
-.square {
-  background:wheat;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 40px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 40px;
-}
-.tiles{
-    margin-top: 160px;
-    margin-right: 50px;
+#tile {
+  width: 34px;
+  height: 34px;
+  border-radius: 10%;
 }
