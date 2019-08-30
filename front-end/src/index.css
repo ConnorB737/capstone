@@ -29,19 +29,20 @@ code {
   border: 1px solid black;
   padding:0;
   margin:0;
-  width: 35px;
-  height: 35px;
-  text-align: center;
+  width: 32px;
+  height: 31px;
+  /* align-self: center; */
+  vertical-align: bottom;
   border-radius: 10%;
-  background-color: lightgoldenrodyellow;
+  background-color: darkgreen;
   line-height: 0;
 }
 
 #leftBar {
   position: absolute;
-  left: 260px;
+  left: 267px;
   width: 200px;
-  height: 560px;
+  height: 520px;
   background-color: lightskyblue;
 }
 
@@ -55,10 +56,10 @@ code {
 
 #rightBar {
   position: absolute;
-  left: 1070px;
+  left: 1015px;
   width: 200px;
-  height: 560px;
-  background-color: aquamarine;
+  height: 520px;
+  background-color: lightskyblue;
 }
 
 #wordsPlayedNav {
@@ -84,7 +85,7 @@ code {
 #functionBar {
   text-align: center;
   position: absolute;
-  top: 650px;
+  top: 610px;
   left: 620px;
 }
 
@@ -95,10 +96,11 @@ code {
 }
 
 #functionBar th, #functionBar td {
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 31px;
   text-align: center;
   border-radius: 10%;
+  line-height: 0;
 }
 
 #functionBar button {
@@ -111,7 +113,9 @@ code {
 }
 
 #tile {
-  width: 34px;
-  height: 34px;
+  width: 31px;
+  height: 30px;
   border-radius: 10%;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
