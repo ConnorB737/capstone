@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import Board from './board';
-// import Square from "./square";
-
-
 
 export class Game extends Component {
 
@@ -22,9 +19,7 @@ export class Game extends Component {
 
         return (
             <div className="game">
-                <div className="game-board">
-                    <Board/>
-                </div>
+
                 <div id="leftBar">
                     <div id="gamesList">
                         <h3 id="gameListNav">Games</h3>
@@ -38,6 +33,10 @@ export class Game extends Component {
                             <h3>Score:</h3>
                         </div>
                     </div>
+                </div>
+
+                <div className="game-board">
+                    <Board/>
                 </div>
 
                 <div id="rightBar">
