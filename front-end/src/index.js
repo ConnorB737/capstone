@@ -18,6 +18,7 @@ const store = createStore(
     {
         socket,
         games: [],
+		serverBoard: "yo",
     },
     composeEnhancers(applyMiddleware(thunk)),
 );

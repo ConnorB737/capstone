@@ -125,6 +125,12 @@ class Board extends Component {
                                     <td>{this.renderTile(rackList[3])}</td>
                                     <td>{this.renderTile(rackList[4])}</td>
                                     <td>{this.renderTile(rackList[5])}</td>
+                                    <td>{this.state.rackList[0]}</td>
+                                    <td>{this.state.rackList[1]}</td>
+                                    <td>{this.state.rackList[2]}</td>
+                                    <td>{this.state.rackList[3]}</td>
+                                    <td>{this.state.rackList[4]}</td>
+                                    <td>{this.state.rackList[5]}</td>
                                 </tr>
                             </tbody>
                         </table>
