@@ -7,7 +7,7 @@ class Board extends Component {
         super(props)
         this.state = {
             rackList: ['A','B','C','D','E','F','G','H','I','J','K'],
-            boardSate: Array(15).fill(0).map(row => new Array(15).fill(null)),
+            boardState: Array(15).fill(0).map(row => new Array(15).fill(null)),
             player: {
                 name: "",
                 score: 0,
@@ -26,12 +26,12 @@ class Board extends Component {
 
     onDrop = (ev, coordinate) => {
         let value = ev.dataTransfer.getData("value");
-        let temState = this.state.boardSate;
+        let temState = this.state.boardState;
         let i=coordinate[0];
         let j=coordinate[1];
         temState[i][j] = value;
         this.setState({
-            boardSate: temState,
+            boardState: temState,
         })
     }
 
@@ -44,13 +44,16 @@ class Board extends Component {
 
 
     render() {
-        let boardSate = this.state.boardSate;
-        let board = boardSate.map((row,i) => 
+        let boardState = this.state.boardState;
+        let board = boardState.map((row,i) => 
             <tr key={i}>{row.map((cell,j) => 
                 <td 
                     key={i*15+j}
                     onDragOver={(e) => this.onDragOver(e)}
-                    onDrop = {(e) => this.onDrop(e, [i,j])}
+                    onDrop = { cell === null?
+                        (e) => this.onDrop(e, [i,j])
+                        : null
+                    }
                 >
                 {this.renderTile(cell)}
                 </td>)}

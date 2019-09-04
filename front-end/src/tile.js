@@ -21,6 +21,10 @@ export class Tile extends Component {
         )
     }
 
+    preventDragHandler = (e) => {
+        e.preventDefault();
+      }
+
     render() {
 
         return (
@@ -31,7 +35,7 @@ export class Tile extends Component {
             draggable
             onDragStart = {this.state.canDrag === true
                 ? (e) => this.onDragStart(e, this.props.value)
-                : null
+                : this.preventDragHandler
             }
             onDrop = {() => this.onDragEnd()}
             />
