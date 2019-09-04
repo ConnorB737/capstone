@@ -1,4 +1,3 @@
-
 const Images={
     "A": require("./letter/A.jpg"),
     "B": require("./letter/B.jpg"),
