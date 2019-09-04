@@ -26,12 +26,12 @@ class Board extends Component {
 
     onDrop = (ev, coordinate) => {
         let value = ev.dataTransfer.getData("value");
-        let temState = this.state.boardState;
+        let tempState = this.state.boardState;
         let i=coordinate[0];
         let j=coordinate[1];
-        temState[i][j] = value;
+        tempState[i][j] = value;
         this.setState({
-            boardState: temState,
+            boardState: tempState,
         })
     }
 
@@ -50,7 +50,7 @@ class Board extends Component {
                 <td 
                     key={i*15+j}
                     onDragOver={(e) => this.onDragOver(e)}
-                    onDrop = { cell === null?
+                    onDrop = {cell === null?
                         (e) => this.onDrop(e, [i,j])
                         : null
                     }
