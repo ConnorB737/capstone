@@ -34,26 +34,67 @@ class Board extends Component {
         let temState = this.state.boardState;
         let i=coordinate[0];
         let j=coordinate[1];
-		
+        
 		
 		//this part of the code handles the checking of whether you're placing tiles in a logical order
 		//it won't let you place tiles randomly, 
 		//but instead enforces that tiles are inline horizontally or vertically
 		//and all touching
         
-        function isThereAnAdjacentTile(i, j){ 
-        //this function checks whether there is an adjacent tile out of the tiles already placed
+        var coords = this.state.word.coords;
         
+        function isValidPlacement(dir){
+            //checks whether there is a straight line of tiles from the first tile you've placed,
+            //to the last tile you've placed
+            //i.e. no gaps
+            
+            //assumes the first tile has been placed 
+            let firstTile = coords[0];
+            if(dir === 1){ //vertically
+                let diff = firstTile[0] - i;
+                if(diff > 0) { //tile is above first tile
+                    diff -= 1; //because the temState of the tile placed should be null
+                    for (let x = 1; x < diff; x++){
+                        if(temState[firstTile[0] - x][j] == null){
+                            return false; //is not placable
+                        }
+                    }
+                } else if (diff < 0) { //tile is below first tile
+                    diff += 1;
+                    for (let x = 1; x < -diff; x++){
+                        if(temState[firstTile[0] + x][j] == null){
+                            return false; //is not placable
+                        }
+                    }
+                }
+            } else if (dir === 0) { //horizonally 
+                let diff = firstTile[1] - j;
+                    if(diff > 0) { //tile is behind first tile
+                        diff -= 1;
+                        for (let x = 1; x < diff; x++){
+                            if(temState[i][firstTile[1] - x] == null){
+                                return false; //is not placable
+                            }
+                        }
+                    } else if (diff < 0) { //tile is in front of first tile
+                        diff += 1;
+                        for (let x = 1; x < -diff; x++){
+                            if(temState[i][firstTile[1] + x] == null){
+                                return false; //is not placable
+                            }
+                    }
+                }
+            }
+            return true;
         }
         
-        let coords = this.state.word.coords;
 		if(coords.length === 0){ //checks whether first tile placed, and whether the spot is free
             if(temState[i][j] == null){
                 coords.push([i, j, value]);
                 temState[i][j] = value;
             }
 		 } else if (this.state.word.direction === -1){ //if a direction hasn't been set (usually second move)
-			if(i === coords[0][0] - 1 || i === coords[0][0] + 1){ //coords[0][0] is the first tile placed 'i' coordinate
+			if(j === coords[0][1] && isValidPlacement(1)){ //coords[0][0] is the first tile placed 'i' coordinate
                 if(temState[i][j] == null){
                     this.setState({
                         word: {
@@ -63,7 +104,7 @@ class Board extends Component {
                     coords.push([i, j, value]);
                     temState[i][j] = value;
                 }
-			} else if (j === coords[0][1] - 1 || j === coords[0][1] + 1){ //coords[0][1] is the first placed 'j' coordinate
+			} else if (i === coords[0][0] && isValidPlacement(0)){ //coords[0][1] is the first placed 'j' coordinate
                 if(temState[i][j] == null){
                     this.setState({
                         word: {
@@ -75,14 +116,12 @@ class Board extends Component {
                     }
                 }
 		} else if (this.state.word.direction === 1) { //if going vertically
-			if (j === coords[0][1] && //make sure is on the same j coordinate, 
-				(temState[i - 1][j] != null || temState[i + 1][j] != null)){ //and make sure that there is a tile on either side of the placement
+			if (j === coords[0][1] && isValidPlacement(1)){ //and make sure that there is a tile on either side of the placement
                 coords.push([i, j, value]);
 				temState[i][j] = value;
 			}
 		} else if (this.state.word.direction === 0) { //same deal but horizontally
-			if (i === coords[0][0] && 
-				(temState[i][j - 1] != null || temState[i][j + 1] != null)){
+			if (i === coords[0][0] && isValidPlacement(0)){
                 coords.push([i, j, value]);
 				temState[i][j] = value;
 			}
