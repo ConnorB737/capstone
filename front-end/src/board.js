@@ -49,6 +49,7 @@ class Board extends Component {
             //i.e. no gaps
             
             //assumes the first tile has been placed 
+            let tempCoords = coords;
             let firstTile = coords[0];
             if(dir === 1){ //vertically
                 let diff = firstTile[0] - i;
@@ -58,12 +59,32 @@ class Board extends Component {
                         if(temState[firstTile[0] - x][j] == null){
                             return false; //is not placable
                         }
+                        
+                        let isTileInCoords = false; //adds all tiles between clicks to the word
+                        for (let x = 0; x < coords.length; x++){
+                            if(firstTile[0] - x === coords[x][0] && j === coords[x][1]){
+                                isTileInCoords = true;
+                            }
+                        }
+                        if(!isTileInCoords){
+                            tempCoords.push([firstTile[0] - x, j, temState[firstTile[0] - x][j]]);
+                        }
                     }
                 } else if (diff < 0) { //tile is below first tile
                     diff += 1;
                     for (let x = 1; x < -diff; x++){
                         if(temState[firstTile[0] + x][j] == null){
                             return false; //is not placable
+                        }
+                        
+                        let isTileInCoords = false; //adds all tiles between clicks to the word
+                        for (let x = 0; x < coords.length; x++){
+                            if(firstTile[0] + x === coords[x][0] && j === coords[x][1]){
+                                isTileInCoords = true;
+                            }
+                        }
+                        if(!isTileInCoords){
+                            tempCoords.push([firstTile[0] + x, j, temState[firstTile[0] + x][j]]);
                         }
                     }
                 }
@@ -75,16 +96,39 @@ class Board extends Component {
                             if(temState[i][firstTile[1] - x] == null){
                                 return false; //is not placable
                             }
+                            
+                            let isTileInCoords = false; //adds all tiles between clicks to the word
+                            for (let x = 0; x < coords.length; x++){
+                            if(i === coords[x][0] && firstTile[1] - x === coords[x][1]){
+                                isTileInCoords = true;
+                            }
+                            }
+                            if(!isTileInCoords){
+                                tempCoords.push([i, firstTile[1] - x, temState[i][firstTile[1] - x]]);
+                            }
                         }
+                        
+                        
                     } else if (diff < 0) { //tile is in front of first tile
                         diff += 1;
                         for (let x = 1; x < -diff; x++){
                             if(temState[i][firstTile[1] + x] == null){
                                 return false; //is not placable
                             }
+                            
+                        let isTileInCoords = false; //adds all tiles between clicks to the word
+                        for (let x = 0; x < coords.length; x++){
+                            if(i === coords[x][0] && firstTile[1] + x === coords[x][1]){
+                                isTileInCoords = true;
+                            }
+                        }
+                        if(!isTileInCoords){
+                            tempCoords.push([i, firstTile[1] + x, temState[i][firstTile[1] + x]]);
+                        }
                     }
                 }
             }
+            coords = tempCoords;
             return true;
         }
         
