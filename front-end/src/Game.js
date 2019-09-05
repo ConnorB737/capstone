@@ -20,11 +20,6 @@ export class Game extends Component {
         <li key={word.toString()}> {word} </li>)
 
 
-        const wordsPlayed = ["hello", " world"] // contain history
-        let wordsPlayedList = wordsPlayed.map((word) => 
-        <li key={word.toString()}> {word} </li>)
-
-
         return (
             <div className="game">
                 <div id="leftBar">
