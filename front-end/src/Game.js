@@ -33,13 +33,12 @@ export class Game extends Component {
                     <div id="scoreBar">
                         <div id="scoreBarNav">
                             <h3>Score:</h3>
-							<p> { sBoard } </p>
                         </div>
                     </div>
                 </div>
 
                 <div className="game-board">
-                    <Board/>
+                    <Board serverBoard={sBoard} />
                 </div>
 
 

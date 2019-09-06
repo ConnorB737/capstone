@@ -4,7 +4,7 @@ import { Tile } from './tile';
 class Board extends Component {
     
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             rackList: ['A','B','C','D','E','F','G','H','I','J','K'],
             boardState: Array(15).fill(0).map(row => new Array(15).fill(null)),
@@ -248,6 +248,12 @@ class Board extends Component {
         }
         
         function clear() { alert("Clear!"); }
+        
+        const sBoard = this.props.serverBoard;
+        function pass() {
+            alert(sBoard);
+        }
+
         return (
             <div>
                 <div id="board" >
@@ -275,7 +281,7 @@ class Board extends Component {
                     </div>
                     <div>
                         <button onClick={play}>Play</button>
-                        <button>Pass</button>
+                        <button onClick={pass}>Pass</button>
                         <button onClick={clear}>Clear</button>
                         <button>Swap</button>
                     </div>
