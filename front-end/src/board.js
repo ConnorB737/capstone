@@ -54,7 +54,7 @@ class Board extends Component {
             if(dir === 1){ //vertically
                 let diff = firstTile[0] - i;
                 if(diff > 0) { //tile is above first tile
-                    diff -= 1; //because the temState of the tile placed should be null
+                    //diff -= 1; //because the temState of the tile placed should be null
                     for (let x = 1; x < diff; x++){
                         if(temState[firstTile[0] - x][j] == null){
                             return false; //is not placable
@@ -71,7 +71,7 @@ class Board extends Component {
                         }
                     }
                 } else if (diff < 0) { //tile is below first tile
-                    diff += 1;
+                    //diff += 1;
                     for (let x = 1; x < -diff; x++){
                         if(temState[firstTile[0] + x][j] == null){
                             return false; //is not placable
@@ -91,7 +91,7 @@ class Board extends Component {
             } else if (dir === 0) { //horizonally 
                 let diff = firstTile[1] - j;
                     if(diff > 0) { //tile is behind first tile
-                        diff -= 1;
+                        //diff -= 1;
                         for (let x = 1; x < diff; x++){
                             if(temState[i][firstTile[1] - x] == null){
                                 return false; //is not placable
@@ -110,7 +110,7 @@ class Board extends Component {
                         
                         
                     } else if (diff < 0) { //tile is in front of first tile
-                        diff += 1;
+                        //diff += 1;
                         for (let x = 1; x < -diff; x++){
                             if(temState[i][firstTile[1] + x] == null){
                                 return false; //is not placable
