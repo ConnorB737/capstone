@@ -17,7 +17,7 @@ class Board extends Component {
     }
     
     renderTile(i) {
-        return <Tile value={i} />
+        return <Tile value={i}/>
     }
 
     onDragOver = (ev) => {
