@@ -138,7 +138,7 @@ class Board extends Component {
                 temState[i][j] = value;
             }
 		 } else if (this.state.word.direction === -1){ //if a direction hasn't been set (usually second move)
-			if(j === coords[0][1] && isValidPlacement(1)){ //coords[0][0] is the first tile placed 'i' coordinate
+			if(j === coords[0][1] && isValidPlacement(1)){ //coords[0][1] is the first tile placed 'j' coordinate
                 if(temState[i][j] == null){
                     this.setState({
                         word: {
@@ -148,19 +148,19 @@ class Board extends Component {
                     coords.push([i, j, value]);
                     temState[i][j] = value;
                 }
-			} else if (i === coords[0][0] && isValidPlacement(0)){ //coords[0][1] is the first placed 'j' coordinate
+			} else if (i === coords[0][0] && isValidPlacement(0)){ //coords[0][0] is the first placed 'i' coordinate
                 if(temState[i][j] == null){
                     this.setState({
                         word: {
                             ...this.state.word,
-                            direction: 0, //the word is going vertically
+                            direction: 0, //the word is going horizontally
                     }});
                     coords.push([i, j, value]);
                     temState[i][j] = value;
                     }
                 }
 		} else if (this.state.word.direction === 1) { //if going vertically
-			if (j === coords[0][1] && isValidPlacement(1)){ //and make sure that there is a tile on either side of the placement
+			if (j === coords[0][1] && isValidPlacement(1)){ //and make sure that there is a tiles between either side of the placement
                 coords.push([i, j, value]);
 				temState[i][j] = value;
 			}
@@ -234,12 +234,14 @@ class Board extends Component {
                 // lowestJ = coords[0][1];
             // }
         
+			//sorts the coords in order of their i or j coordinate depending on the direction
              if (dir === 0) { //horizonal
                 coords = coords.sort((a, b) => a[1] - b[1]);
              } else if (dir === 1) {//vertical 
                 coords = coords.sort((a, b) => a[0] - b[0]);
             }
             
+			//as the word is now in order, we can simply take each letter to construct our word
             let txt = "";
             for (let x = 0; x < coords.length; x++){
                     txt += coords[x][2];
