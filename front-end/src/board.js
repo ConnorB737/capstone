@@ -35,14 +35,6 @@ class Board extends Component {
         })
     }
 
-    findWord = () => {
-        
-    }
-
-
-
-
-
     render() {
         let boardState = this.state.boardState;
         let board = boardState.map((row,i) => 
