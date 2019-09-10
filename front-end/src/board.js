@@ -35,41 +35,10 @@ class Board extends Component {
         })
     }
 
-    findWord = () => {
-        
-    }
-
 
     render() {
         let boardSate = this.state.boardSate;
         boardSate = boardSate.map((row,i) => {
-
-            // if (i===6||i===8) {
-            //               return(<tr className="DL" key={i}>{row.map((cell, j) => (j===6||j===8)?
-            //                   <td  className="DL2"
-            //                        key={i * 15 + j}
-            //                        onDragOver={(e) => this.onDragOver(e)}
-            //                        onDrop={(e) => this.onDrop(e, [i, j])}
-            //                   >
-            //                       {this.renderTile(cell)}
-            //                   </td> : <td className="normaltd" key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}>
-            //                       {this.renderTile(cell)}</td>)}
-            //               </tr>)
-            //           }
-            //
-            // else if (i===0||i===14) {
-            //     return(<tr className="TW" key={i}>{row.map((cell, j) => (j===0||j===14||j===7)?
-            //         <td  className="TW2"
-            //              key={i * 15 + j}
-            //              onDragOver={(e) => this.onDragOver(e)}
-            //              onDrop={(e) => this.onDrop(e, [i, j])}
-            //         >
-            //             {this.renderTile(cell)}
-            //         </td> : <td className="normaltd" key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}>
-            //             {this.renderTile(cell)}</td>)}
-            //     </tr>)
-            // }
-
              if (i===7) {
                           return(<tr className="ST" key={i}>{row.map((cell, j) =>{
                               if(j===0||j===14){
@@ -316,7 +285,7 @@ class Board extends Component {
         }
         );
 
-        
+
         let rackList = this.state.rackList;
 
         return (
