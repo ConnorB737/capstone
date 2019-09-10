@@ -7,7 +7,6 @@ class Board extends Component {
         super(props)
         this.state = {
             rackList: ['A','B','C','D','E','F','G','H','I','J','K'],
-            boardState: Array(15).fill(0).map(row => new Array(15).fill(null)),
             boardSate: Array(15).fill(0).map(row => new Array(15).fill(null)),
             player: {
                 name: "",
