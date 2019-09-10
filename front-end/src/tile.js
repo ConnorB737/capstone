@@ -15,16 +15,11 @@ export class Tile extends Component {
         ev.dataTransfer.setData("value", value)
     }
 
-    onDragEnd = (e) => {
-        e.preventDefault()
+    onDragEnd = () => {
         this.setState(
             {canDrag: false}
         )
     }
-
-    preventDragHandler = (e) => {
-        e.preventDefault();
-      }
 
     render() {
 
@@ -36,9 +31,9 @@ export class Tile extends Component {
             draggable
             onDragStart = {this.state.canDrag === true
                 ? (e) => this.onDragStart(e, this.props.value)
-                : this.preventDragHandler
+                : null
             }
-            onDrop = {(e) => this.onDragEnd(e)}
+            onDrop = {() => this.onDragEnd()}
             />
         )
     }
