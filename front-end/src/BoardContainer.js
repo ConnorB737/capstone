@@ -1,4 +1,4 @@
-import { Board } from "./board";
+import Board from "./board";
 import { connect } from "react-redux";
 import { placeWord } from "./actions";
 

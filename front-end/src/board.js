@@ -170,8 +170,8 @@ class Board extends Component {
 				temState[i][j] = value;
 			}
 		}
-		
-		this.props.placeWord(socket, word, direction, startingPosition);
+
+		this.props.placeWord(this.props.socket, value, this.state.word.direction, this.state.word.coords);
 		
 		this.setState({
 			lastX: i,
