@@ -275,8 +275,6 @@ class Board extends Component {
 				temState[i][j] = value;
 			}
 		}
-
-		this.props.placeWord(this.props.socket, value, this.state.word.direction, this.state.word.coords);
 		
 		this.setState({
 			lastX: i,
@@ -363,7 +361,7 @@ class Board extends Component {
             for (let x = 0; x < coords.length; x++){
                     txt += coords[x][2];
                 }
-            alert(txt);
+            this.props.placeWord(this.props.socket, txt, this.state.word.direction, this.state.word.coords);
         }
         
         function clear() { alert("Clear!"); }
