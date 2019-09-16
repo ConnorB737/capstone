@@ -1,8 +1,113 @@
 import React, { Component } from 'react';
 import { Tile } from './tile';
 
+const SPECIAL_TILE_PLACEMENT = {
+    "TW2": [
+        [7, 0],
+        [7, 14],
+        [0, 0],
+        [0, 7],
+        [0, 14],
+        [14, 0],
+        [14, 7],
+        [14, 14],
+    ],
+    "TL2": [
+        [7, 3],
+        [7, 11],
+        [5, 1],
+        [5, 3],
+        [5, 12],
+        [5, 14],
+        [9, 1],
+        [9, 3],
+        [9, 12],
+        [9, 14],
+        [3, 7],
+        [11, 7],
+        [1, 5],
+        [1, 9],
+        [13, 5],
+        [13, 9],
+        [0, 3],
+        [0, 4],
+        [0, 10],
+        [0, 11],
+        [14, 3],
+        [14, 4],
+        [14, 10],
+        [14, 11],
+    ],
+    "ST2": [
+        [7, 7],
+    ],
+    "DL2": [
+        [6, 2],
+        [6, 4],
+        [6, 6],
+        [6, 8],
+        [6, 10],
+        [6, 12],
+        [8, 2],
+        [8, 4],
+        [8, 6],
+        [8, 8],
+        [8, 10],
+        [8, 12],
+        [4, 0],
+        [4, 6],
+        [4, 8],
+        [4, 14],
+        [10, 0],
+        [10, 6],
+        [10, 8],
+        [10, 14],
+        [3, 0],
+        [3, 14],
+        [11, 0],
+        [11, 14],
+        [2, 1],
+        [2, 6],
+        [2, 8],
+        [2, 13],
+        [12, 1],
+        [12, 6],
+        [12, 8],
+        [12, 13],
+        [1, 2],
+        [1, 12],
+        [13, 2],
+        [13, 12],
+    ],
+    "DW2": [
+        [5, 5],
+        [5, 9],
+        [9, 5],
+        [9, 9],
+        [4, 4],
+        [4, 10],
+        [10, 4],
+        [10, 10],
+        [3, 3],
+        [3, 11],
+        [11, 3],
+        [11, 11],
+        [2, 2],
+        [2, 12],
+        [12, 2],
+        [12, 12],
+        [1, 1],
+        [1, 13],
+        [13, 1],
+        [13, 13],
+    ],
+};
+
+
 class Board extends Component {
-    
+
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -25,11 +130,11 @@ class Board extends Component {
         return <Tile value={i} />
     }
 
-    onDragOver = (ev) => {
+    onDragOver(ev) {
         ev.preventDefault();
     }
 
-    onDrop = (ev, coordinate) => {
+    onDrop(ev, coordinate) {
         let value = ev.dataTransfer.getData("value");
         let temState = this.state.boardState;
         let i=coordinate[0];
@@ -187,254 +292,33 @@ class Board extends Component {
         })
     }
 
+    _tile_class_name(i, j) {
+        for (let tileClass in SPECIAL_TILE_PLACEMENT) {
+            if (SPECIAL_TILE_PLACEMENT.hasOwnProperty(tileClass)) {
+                let found = SPECIAL_TILE_PLACEMENT[tileClass].find(location => {
+                    if (location[0] === i && location[1] === j) {
+                        return true;
+                    }
+                });
+                if (found) {
+                    return tileClass;
+                }
+            }
+        }
+
+        return "normaltd";
+    }
 
     render() {
         let boardState = this.state.boardState;
         boardState = boardState.map((row,i) => {
-             if (i===7) {
-                          return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                              if(j===0||j===14){
-                              return(<td  className="TW2"
-                                   key={i * 15 + j}
-                                   onDragOver={(e) => this.onDragOver(e)}
-                                   onDrop={(e) => this.onDrop(e, [i, j])}
-                              >
-                                  {this.renderTile(cell)}
-                              </td>)}
-                              if(j===3||j===11){
-                                  return(<td  className="TL2"
-                                              key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                                  >{this.renderTile(cell)}
-                                  </td>)}
-                              if(j===7){
-                                  return(<td  className="ST2"
-                                              key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                                  >{this.renderTile(cell)}
-                                  </td>)}
-
-                                  else{
-                                  return(<td  className="normaltd"
-                                              key={i * 15 + j}
-                                              onDragOver={(e) => this.onDragOver(e)}
-                                              onDrop={(e) => this.onDrop(e, [i, j])}
-                                  >
-                                      {this.renderTile(cell)}
-                                  </td>)
-                              }
-                          }) }
-                          </tr>)
-                      }
-                else if (i===8||i===6) {
-                    return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                        if(j===2||j===4||j===6||j===8||j===10||j===12){
-                            return(<td  className="DL2"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)}
-                        else{
-                            return(<td  className="normaltd"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)
-                        }
-                    }) }
-                    </tr>)
-                }
-                if (i===9||i===5) {
-                    return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                        if(j===1||j===3||j===14||j===12){
-                            return(<td  className="TL2"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)}
-                        if(j===5||j===9){
-                            return(<td  className="DW2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-
-                        else{
-                            return(<td  className="normaltd"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)
-                        }
-                    }) }
-                    </tr>)
-                }
-                if (i===10||i===4) {
-                    return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                        if(j===0||j===6||j===8||j===14){
-                            return(<td  className="DL2"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)}
-                        if(j===4||j===10){
-                            return(<td  className="DW2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-                        else{
-                            return(<td  className="normaltd"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)
-                        }
-                    }) }
-                    </tr>)
-                }
-                if (i===11||i===3) {
-                    return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                        if(j===0||j===14){
-                            return(<td  className="DL2"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)}
-                        if(j===3||j===11){
-                            return(<td  className="DW2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-                        if(j===7){
-                            return(<td  className="TL2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-
-                        else{
-                            return(<td  className="normaltd"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)
-                        }
-                    }) }
-                    </tr>)
-                }
-                if (i===12||i===2) {
-                    return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                        if(j===1||j===6||j===8||j===13){
-                            return(<td  className="DL2"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)}
-                        if(j===2||j===12){
-                            return(<td  className="DW2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-                        else{
-                            return(<td  className="normaltd"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)
-                        }
-                    }) }
-                    </tr>)
-                }
-                if (i===13||i===1) {
-                    return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                        if(j===1||j===13){
-                            return(<td  className="DW2"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)}
-                        if(j===2||j===12){
-                            return(<td  className="DL2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-                        if(j===5||j===9){
-                            return(<td  className="TL2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-
-
-                        else{
-                            return(<td  className="normaltd"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)
-                        }
-                    }) }
-                    </tr>)
-                }
-                if (i===14||i===0) {
-                    return(<tr className="ST" key={i}>{row.map((cell, j) =>{
-                        if(j===0||j===14||j===7){
-                            return(<td  className="TW2"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)}
-                        if(j===3||j===4||j===10||j===11){
-                            return(<td  className="TL2"
-                                        key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                            >{this.renderTile(cell)}
-                            </td>)}
-                        else{
-                            return(<td  className="normaltd"
-                                        key={i * 15 + j}
-                                        onDragOver={(e) => this.onDragOver(e)}
-                                        onDrop={(e) => this.onDrop(e, [i, j])}
-                            >
-                                {this.renderTile(cell)}
-                            </td>)
-                        }
-                    }) }
-                    </tr>)
-                }
-            else{
-                return(<tr  className="normaltr" key={i}>{row.map((cell, j) =>
-                    <td className="normaltd"
-                        key={i * 15 + j}
-                        onDragOver={(e) => this.onDragOver(e)}
-                        onDrop={(e) => this.onDrop(e, [i, j])}
-                    >
-                        {this.renderTile(cell)}
-                    </td>)}
-                </tr>)
-
-            }
-        }
+            return(<tr className="normaltr" key={i}>{row.map((cell, j) =>{
+              return(<td className={this._tile_class_name(i, j)}
+                              key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
+                  >{this.renderTile(cell)}
+                  </td>)
+            }) }
+            </tr>)}
         );
 
 
