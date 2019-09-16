@@ -307,6 +307,34 @@ class Board extends Component {
         return "normaltd";
     }
 
+    play() {
+
+        var coords = this.state.word.coords;
+        var dir = this.state.word.direction;
+
+        //sorts the coords in order of their i or j coordinate depending on the direction
+         if (dir === 0) { //horizonal
+            coords = coords.sort((a, b) => a[1] - b[1]);
+         } else if (dir === 1) {//vertical
+            coords = coords.sort((a, b) => a[0] - b[0]);
+        }
+
+        //as the word is now in order, we can simply take each letter to construct our word
+        let txt = "";
+        for (let x = 0; x < coords.length; x++){
+                txt += coords[x][2];
+            }
+        this.props.placeWord(this.props.socket, txt, this.state.word.direction, this.state.word.coords);
+    }
+
+    clear() {
+        alert("Clear!");
+    }
+
+    pass() {
+        alert(this.props.serverBoard);
+    }
+
     render() {
         let boardState = this.state.boardState;
         boardState = boardState.map((row,i) => {
@@ -321,55 +349,6 @@ class Board extends Component {
 
 
         let rackList = this.state.rackList;
-        
-        var coords = this.state.word.coords;
-        var dir = this.state.word.direction;
-        function play() { 
-        //turns our word into a suitable format for the server, and sends it
-        //has yet to test whether the word is valid
-            
-         // //this first part is finding the I, J coordinates of the first tile in the word
-            // var lowestI = 0;
-            // var lowestJ = 0;
-            // if (dir === 0){ //horizontal
-                // lowestJ = coords[0][1];
-                // for (let x = 0; x < coords.length; x++){
-                    // if (coords[x][1] < lowestJ) {
-                        // lowestJ = coords[x][1];
-                    // }
-                // }
-                // lowestI = coords[0][0]; //should all have the same J coords
-            // } else if (dir === 1){ //vertical
-                // lowestI = coords[0][0];
-                // for (let x = 0; x < coords.length; x++){
-                    // if (coords[x][0] < lowestI) {
-                        // lowestI = coords[x][0];
-                    // }
-                // }
-                // lowestJ = coords[0][1];
-            // }
-        
-			//sorts the coords in order of their i or j coordinate depending on the direction
-             if (dir === 0) { //horizonal
-                coords = coords.sort((a, b) => a[1] - b[1]);
-             } else if (dir === 1) {//vertical 
-                coords = coords.sort((a, b) => a[0] - b[0]);
-            }
-            
-			//as the word is now in order, we can simply take each letter to construct our word
-            let txt = "";
-            for (let x = 0; x < coords.length; x++){
-                    txt += coords[x][2];
-                }
-            this.props.placeWord(this.props.socket, txt, this.state.word.direction, this.state.word.coords);
-        }
-        
-        function clear() { alert("Clear!"); }
-        
-        const sBoard = this.props.serverBoard;
-        function pass() {
-            alert(sBoard);
-        }
 
         return (
             <div id="board">
@@ -397,9 +376,9 @@ class Board extends Component {
                         </table>
                     </div>
                     <div>
-                        <button onClick={play}>Play</button>
-                        <button onClick={pass}>Pass</button>
-                        <button onClick={clear}>Clear</button>
+                        <button onClick={this.play.bind(this)}>Play</button>
+                        <button onClick={this.pass.bind(this)}>Pass</button>
+                        <button onClick={this.clear.bind(this)}>Clear</button>
                         <button>Swap</button>
                     </div>
                 </div>

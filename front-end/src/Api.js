@@ -1,5 +1,4 @@
-import { updateGamesList } from "./actions";
-import { updateBoard } from "./actions";
+import { updateGamesList, updateBoard, wordAccepted } from "./actions";
 
 export const socketEvents = {
     GET_GAMES: 'get_games',
@@ -24,7 +23,9 @@ const handleServerBoard = (dispatch) => {
 
 
 const handleWordAccepted = (dispatch) => {
-    alert("Played a word!");
+    return () => {
+        dispatch(wordAccepted())
+    }
 };
 
 
