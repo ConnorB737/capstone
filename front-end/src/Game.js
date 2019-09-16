@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Board from './board';
+import BoardContainer from './BoardContainer';
 
 export class Game extends Component {
 
@@ -38,7 +38,7 @@ export class Game extends Component {
                 </div>
 
                 <div className="game-board">
-                    <Board serverBoard={sBoard} />
+                    <BoardContainer serverBoard={sBoard} />
                 </div>
 
 

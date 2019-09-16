@@ -171,7 +171,7 @@ class Board extends Component {
 			}
 		}
 		
-		
+		this.props.placeWord(socket, word, direction, startingPosition);
 		
 		this.setState({
 			lastX: i,

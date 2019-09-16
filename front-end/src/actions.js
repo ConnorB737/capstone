@@ -1,4 +1,4 @@
-import {socketEvents} from "./Api";
+import {buildPlaceWordMessage, socketEvents} from "./Api";
 
 export const types = {
     SOCKET: 'socket',
@@ -33,3 +33,10 @@ export const updateBoard = (data) => {
         serverBoard: data.serverBoard,
     }
 };
+
+export const placeWord = (socket, word, direction, startingPosition) => {
+    return (dispatch) => {
+        socket.emit(socketEvents.PLACE_WORD, buildPlaceWordMessage(word, direction, startingPosition))
+    }
+};
+
