@@ -35,7 +35,9 @@ export const updateBoard = (data) => {
 };
 
 export const wordAccepted = () => {
-    alert("Placed a word!");
+    return () => {
+        alert("Placed a word!");
+    }
 };
 
 export const placeWord = (socket, word, direction, startingPosition) => {
