@@ -34,7 +34,7 @@ def attach_controller(socketio: SocketIO):
 
         games = select(game for game in Game)[:]
         if(len(games) > 0):
-            response = json.dumps({"serverBoard": games[0].board})
+            response = json.dumps({"serverBoard": games[0].board.replace("[", "").replace("]","").replace(",","")})
         else:
             response = json.dumps({"serverBoard": np.zeros((15, 15)).tolist()})
 

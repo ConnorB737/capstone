@@ -136,6 +136,7 @@ class Board extends Component {
 
     onDrop(ev, coordinate) {
         let value = ev.dataTransfer.getData("value");
+        
         let temState = this.state.boardState;
         let i=coordinate[0];
         let j=coordinate[1];
@@ -328,15 +329,36 @@ class Board extends Component {
     }
 
     clear() {
-        alert("Clear!");
+        //not elegant or beautiful, will need refactoring. 
+        //primarily getting something to show in the week 8 presentation
+        function serverBoardToFrontendBoard(serverBoard) {
+            let boardArray = serverBoard.split(" ");
+            let newBoard = Array(15).fill(0).map(row => new Array(15).fill(null));
+            if(serverBoard !== "yo"){
+                for(var x = 0; x < 15*15-1; x++){
+                    if(boardArray[x] == "null")
+                        newBoard[parseInt(x / 15)][x % 15] = "";
+                    else
+                        newBoard[parseInt(x / 15)][x % 15] = boardArray[x].replace("\"","").replace("\"",""); //because the javascript replace function only replaces the first value found
+                }
+            }
+            return newBoard;
+        }
+        
+        alert("Loading Server Board");
+        this.setState({
+            boardState: serverBoardToFrontendBoard(this.props.serverBoard),
+        })
+        
     }
 
     pass() {
         alert(this.props.serverBoard);
     }
-
+    
     render() {
         let boardState = this.state.boardState;
+        //let boardState = serverBoardToFrontendBoard(this.props.serverBoard);
         boardState = boardState.map((row,i) => {
             return(<tr className="normaltr" key={i}>{row.map((cell, j) =>{
               return(<td className={this._tile_class_name(i, j)}
