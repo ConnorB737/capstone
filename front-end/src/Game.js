@@ -19,40 +19,36 @@ export class Game extends Component {
 
         return (
             <div className="game">
-
-                <div id="leftBar">
-                    <div id="gamesList">
-                        <h3 id="gameListNav">Games</h3>
-                        <ul>
-                            { gamesList }
-                        </ul>
-                    </div>
-                    <hr/>
-                    <div id="scoreBar">
-                        <div id="scoreBarNav">
-                            <h3>Score:</h3>
-                        </div>
-                    </div>
-                </div>
-
+                <div className="logo"><img src={logo} alt="" /></div>
                 <div className="game-board">
                     <Board/>
                 </div>
+                <div id="leftButton">
+                    <button className="main">Main Menu</button>
+                    <button className="stop">Stop Game</button>
+                    <button className="help" onClick={()=>{
+                        window.location. assign("../public/help.html")}}>Help</button>
 
+                </div>
                 <div id="rightBar">
                     <div id="wordsPlayed">
                         <div id="wordsPlayedNav">
-                        <h3>Words Played</h3>
+                            <h3>Words Played</h3>
                         </div>
                         <ul>{wordsPlayedList}</ul>
                     </div>
-
                     <hr/>
+                    <div id="score">
+                        <p>Your last score:</p><hr/>
+                        <p>Your total score:</p>
+                    </div>
+
                     <div id="bag">
-                        <div id="bagNav">
-                        <h3>Tiles Left:</h3>
+                        <div id="bagNav"><hr/>
+                            <p>Tiles Left:</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         );
