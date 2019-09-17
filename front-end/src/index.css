@@ -9,7 +9,7 @@
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  monospace;
 }
 body{
   background-color: lightgray;
@@ -29,11 +29,11 @@ body{
   border: 1px solid black;
 
 }
-#board tr {
+.normaltr {
   align-content: center;
 }
 
- #board td {
+.normaltd {
   border: 1px solid black;
   padding:0;
   margin:0;
@@ -41,10 +41,88 @@ body{
   height: 30px;
   vertical-align: bottom;
   border-radius: 10%;
-  background-color: darkgreen;
+  background-color:lightgoldenrodyellow;
   line-height: 0;
 }
 
+.ST {
+  align-content: center;
+}
+
+.ST2 {
+  border: 1px solid black;
+  padding:0;
+  margin:0;
+  width: 31px;
+  height: 30px;
+  vertical-align: bottom;
+  border-radius: 10%;
+  background: url("../src/bonus/ST.jpg") no-repeat;
+  line-height: 0;
+}
+.DL {
+  align-content: center;
+}
+
+.DL2 {
+  border: 1px solid black;
+  padding:0;
+  margin:0;
+  width: 31px;
+  height: 30px;
+  vertical-align: bottom;
+  border-radius: 10%;
+  background: url("../src/bonus/DL.jpg") no-repeat;
+  line-height: 0;
+}
+
+.DW {
+  align-content: center;
+}
+
+.DW2 {
+  border: 1px solid black;
+  padding:0;
+  margin:0;
+  width: 31px;
+  height: 30px;
+  vertical-align: bottom;
+  border-radius: 10%;
+  background: url("../src/bonus/DW.jpg") no-repeat;
+  line-height: 0;
+}
+
+.TL {
+  align-content: center;
+}
+
+.TL2 {
+  border: 1px solid black;
+  padding:0;
+  margin:0;
+  width: 31px;
+  height: 30px;
+  vertical-align: bottom;
+  border-radius: 10%;
+  background: url("../src/bonus/TL.jpg") no-repeat;
+  line-height: 0;
+}
+
+.TW {
+  align-content: center;
+}
+
+.TW2 {
+  border: 1px solid black;
+  padding:0;
+  margin:0;
+  width: 31px;
+  height: 30px;
+  vertical-align: bottom;
+  border-radius: 10%;
+  background: url("../src/bonus/TW.jpg") no-repeat;
+  line-height: 0;
+}
 #leftBar {
   position: absolute;
   left: 0px;
@@ -65,7 +143,7 @@ body{
 
 #rightBar {
   position: absolute;
-  right: 0px;  
+  right: 5px;
   width: 225px;
   height: 525px;
   background-color: lightskyblue;
@@ -95,12 +173,15 @@ body{
 #functionBar {
   text-align: center;
   position: absolute;
-  top: 520px;
-  left: 350px;
+  top: 530px;
+  left: 240px;
 }
 
 #functionBar table {
-  margin: 0 auto;
+  /*top: 100px;*/
+  /*left:350px;*/
+  margin-left: 0px;
+  /*margin: 0 auto;*/
   border-spacing: 10px;
 }
 
@@ -114,7 +195,7 @@ body{
 }
 
 #functionBar button {
-  margin: 5px;
+  margin-top: 10px;
   background-color: lightpink;
   border-radius: 25%;
   text-align: center;
