@@ -15,25 +15,30 @@ export class Tile extends Component {
         ev.dataTransfer.setData("value", value)
     }
 
-    onDragEnd = () => {
+    onDragEnd = (e) => {
+        e.preventDefault()
         this.setState(
             {canDrag: false}
         )
     }
 
+    preventDragHandler = (e) => {
+        e.preventDefault();
+      }
+
     render() {
 
         return (
             <img 
-            id="tile" 
-            src={Images[this.props.value]} 
-            alt={this.props.value} 
-            draggable
-            onDragStart = {this.state.canDrag === true
-                ? (e) => this.onDragStart(e, this.props.value)
-                : null
-            }
-            onDrop = {() => this.onDragEnd()}
+                id="tile" 
+                src={Images[this.props.value]} 
+                alt={this.props.value}
+                draggable
+                onDragStart = {this.state.canDrag === true
+                    ? (e) => this.onDragStart(e, this.props.value)
+                    : this.preventDragHandler}
+                onDrop = {(e) => this.onDragEnd(e)}
+
             />
         )
     }
