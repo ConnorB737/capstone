@@ -118,7 +118,7 @@ body{
   background-color: lightpink;
   border-radius: 25%;
   text-align: center;
-  width: 50px;
+  width: 55px;
   height: 30px;
 }
 
@@ -128,4 +128,10 @@ body{
   border-radius: 10%;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
+}
+#newTile {
+  width: 29px;
+  height: 29px;
+  border-radius: 10%;
+  border: 2px solid red;
 }
