@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Board from './board';
+import logo from '../src/image/logo.png';
 
 export class Game extends Component {
 
