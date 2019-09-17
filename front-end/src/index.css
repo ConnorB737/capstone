@@ -15,6 +15,9 @@ body{
   background: url("../src/image/background.jpg") no-repeat;
 ;
 }
+.logo{
+  margin-left: 50px;
+}
 .game {
   width: 800px;
   height: 620px;
