@@ -30,12 +30,12 @@ class Board extends Component {
 
     onDrop = (ev, coordinate) => {
         let value = ev.dataTransfer.getData("value");
-        let temState = this.state.boardSate;
+        let temState = this.state.boardState;
         let i=coordinate[0];
         let j=coordinate[1];
         temState[i][j] = value;
         this.setState({
-            boardSate: temState,
+            boardState: temState,
         })
     }
 
@@ -101,8 +101,8 @@ class Board extends Component {
     }
 
     render() {
-        let boardSate = this.state.boardSate;
-        boardSate = boardSate.map((row,i) => {
+        let boardState = this.state.boardState;
+        boardState = boardState.map((row,i) => {
              if (i===7) {
                           return(<tr className="ST" key={i}>{row.map((cell, j) =>{
                               if(j===0||j===14){
@@ -136,7 +136,7 @@ class Board extends Component {
                                               onDragOver={(e) => this.onDragOver(e)}
                                                                   onDrop = {cell === null?
                         (e) => this.onDrop(e, [i,j])
-                        : null}}
+                        : null}
                                   >
                                       {this.renderTile(cell)}
                                   </td>)
@@ -392,7 +392,7 @@ class Board extends Component {
 
                     <table >
                         <tbody>
-                            {boardSate}
+                            {boardState}
                         </tbody>
                     </table>
 
