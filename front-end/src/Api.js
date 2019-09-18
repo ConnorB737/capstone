@@ -22,9 +22,9 @@ const handleServerBoard = (dispatch) => {
 };
 
 
-const handleWordAccepted = (dispatch) => {
+const handleWordAccepted = (dispatch, socket) => {
     return () => {
-        dispatch(wordAccepted())
+        dispatch(wordAccepted(socket))
     }
 };
 
@@ -34,7 +34,7 @@ export const dispatchFromSocket = (store) => {
 	
 	store.getState().socket.on(socketEvents.GET_BOARD, handleServerBoard(store.dispatch));
 
-	store.getState().socket.on(socketEvents.WORD_ACCEPTED, handleWordAccepted(store.dispatch));
+	store.getState().socket.on(socketEvents.WORD_ACCEPTED, handleWordAccepted(store.dispatch, store.getState().socket));
 };
 
 

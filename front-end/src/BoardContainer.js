@@ -1,6 +1,6 @@
 import Board from "./board";
 import { connect } from "react-redux";
-import { placeWord } from "./actions";
+import {placeTile, placeWord} from "./actions";
 
 
 const mapStateToProps = state => ({
@@ -8,7 +8,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  placeWord: (socket, word, direction, startingPosition) => dispatch(placeWord(socket, word, direction, startingPosition)),
+    placeWord: (socket, word, direction, startingPosition) => dispatch(placeWord(socket, word, direction, startingPosition)),
+    placeTile: (placedTile) => dispatch(placeTile(placedTile)),
 });
 
 export default connect(

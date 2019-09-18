@@ -104,16 +104,18 @@ const SPECIAL_TILE_PLACEMENT = {
     ],
 };
 
+const DIRECTION = {
+    NOT_PLACED: -1,
+    RIGHT: 0,
+    DOWN: 1,
+};
 
 class Board extends Component {
-
-
 
     constructor(props) {
         super(props);
         this.state = {
             rackList: ['A','B','C','D','E','F','G','H','I','J','K'],
-            boardState: Array(15).fill(0).map(row => new Array(15).fill(null)),
             player: {
                 name: "",
                 score: 0,
@@ -121,8 +123,8 @@ class Board extends Component {
             opponent: {},
             
             word: {
-                direction:-1, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
-                coords: [], //contains the coords of each tile
+                direction: DIRECTION.NOT_PLACED, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
+                placedTiles: [], //contains the coords of each tile
             },
             
             wordList: words["wordList"],
@@ -133,13 +135,13 @@ class Board extends Component {
         return <Tile value={cell} />
     }
     
-    renderTileIJ(i,j,cell) {
-        let coords = this.state.word.coords;
-        for(let x = 0; x < coords.length; x++){
-          if (i === coords[x][0] && j === coords[x][1]){
-                return <Tile value={coords[x][2]} />
+    renderTileIJ(tileIndexY, tileIndexX, cell) {
+        let placedTiles = this.state.word.placedTiles;
+        placedTiles.forEach(tile => {
+            if (tileIndexY === tile['y'] && tileIndexX === tile['x']){
+                return <Tile value={tile['value']} />
            }
-        }
+        });
         return <Tile value={cell} />
     }
 
@@ -150,10 +152,10 @@ class Board extends Component {
     onDrop(ev, coordinate) {
         let value = ev.dataTransfer.getData("value");
         
-        let temState = JSON.parse(JSON.stringify(this.state.boardState)); //cloning the object, as opposed to referencing it
+        let tempBoardState = JSON.parse(JSON.stringify(this.props.serverBoard)); //cloning the object, as opposed to referencing it
         
-        let i=coordinate[0];
-        let j=coordinate[1];
+        let droppedTileY = coordinate[0];
+        let droppedTileX = coordinate[1];
         
 		
 		//this part of the code handles the checking of whether you're placing tiles in a logical order
@@ -161,159 +163,191 @@ class Board extends Component {
 		//but instead enforces that tiles are inline horizontally or vertically
 		//and all touching
         
-        var coords = this.state.word.coords;
+        var placedTiles = this.state.word.placedTiles;
         
-        //put the word coords into the temState for comparisons with the game logic
-        for (let x = 0; x < coords.length; x++){
-                temState[coords[x][0]][coords[x][1]] = coords[x][2];
-            }
-        
-        function isValidPlacement(dir){
+        //put the word coords into the temporary board state for comparisons with the game logic
+        placedTiles.forEach(tile => {
+            tempBoardState[tile['y']][tile['x']] = tile['value']
+        });
+
+        function placeTileOnBoard(placedTile) {
+            placedTiles.push(placedTile);
+            this.props.placeTile(placedTile);
+        }
+        placeTileOnBoard = placeTileOnBoard.bind(this);
+
+        function isValidPlacement(direction){
             //checks whether there is a straight line of tiles from the first tile you've placed,
             //to the last tile you've placed
             //i.e. no gaps
             
-            //assumes the first tile has been placed 
-            let tempCoords = coords;
-            let firstTile = coords[0];
+            //assumes the first tile has been placed
+            let firstTile = placedTiles[0];
             //check that it isn't in the tempCoords
-            for(let x = 0; x < coords.length; x++){
-                if (i === coords[x][0] && j === coords[x][1]){
+            placedTiles.forEach(tile => {
+                if (droppedTileY === tile['y'] && droppedTileX === tile['x']) {
                     return false;
                 }
-            }
-            if(dir === 1){ //vertically
-                let diff = firstTile[0] - i;
-                if(diff > 0) { //tile is above first tile
+            });
+            if(direction === DIRECTION.DOWN){ //vertically
+                let firstTileOffset = firstTile['y'] - droppedTileY;
+                if (firstTileOffset > 0) { //tile is above first tile
                     //diff -= 1; //because the temState of the tile placed should be null
-                    for (let x = 1; x < diff; x++){
-                        if(temState[firstTile[0] - x][j] == null){
+                    for (let previousTileY = 1; previousTileY < firstTileOffset; previousTileY++){
+                        if(tempBoardState[firstTile['y'] - previousTileY][droppedTileX] == null){
                             return false; //is not placable
                         }
                         
                         let isTileInCoords = false; //adds all tiles between clicks to the word
-                        for (let x = 0; x < coords.length; x++){
-                            if(firstTile[0] - x === coords[x][0] && j === coords[x][1]){
+                        for (let previousTileIndex = 0; previousTileIndex < placedTiles.length; previousTileIndex++){
+                            if (firstTile['y'] - previousTileIndex === placedTiles[previousTileIndex]['y'] && droppedTileX === placedTiles[previousTileIndex]['x']){
                                 isTileInCoords = true;
                             }
                         }
                         if(!isTileInCoords){
-                            tempCoords.push([firstTile[0] - x, j, temState[firstTile[0] - x][j]]);
+                            placeTileOnBoard({
+                                y: firstTile['y'] - previousTileY,
+                                x: droppedTileX,
+                                value: tempBoardState[firstTile['y'] - previousTileY][droppedTileX],
+                            });
                         }
                     }
-                } else if (diff < 0) { //tile is below first tile
+                } else if (firstTileOffset < 0) { //tile is below first tile
                     //diff += 1;
-                    for (let x = 1; x < -diff; x++){
-                        if(temState[firstTile[0] + x][j] == null){
+                    for (let previousTileY = 1; previousTileY < -firstTileOffset; previousTileY++){
+                        if(tempBoardState[firstTile['y'] + previousTileY][droppedTileX] == null){
                             return false; //is not placable
                         }
                         
                         let isTileInCoords = false; //adds all tiles between clicks to the word
-                        for (let x = 0; x < coords.length; x++){
-                            if(firstTile[0] + x === coords[x][0] && j === coords[x][1]){
+                        for (let previousTileIndex = 0; previousTileIndex < placedTiles.length; previousTileIndex++){
+                            if(firstTile['y'] + previousTileIndex === placedTiles[previousTileIndex]['y'] && droppedTileX === placedTiles[previousTileIndex]['x']){
                                 isTileInCoords = true;
                             }
                         }
                         if(!isTileInCoords){
-                            tempCoords.push([firstTile[0] + x, j, temState[firstTile[0] + x][j]]);
+                            placeTileOnBoard({
+                                y: firstTile['y'] + previousTileY,
+                                x: droppedTileX,
+                                value: tempBoardState[firstTile['y'] + previousTileY][droppedTileX]
+                            });
                         }
                     }
                 }
-            } else if (dir === 0) { //horizonally 
-                let diff = firstTile[1] - j;
-                    if(diff > 0) { //tile is behind first tile
-                        //diff -= 1;
-                        for (let x = 1; x < diff; x++){
-                            if(temState[i][firstTile[1] - x] == null){
-                                return false; //is not placable
-                            }
-                            
-                            let isTileInCoords = false; //adds all tiles between clicks to the word
-                            for (let x = 0; x < coords.length; x++){
-                            if(i === coords[x][0] && firstTile[1] - x === coords[x][1]){
-                                isTileInCoords = true;
-                            }
-                            }
-                            if(!isTileInCoords){
-                                tempCoords.push([i, firstTile[1] - x, temState[i][firstTile[1] - x]]);
-                            }
+            } else if (direction === DIRECTION.RIGHT) { //horizonally
+                let firstTileOffset = firstTile['x'] - droppedTileX;
+                if(firstTileOffset > 0) { //tile is behind first tile
+                    //diff -= 1;
+                    for (let previousTileX = 1; previousTileX < firstTileOffset; previousTileX++){
+                        if(tempBoardState[droppedTileY][firstTile['x'] - previousTileX] == null){
+                            return false; //is not placable
                         }
-                        
-                        
-                    } else if (diff < 0) { //tile is in front of first tile
-                        //diff += 1;
-                        for (let x = 1; x < -diff; x++){
-                            if(temState[i][firstTile[1] + x] == null){
-                                return false; //is not placable
-                            }
-                            
+
                         let isTileInCoords = false; //adds all tiles between clicks to the word
-                        for (let x = 0; x < coords.length; x++){
-                            if(i === coords[x][0] && firstTile[1] + x === coords[x][1]){
+                        for (let previousTileIndex = 0; previousTileIndex < placedTiles.length; previousTileIndex++){
+                            if(droppedTileY === placedTiles[previousTileIndex]['y'] && firstTile['x'] - previousTileIndex === placedTiles[previousTileIndex]['x']){
                                 isTileInCoords = true;
                             }
                         }
                         if(!isTileInCoords){
-                            tempCoords.push([i, firstTile[1] + x, temState[i][firstTile[1] + x]]);
+                            placeTileOnBoard({
+                                y: droppedTileY,
+                                x: firstTile['x'] - previousTileX,
+                                value: tempBoardState[droppedTileY][firstTile['x'] - previousTileX]
+                            });
+                        }
+                    }
+                } else if (firstTileOffset < 0) { //tile is in front of first tile
+                    //diff += 1;
+                    for (let previousTileX = 1; previousTileX < -firstTileOffset; previousTileX++){
+                        if(tempBoardState[droppedTileY][firstTile['x'] + previousTileX] == null){
+                            return false; //is not placable
+                        }
+
+                        let isTileInCoords = false; //adds all tiles between clicks to the word
+                        for (let previousTileIndex = 0; previousTileIndex < placedTiles.length; previousTileIndex++){
+                            if(droppedTileY === placedTiles[previousTileIndex]['y'] && firstTile['x'] + previousTileIndex === placedTiles[previousTileIndex]['x']){
+                                isTileInCoords = true;
+                            }
+                        }
+                        if(!isTileInCoords){
+                            placeTileOnBoard({
+                                y: droppedTileY,
+                                x: firstTile['x'] + previousTileX,
+                                value: tempBoardState[droppedTileY][firstTile['x'] + previousTileX]
+                            });
                         }
                     }
                 }
             }
-            coords = tempCoords;
             return true;
         }
         
-		if(coords.length === 0){ //checks whether first tile placed, and whether the spot is free
-            if(temState[i][j] == null){
-                coords.push([i, j, value]);
-                temState[i][j] = value;
+		if(placedTiles.length === 0){ //checks whether first tile placed, and whether the spot is free
+            if(tempBoardState[droppedTileY][droppedTileX] == null){
+                placeTileOnBoard({
+                    x: droppedTileX,
+                    y: droppedTileY,
+                    value: value
+                });
+                tempBoardState[droppedTileY][droppedTileX] = value;
             }
-		 } else if (this.state.word.direction === -1){ //if a direction hasn't been set (usually second move)
-			if(j === coords[0][1] && isValidPlacement(1)){ //coords[0][1] is the first tile placed 'j' coordinate
-                if(temState[i][j] == null){
+		 } else if (this.state.word.direction === DIRECTION.NOT_PLACED){ //if a direction hasn't been set (usually second move)
+			if(droppedTileX === placedTiles[0]['x'] && isValidPlacement(DIRECTION.DOWN)){ //coords[0][1] is the first tile placed 'j' coordinate
+                if(tempBoardState[droppedTileY][droppedTileX] == null){
                     this.setState({
                         word: {
                             ...this.state.word,
-                            direction: 1, //the word is going vertically
+                            direction: DIRECTION.DOWN, //the word is going vertically
                     }});
-                    coords.push([i, j, value]);
-                    temState[i][j] = value;
+                    placeTileOnBoard({
+                        x: droppedTileX,
+                        y: droppedTileY,
+                        value: value
+                    });
+                    tempBoardState[droppedTileY][droppedTileX] = value;
                 }
-			} else if (i === coords[0][0] && isValidPlacement(0)){ //coords[0][0] is the first placed 'i' coordinate
-                if(temState[i][j] == null){
+			} else if (droppedTileY === placedTiles[0]['y'] && isValidPlacement(DIRECTION.RIGHT)){ //coords[0][0] is the first placed 'i' coordinate
+                if(tempBoardState[droppedTileY][droppedTileX] == null){
                     this.setState({
                         word: {
                             ...this.state.word,
-                            direction: 0, //the word is going horizontally
+                            direction: DIRECTION.RIGHT, //the word is going horizontally
                     }});
-                    coords.push([i, j, value]);
-                    temState[i][j] = value;
-                    }
+                    placeTileOnBoard({
+                        x: droppedTileX,
+                        y: droppedTileY,
+                        value: value
+                    });
+                    tempBoardState[droppedTileY][droppedTileX] = value;
                 }
-		} else if (this.state.word.direction === 1) { //if going vertically
-			if (j === coords[0][1] && isValidPlacement(1)){ //and make sure that there is a tiles between either side of the placement
-                coords.push([i, j, value]);
-				temState[i][j] = value;
 			}
-		} else if (this.state.word.direction === 0) { //same deal but horizontally
-			if (i === coords[0][0] && isValidPlacement(0)){
-                coords.push([i, j, value]);
-				temState[i][j] = value;
+		} else if (this.state.word.direction === DIRECTION.DOWN) { //if going vertically
+			if (droppedTileX === placedTiles[0]['x'] && isValidPlacement(DIRECTION.DOWN)){ //and make sure that there is a tiles between either side of the placement
+                placeTileOnBoard({
+                    x: droppedTileX,
+                    y: droppedTileY,
+                    value: value
+                });
+				tempBoardState[droppedTileY][droppedTileX] = value;
+			}
+		} else if (this.state.word.direction === DIRECTION.RIGHT) { //same deal but horizontally
+			if (droppedTileY === placedTiles[0]['y'] && isValidPlacement(DIRECTION.RIGHT)){
+                placeTileOnBoard({
+                    x: droppedTileX,
+                    y: droppedTileY,
+                    value: value
+                });
+				tempBoardState[droppedTileY][droppedTileX] = value;
 			}
 		}
 		
 		this.setState({
-			lastX: i,
-			lastY: j,
-		})
-		console.log(this.state);
-		console.log(i, j);
-		
-		//temState[i][j] = value;
-			
-        // this.setState({
-            // boardState: temState,
-        // })
+            ...this.state,
+			lastx: droppedTileX,
+			lasty: droppedTileY,
+		});
+
     }
 
     _tile_class_name(i, j) {
@@ -335,29 +369,21 @@ class Board extends Component {
 
     play() {
 
-        var coords = this.state.word.coords;
-        var dir = this.state.word.direction;
+        var placedTiles = this.state.word.placedTiles;
+        var direction = this.state.word.direction;
 
         //sorts the coords in order of their i or j coordinate depending on the direction
-         if (dir === 0) { //horizonal
-            coords = coords.sort((a, b) => a[1] - b[1]);
-         } else if (dir === 1) {//vertical
-            coords = coords.sort((a, b) => a[0] - b[0]);
+         if (direction === DIRECTION.RIGHT) { //horizonal
+            placedTiles = placedTiles.sort((a, b) => a['x'] - b['x']);
+         } else if (direction === DIRECTION.DOWN) {//vertical
+            placedTiles = placedTiles.sort((a, b) => a['y'] - b['y']);
         }
 
         //as the word is now in order, we can simply take each letter to construct our word
-        let txt = "";
-        for (let x = 0; x < coords.length; x++){
-                txt += coords[x][2];
-            }
-        if(this.state.wordList.includes(txt)){ //if valid word, place it on the server and reset the state to place your next word
-            this.props.placeWord(this.props.socket, txt, this.state.word.direction, this.state.word.coords);
-            this.setState({
-                word: {
-                    direction:-1, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
-                    coords: [], //contains the coords of each tile
-                },
-            })
+        const combinedWord = placedTiles.map(tile => tile['value']).join("");
+        if (this.state.wordList.includes(combinedWord)) { //if valid word, place it on the server and reset the state to place your next word
+            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction, this.state.word.placedTiles);
+            this.clear();
         } else { 
             alert("Invalid word!");
         }
@@ -365,88 +391,71 @@ class Board extends Component {
 
     clear() {
         this.setState({
-                word: {
-                    direction:-1, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
-                    coords: [], //contains the coords of each tile
-                },
-            })
+            word: {
+                direction: DIRECTION.NOT_PLACED, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
+                placedTiles: [], //contains the coords of each tile
+            },
+        });
     }
 
     pass() {
-        //not elegant or beautiful, will need refactoring. 
-        //primarily getting something to show in the week 8 presentation
-        function serverBoardToFrontendBoard(serverBoard) {
-            let boardArray = serverBoard.split(" ");
-            let newBoard = Array(15).fill(0).map(row => new Array(15).fill(null));
-            if(serverBoard !== "yo"){
-                for(var x = 0; x < 15*15-1; x++){
-                    if(boardArray[x] === "null")
-                        newBoard[parseInt(x / 15)][x % 15] = null;
-                    else
-                        newBoard[parseInt(x / 15)][x % 15] = boardArray[x].replace("\"","").replace("\"",""); //because the javascript replace function only replaces the first value found
-                }
-            }
-            return newBoard;
-        }
-        
-        alert("Loading Server Board");
-        this.setState({
-            boardState: serverBoardToFrontendBoard(this.props.serverBoard),
-        })
+
     }
     
     render() {
-        let boardState = this.state.boardState;
-        //let boardState = serverBoardToFrontendBoard(this.props.serverBoard);
-        boardState = boardState.map((row,i) => {
-            return(<tr className="normaltr" key={i}>{row.map((cell, j) =>{
-              return(<td className={this._tile_class_name(i, j)}
-                              key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                  >{
-                      this.renderTileIJ(i,j,cell)
-                   }
-                  </td>)
-            }) }
-            </tr>)}
-        );
+        if (this.props.serverBoard) {
+            const boardState = this.props.serverBoard.map((row,i) => {
+                return(<tr className="normaltr" key={i}>{row.map((cell, j) =>{
+                  return(<td className={this._tile_class_name(i, j)}
+                                  key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
+                      >{
+                          this.renderTileIJ(i,j,cell)
+                       }
+                      </td>)
+                }) }
+                </tr>)}
+            );
 
 
-        let rackList = this.state.rackList;
+            let rackList = this.state.rackList;
 
-        return (
-            <div id="board">
+            return (
+                <div id="board">
 
-                    <table >
-                        <tbody>
-                            {boardState}
-                        </tbody>
-                    </table>
-
-    
-                <div id="functionBar">
-                    <div>
-                        <table>
+                        <table >
                             <tbody>
-                                <tr>
-                                    <td>{this.renderTile(rackList[0])}</td>
-                                    <td>{this.renderTile(rackList[1])}</td>
-                                    <td>{this.renderTile(rackList[2])}</td>
-                                    <td>{this.renderTile(rackList[3])}</td>
-                                    <td>{this.renderTile(rackList[4])}</td>
-                                    <td>{this.renderTile(rackList[5])}</td>
-                                </tr>
+                                {boardState}
                             </tbody>
                         </table>
-                    </div>
-                    <div>
-                        <button onClick={this.play.bind(this)}>Play</button>
-                        <button onClick={this.pass.bind(this)}>Pass</button>
-                        <button onClick={this.clear.bind(this)}>Clear</button>
-                        <button>Swap</button>
+
+
+                    <div id="functionBar">
+                        <div>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>{this.renderTile(rackList[0])}</td>
+                                        <td>{this.renderTile(rackList[1])}</td>
+                                        <td>{this.renderTile(rackList[2])}</td>
+                                        <td>{this.renderTile(rackList[3])}</td>
+                                        <td>{this.renderTile(rackList[4])}</td>
+                                        <td>{this.renderTile(rackList[5])}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <button onClick={this.play.bind(this)}>Play</button>
+                            <button onClick={this.pass.bind(this)}>Pass</button>
+                            <button onClick={this.clear.bind(this)}>Clear</button>
+                            <button>Swap</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        } else {
+            return null;
+        }
     }
 }
 

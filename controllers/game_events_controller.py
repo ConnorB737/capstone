@@ -31,12 +31,11 @@ def attach_controller(socketio: SocketIO):
     @db_session
     def get_board():
         print(f"Received {EventType.GET_BOARD.value} event")
-
         games = select(game for game in Game)[:]
-        if(len(games) > 0):
-            response = json.dumps({"serverBoard": games[0].board.replace("[", "").replace("]","").replace(",","")})
+        if len(games) > 0:
+            response = games[0].board
         else:
-            response = json.dumps({"serverBoard": np.zeros((15, 15)).tolist()})
+            response = BoardState().serialize()
 
         print(f"Sending response: {response}")
         socketio.emit(EventType.GET_BOARD.value, response)

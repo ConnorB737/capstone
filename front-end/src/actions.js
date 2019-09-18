@@ -4,6 +4,7 @@ export const types = {
     SOCKET: 'socket',
     UPDATE_GAMES_LIST: 'update_games_list',
 	UPDATE_BOARD: "update_board",
+    PLACE_TILE: "place_tile",
 };
 
 
@@ -30,19 +31,26 @@ export const updateGamesList = (data) => {
 export const updateBoard = (data) => {
     return {
         type: types.UPDATE_BOARD,
-        serverBoard: data.serverBoard,
+        serverBoard: data,
     }
 };
 
-export const wordAccepted = () => {
-    return () => {
-        alert("Placed a word!");
+export const wordAccepted = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_BOARD);
     }
 };
 
 export const placeWord = (socket, word, direction, startingPosition) => {
     return (dispatch) => {
         socket.emit(socketEvents.PLACE_WORD, buildPlaceWordMessage(word, direction, startingPosition))
+    }
+};
+
+export const placeTile = (data) => {
+    return {
+        type: types.PLACE_TILE,
+        ...data,
     }
 };
 

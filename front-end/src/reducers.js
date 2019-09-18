@@ -12,6 +12,13 @@ const reducer = (state, action) => {
 				...state,
 				serverBoard: action.serverBoard,
 			};
+        case types.PLACE_TILE:
+            const newServerBoard = state.serverBoard;
+            newServerBoard[action.y][action.x] = action.value;
+            return {
+                ...state,
+                serverBoard: newServerBoard,
+            };
         default:
             return state;
     }
