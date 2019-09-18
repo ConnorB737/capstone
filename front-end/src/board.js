@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Tile } from './tile';
+import words from './words.json';
 
 const SPECIAL_TILE_PLACEMENT = {
     "TW2": [
@@ -123,6 +124,8 @@ class Board extends Component {
                 direction:-1, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
                 coords: [], //contains the coords of each tile
             },
+            
+            wordList: words["wordList"],
         }
     }
     
@@ -157,6 +160,12 @@ class Board extends Component {
             //assumes the first tile has been placed 
             let tempCoords = coords;
             let firstTile = coords[0];
+            //check that it isn't in the tempCoords
+            for(let x = 0; x < coords.length; x++){
+                if (i == coords[x][0] && j == coords[x][1]){
+                    return false;
+                }
+            }
             if(dir === 1){ //vertically
                 let diff = firstTile[0] - i;
                 if(diff > 0) { //tile is above first tile
@@ -325,7 +334,11 @@ class Board extends Component {
         for (let x = 0; x < coords.length; x++){
                 txt += coords[x][2];
             }
-        this.props.placeWord(this.props.socket, txt, this.state.word.direction, this.state.word.coords);
+        if(this.state.wordList.includes(txt)){
+            this.props.placeWord(this.props.socket, txt, this.state.word.direction, this.state.word.coords);
+        } else { 
+            alert("Invalid word!");
+        }
     }
 
     clear() {
@@ -336,7 +349,7 @@ class Board extends Component {
             let newBoard = Array(15).fill(0).map(row => new Array(15).fill(null));
             if(serverBoard !== "yo"){
                 for(var x = 0; x < 15*15-1; x++){
-                    if(boardArray[x] == "null")
+                    if(boardArray[x] === "null")
                         newBoard[parseInt(x / 15)][x % 15] = "";
                     else
                         newBoard[parseInt(x / 15)][x % 15] = boardArray[x].replace("\"","").replace("\"",""); //because the javascript replace function only replaces the first value found
