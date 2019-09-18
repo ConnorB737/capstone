@@ -151,6 +151,7 @@ class Board extends Component {
         let value = ev.dataTransfer.getData("value");
         
         let temState = JSON.parse(JSON.stringify(this.state.boardState)); //cloning the object, as opposed to referencing it
+        
         let i=coordinate[0];
         let j=coordinate[1];
         
@@ -161,6 +162,11 @@ class Board extends Component {
 		//and all touching
         
         var coords = this.state.word.coords;
+        
+        //put the word coords into the temState for comparisons with the game logic
+        for (let x = 0; x < coords.length; x++){
+                temState[coords[x][0]][coords[x][1]] = coords[x][2];
+            }
         
         function isValidPlacement(dir){
             //checks whether there is a straight line of tiles from the first tile you've placed,
@@ -375,7 +381,7 @@ class Board extends Component {
             if(serverBoard !== "yo"){
                 for(var x = 0; x < 15*15-1; x++){
                     if(boardArray[x] === "null")
-                        newBoard[parseInt(x / 15)][x % 15] = "";
+                        newBoard[parseInt(x / 15)][x % 15] = null;
                     else
                         newBoard[parseInt(x / 15)][x % 15] = boardArray[x].replace("\"","").replace("\"",""); //because the javascript replace function only replaces the first value found
                 }
