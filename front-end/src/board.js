@@ -150,6 +150,7 @@ class Board extends Component {
     }
 
     onDrop(ev, coordinate) {
+        ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
         
         let tempBoardState = JSON.parse(JSON.stringify(this.props.serverBoard)); //cloning the object, as opposed to referencing it
