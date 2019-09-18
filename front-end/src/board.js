@@ -129,8 +129,18 @@ class Board extends Component {
         }
     }
     
-    renderTile(i) {
-        return <Tile value={i} />
+    renderTile(cell){
+        return <Tile value={cell} />
+    }
+    
+    renderTileIJ(i,j,cell) {
+        let coords = this.state.word.coords;
+        for(let x = 0; x < coords.length; x++){
+          if (i === coords[x][0] && j === coords[x][1]){
+                return <Tile value={coords[x][2]} />
+           }
+        }
+        return <Tile value={cell} />
     }
 
     onDragOver(ev) {
@@ -140,7 +150,7 @@ class Board extends Component {
     onDrop(ev, coordinate) {
         let value = ev.dataTransfer.getData("value");
         
-        let temState = this.state.boardState;
+        let temState = JSON.parse(JSON.stringify(this.state.boardState)); //cloning the object, as opposed to referencing it
         let i=coordinate[0];
         let j=coordinate[1];
         
@@ -162,7 +172,7 @@ class Board extends Component {
             let firstTile = coords[0];
             //check that it isn't in the tempCoords
             for(let x = 0; x < coords.length; x++){
-                if (i == coords[x][0] && j == coords[x][1]){
+                if (i === coords[x][0] && j === coords[x][1]){
                     return false;
                 }
             }
@@ -295,9 +305,9 @@ class Board extends Component {
 		
 		//temState[i][j] = value;
 			
-        this.setState({
-            boardState: temState,
-        })
+        // this.setState({
+            // boardState: temState,
+        // })
     }
 
     _tile_class_name(i, j) {
@@ -334,14 +344,29 @@ class Board extends Component {
         for (let x = 0; x < coords.length; x++){
                 txt += coords[x][2];
             }
-        if(this.state.wordList.includes(txt)){
+        if(this.state.wordList.includes(txt)){ //if valid word, place it on the server and reset the state to place your next word
             this.props.placeWord(this.props.socket, txt, this.state.word.direction, this.state.word.coords);
+            this.setState({
+                word: {
+                    direction:-1, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
+                    coords: [], //contains the coords of each tile
+                },
+            })
         } else { 
             alert("Invalid word!");
         }
     }
 
     clear() {
+        this.setState({
+                word: {
+                    direction:-1, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
+                    coords: [], //contains the coords of each tile
+                },
+            })
+    }
+
+    pass() {
         //not elegant or beautiful, will need refactoring. 
         //primarily getting something to show in the week 8 presentation
         function serverBoardToFrontendBoard(serverBoard) {
@@ -362,11 +387,6 @@ class Board extends Component {
         this.setState({
             boardState: serverBoardToFrontendBoard(this.props.serverBoard),
         })
-        
-    }
-
-    pass() {
-        alert(this.props.serverBoard);
     }
     
     render() {
@@ -376,7 +396,9 @@ class Board extends Component {
             return(<tr className="normaltr" key={i}>{row.map((cell, j) =>{
               return(<td className={this._tile_class_name(i, j)}
                               key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
-                  >{this.renderTile(cell)}
+                  >{
+                      this.renderTileIJ(i,j,cell)
+                   }
                   </td>)
             }) }
             </tr>)}
