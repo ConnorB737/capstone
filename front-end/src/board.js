@@ -433,13 +433,11 @@ class Board extends Component {
                         <div>
                             <table>
                                 <tbody>
-                                    <tr>
-                                        <td>{this.renderTile(rackList[0])}</td>
-                                        <td>{this.renderTile(rackList[1])}</td>
-                                        <td>{this.renderTile(rackList[2])}</td>
-                                        <td>{this.renderTile(rackList[3])}</td>
-                                        <td>{this.renderTile(rackList[4])}</td>
-                                        <td>{this.renderTile(rackList[5])}</td>
+                                    <tr>{
+                                        rackList.map(tile => {
+                                            return <td>{this.renderTile(tile)}</td>
+                                        })
+                                    }
                                     </tr>
                                 </tbody>
                             </table>
