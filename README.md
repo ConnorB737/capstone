@@ -1,4 +1,4 @@
-# 159.356 Capstone Project Group 4
+# 159.356 Capstone Project Group 4 [![Travis build](https://api.travis-ci.com/ConnorB737/capstone.svg?token=rxG7iYS5KLM3msKkUa3x&branch=master)](https://travis-ci.com/ConnorB737/capstone)
 
 ## Development
 
