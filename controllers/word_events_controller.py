@@ -2,7 +2,7 @@ from models.board import BoardState
 from models.types import EventType
 from pony.orm import select, db_session
 from models.game import Game
-
+import service.gameplay_service as gps
 
 def attach_controller(socketio):
 
@@ -22,6 +22,9 @@ def attach_controller(socketio):
                 board.place_tile(tile_position["x"], tile_position['y'], tile_position['value'])
             games[0].board = board.serialize()
 
+            gps.calculate_word_score(message["startingPosition"])
+
         ##
+
         socketio.emit(EventType.WORD_ACCEPTED.value)
 
