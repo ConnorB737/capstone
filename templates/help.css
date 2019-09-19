@@ -1,0 +1,59 @@
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+body{
+    background: url("../front-end/src/image/background.jpg") no-repeat;
+;
+}
+
+
+#nav{
+    position: absolute;
+    top:70px;
+    left: 50px;
+    height:60px;
+    width:820px;
+    background:black;
+
+    margin-top: 0px;
+    margin-left: 380px;
+}
+
+
+#nav ul li {
+    float:left;
+    width:170px;
+    line-height:40px;
+    text-align:center;
+    position:relative;
+    padding-left: 10px;
+    /*color: gray;*/
+    font-size: 25px;
+}
+
+#nav ul li a{
+    text-decoration:none;
+    color:gray;
+    padding:5px 10px;
+    display:block;
+}
+
+
+/*!* 在一级菜单中，鼠标放上去的样式 *!*/
+#nav ul li a:hover {
+    color:red;
+}
+#nav ul li ul{
+    position:absolute;/*防止一级菜单随二级菜单变化而变化*/
+    left:0px;
+    top:40px;
+    display:none;
+}
+
+
+/*#nav ul li ul li a{*/
+    /*width:80px;*/
+/*}*/
+
+
