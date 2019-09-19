@@ -7,6 +7,18 @@ const reducer = (state, action) => {
                 ...state,
                 games: action.games,
             };
+		case types.UPDATE_BOARD:
+			return {
+				...state,
+				serverBoard: action.serverBoard,
+			};
+        case types.PLACE_TILE:
+            const newServerBoard = state.serverBoard;
+            newServerBoard[action.y][action.x] = action.value;
+            return {
+                ...state,
+                serverBoard: newServerBoard,
+            };
         default:
             return state;
     }

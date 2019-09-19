@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import Board from './board';
 import logo from '../src/image/logo.png';
+import BoardContainer from './BoardContainer';
 
 export class Game extends Component {
 
     componentDidMount() {
         this.props.getGames(this.props.socket);
+        this.props.getBoard(this.props.socket);
     }
 
     render() {
         const gamesList = this.props.games.map(game => {
             return (<li>{game.id} </li>);
         });
-
+        
+		const sBoard = this.props.serverBoard; //this.props.serverBoard is the board received from the server
+        
         const wordsPlayed = ["hello", " world"] // contain history
         let wordsPlayedList = wordsPlayed.map((word) => 
         <li key={word.toString()}> {word} </li>)
@@ -21,8 +25,9 @@ export class Game extends Component {
         return (
             <div className="game">
                 <div className="logo"><img src={logo} alt="" /></div>
+               
                 <div className="game-board">
-                    <Board/>
+                    <BoardContainer serverBoard={sBoard} />
                 </div>
                 <div id="leftButton">
                     <button className="main">Main Menu</button>
@@ -31,6 +36,7 @@ export class Game extends Component {
                         window.location. assign("../public/help.html")}}>Help</button>
 
                 </div>
+
                 <div id="rightBar">
                     <div id="wordsPlayed">
                         <div id="wordsPlayedNav">
