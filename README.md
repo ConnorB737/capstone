@@ -44,6 +44,8 @@ The builds are visible on [Travis CI](https://travis-ci.com/ConnorB737/capstone)
 
 Deployments are visible on [Heroku](https://dashboard.heroku.com/apps/group4-capstone-scrabble).
 
+The deployed application is available [here](https://group4-capstone-scrabble.herokuapp.com/).
+
 ## Front-end notes
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
