@@ -46,6 +46,6 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    port = os.getenv('PORT')
+    port = os.getenv('PORT', 5000)
     print(f"Application running on port {port}!")
     socketio.run(app, debug=True, port=port)
