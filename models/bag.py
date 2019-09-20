@@ -5,8 +5,8 @@ class TilesBag:
 
         self.bag = ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'D', 'D', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'E', 'F', 'F', 'G', 'G', 'G', 'H', 'H', 'I', 'I', 'I', 'I', 'I', 'I', 'I', 'I', 'I', 'J', 'K', 'L', 'L', 'L', 'L', 'M', 'M', 'N', 'N', 'N', 'N', 'N', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'P', 'P', 'Q', 'R', 'R', 'R', 'R', 'R', 'R', 'S', 'S', 'S', 'S', 'T', 'T', 'T', 'T', 'T', 'T', 'U', 'U', 'U', 'U', 'V', 'V', 'W', 'W', 'X', 'Y', 'Y', 'Z']
         random.shuffle(self.bag)
-        self.rack = self.bag[:6]
-        self.rest = self.bag[6:]
+        self.rack = self.bag[:7]
+        self.rest = self.bag[7:]
 
     #  recieve a index of rack list, swap with the first different element in the rest list
     def swap(self,index):
@@ -28,9 +28,9 @@ class TilesBag:
         for letter in word:
             self.rack.remove(letter)
         self.bag = self.rack+self.rest
-        self.rack=self.bag[:6]
-        self.rest=self.bag[6:]
+        self.rack=self.bag[:7]
+        self.rest=self.bag[7:]
         
     # return number of tiles left 
     def tiles_left(self):
-        return len(self.rest)
+        return len(self.bag)
