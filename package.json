@@ -8,7 +8,7 @@
   "scripts": {
     "start": "cd front-end && start",
     "watch": "cd front-end && cra-build-watch",
-    "build": "cd front-end && react-scripts build",
+    "build": "cd front-end && npm install && react-scripts build",
     "test": "cd front-end && react-scripts test",
     "eject": "cd front-end && react-scripts eject"
   }
