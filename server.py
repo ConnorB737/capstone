@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 from pony.flask import Pony
@@ -44,5 +46,6 @@ def create_app():
 
 if __name__ == "__main__":
     app = create_app()
-    print("Application running!")
-    socketio.run(app, debug=True, port=5000)
+    port = os.getenv('PORT')
+    print(f"Application running on port {port}!")
+    socketio.run(app, debug=True, port=port)
