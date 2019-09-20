@@ -1,0 +1,15 @@
+{
+  "name": "scrabble",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "scrabble-frontend": "file:./front-end"
+  },
+  "scripts": {
+    "start": "cd front-end && start",
+    "watch": "cd front-end && cra-build-watch",
+    "build": "cd front-end && react-scripts build",
+    "test": "cd front-end && react-scripts test",
+    "eject": "cd front-end && react-scripts eject"
+  }
+}
