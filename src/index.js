@@ -11,7 +11,7 @@ import App from "./App";
 import './index.css';
 import config from './config';
 
-const socket = openSocket(config['{process.env.NODE_ENV}']);
+const socket = openSocket(config['{process.env.NODE_ENV}'], {transports: ['websocket', 'polling']});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -37,3 +37,4 @@ render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
