@@ -1,9 +1,9 @@
-code {
+﻿code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 body{
-    background: url("../front-end/src/image/background.jpg") no-repeat;
+    background: url("../src/image/background.jpg") no-repeat;
 ;
 }
 
