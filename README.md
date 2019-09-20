@@ -18,7 +18,6 @@ $ pip install -r requirements.txt
 3. In another tab, run the front-end build watcher:
 
 ```bash
-$ cd front-end
 $ npm run watch
 ```
 
