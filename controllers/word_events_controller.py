@@ -1,14 +1,13 @@
-from models.board import BoardState
 from models.types import EventType
 from pony.orm import select, db_session
 from models.game import Game
-
+from service.word_service import place_word
 
 def attach_controller(socketio):
 
     @socketio.on(EventType.PLACE_WORD.value)
     @db_session
-    def place_word(message):
+    def place_word_controller(message):
         print(f"Received {message}")
 
         #will need more checking done in the future,
@@ -16,12 +15,9 @@ def attach_controller(socketio):
         #game to the next currently.
 
         games = select(game for game in Game)[:]
-        if len(games) > 0:
-            board = BoardState.deserialize(games[0].board)
-            for tile_position in message["startingPosition"]:
-                board.place_tile(tile_position["x"], tile_position['y'], tile_position['value'])
-            games[0].board = board.serialize()
-
+        user = list(user for user in games[0].players)[0]
+        place_word(games[0].id, user, message["startingPosition"])
         ##
+
         socketio.emit(EventType.WORD_ACCEPTED.value)
 

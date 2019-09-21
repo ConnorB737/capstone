@@ -16,3 +16,4 @@ class User(db.Entity, UserMixin):
     last_login = Optional(datetime)
     games = Set('Game')
     turn_states = Set('TurnState')
+    scores = Set('Score')

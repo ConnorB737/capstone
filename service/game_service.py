@@ -2,6 +2,7 @@ from pony.orm import commit
 
 from models.board import BoardState
 from models.game import Game
+from models.score import Score
 from models.turn_state import TurnState
 from models.user import User
 
@@ -18,10 +19,15 @@ def build_game(first_player: User) -> Game:
         board=BoardState().serialize(),
         round=FIRST_ROUND,
     )
-    first_player_turn_state = TurnState(
+    TurnState(
         game=new_game,
         player=first_player,
         has_placed=False,
+    )
+    Score(
+        game=new_game,
+        user=first_player,
+        value=0,
     )
     commit()
     return new_game
@@ -36,10 +42,15 @@ def join_existing_game(game_id: int, player: User) -> Game:
         return game
     elif len(game.players) < 2:
         game.players.add(player)
-        second_player_turn_state = TurnState(
+        TurnState(
             game=game,
             player=player,
             has_placed=False,
+        )
+        Score(
+            game=game,
+            user=player,
+            value=0,
         )
         commit()
         return game

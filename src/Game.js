@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Board from './board';
 import logo from '../src/image/logo.png';
 import BoardContainer from './BoardContainer';
 
@@ -8,13 +7,10 @@ export class Game extends Component {
     componentDidMount() {
         this.props.getGames(this.props.socket);
         this.props.getBoard(this.props.socket);
+        this.props.getScores(this.props.socket);
     }
 
     render() {
-        const gamesList = this.props.games.map(game => {
-            return (<li>{game.id} </li>);
-        });
-        
 		const sBoard = this.props.serverBoard; //this.props.serverBoard is the board received from the server
         
         const wordsPlayed = ["hello", " world"] // contain history
@@ -46,8 +42,11 @@ export class Game extends Component {
                     </div>
                     <hr/>
                     <div id="score">
-                        <p>Your last score:</p><hr/>
-                        <p>Your total score:</p>
+                        {
+                            Object.keys(this.props.scores).map(score => {
+                                return (<p key={score}>{score}: {this.props.scores[score]}</p>);
+                            })
+                        }
                     </div>
 
                     <div id="bag">

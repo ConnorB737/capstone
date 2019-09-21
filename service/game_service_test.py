@@ -10,3 +10,6 @@ def test_build_game(ponydb):
     game = build_game(user)
     assert isinstance(game, Game)
     assert user in game.players
+
+    scores = ponydb.Score.select(lambda s: s.game == game)
+    assert len(scores) == 1

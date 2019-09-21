@@ -39,3 +39,18 @@ def attach_controller(socketio: SocketIO):
 
         print(f"Sending response: {response}")
         socketio.emit(EventType.GET_BOARD.value, response)
+
+    @socketio.on(EventType.GET_SCORES.value)
+    @db_session
+    def get_scores():
+        print(f"Received {EventType.GET_SCORES.value} event")
+        games = select(game for game in Game)[:]
+        game = games[0]
+        response = json.dumps({
+            score.user.id: score.value
+            for score
+            in game.scores
+        })
+
+        print(f"Sending response: {response}")
+        socketio.emit(EventType.SCORES_LIST.value, response)

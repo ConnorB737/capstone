@@ -19,6 +19,11 @@ const reducer = (state, action) => {
                 ...state,
                 serverBoard: newServerBoard,
             };
+        case types.UPDATE_SCORES:
+            return {
+                ...state,
+                scores: action.scores,
+            };
         default:
             return state;
     }

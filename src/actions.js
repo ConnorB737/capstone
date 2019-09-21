@@ -5,6 +5,7 @@ export const types = {
     UPDATE_GAMES_LIST: 'update_games_list',
 	UPDATE_BOARD: "update_board",
     PLACE_TILE: "place_tile",
+    UPDATE_SCORES: "update_scores",
 };
 
 
@@ -17,6 +18,12 @@ export const getGames = (socket) => {
 export const getBoard = (socket) => {
     return dispatch => {
         socket.emit(socketEvents.GET_BOARD);
+    };
+};
+
+export const getScores = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_SCORES);
     };
 };
 
@@ -35,9 +42,19 @@ export const updateBoard = (data) => {
     }
 };
 
+
+export const updateScores = (data) => {
+    return {
+        type: types.UPDATE_SCORES,
+        scores: data,
+    }
+};
+
+
 export const wordAccepted = (socket) => {
     return dispatch => {
         socket.emit(socketEvents.GET_BOARD);
+        socket.emit(socketEvents.GET_SCORES);
     }
 };
 
