@@ -1,6 +1,7 @@
 from pony import orm
 
 from models.database import db
+from models.score import Score
 from models.turn_state import TurnState
 from models.user import User
 
@@ -20,6 +21,8 @@ class Game(db.Entity):
 
     # The current round of the game, indexed from 1
     round = orm.Required(int)
+
+    scores = orm.Set(Score, reverse="game")
 
     def has_player(self, player):
         return player.id in (existing_player.id for existing_player in self.players)

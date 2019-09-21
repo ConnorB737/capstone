@@ -24,3 +24,6 @@ class EventType(enum.Enum):
     # Events related to allowing the user to make certain actions
     GET_STATUS = "get_status"
     GAME_STATUS = "game_status"
+
+    GET_SCORES = "get_scores"
+    SCORES_LIST = "scores_list"
