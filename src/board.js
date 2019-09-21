@@ -151,6 +151,8 @@ class Board extends Component {
         ev.preventDefault();
     }
 
+
+
     onDrop(ev, coordinate) {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
@@ -465,7 +467,8 @@ class Board extends Component {
     pass() {
 
     }
-    
+
+
     render() {
         if (this.props.serverBoard) {
             const boardState = this.props.serverBoard.map((row,i) => {
