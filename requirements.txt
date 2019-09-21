@@ -28,6 +28,7 @@ psycopg2==2.8.3
 py==1.8.0
 pyparsing==2.4.2
 pytest==5.1.2
+pytest-ponyorm==0.3.3
 python-engineio==3.9.0
 python-socketio==4.3.0
 pytz==2019.2
