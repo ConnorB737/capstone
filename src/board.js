@@ -361,6 +361,7 @@ class Board extends Component {
                 placedTiles: [], //contains the coords of each tile
             },
         });
+        this.props.getBoard(this.props.socket);
     }
 
     pass() {
