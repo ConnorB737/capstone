@@ -310,7 +310,7 @@ class Board extends Component {
                             <div>
                                 Choose One tile to swap
                             </div>
-                            <div>
+                            <div id="selectrack">
                                 <table>
                                     <tbody>
                                         <tr>

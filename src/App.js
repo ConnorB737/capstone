@@ -1,8 +1,8 @@
 import React from 'react';
-import AppContainer from "./GameContainer";
+import GameContainer from "./GameContainer";
 
 const App = () => (
-  <AppContainer />
+  <GameContainer />
 );
 
 export default App;

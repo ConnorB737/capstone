@@ -236,8 +236,8 @@ body{
   /*right:20px;*/
   /*text-align: center;*/
   font-size: 18px;
-  width: 60px;
-  height: 34px;
+  width: 69px;
+  height: 35px;
 }
 
 /*#tile {*/
@@ -252,4 +252,9 @@ body{
   height: 29px;
   border-radius: 10%;
   border: 2px solid red;
+}
+#selectrack{
+  position: absolute;
+  right: 750px;
+  top:10px;
 }

@@ -12,8 +12,8 @@ CONFIG = {
             create_db=True,
         ),
         'FLASK': dict(
-            static_folder="front-end/build",
-            template_folder="front-end/build",
+            static_folder="build",
+            template_folder="build",
             static_url_path="/"
         ),
     },
