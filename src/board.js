@@ -26,7 +26,7 @@ class Board extends Component {
             opponent: {},
             
             word: {
-                direction: DIRECTION.NOT_PLACED, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
+                direction: [DIRECTION.NOT_PLACED], //made into a single dimension array because was having issues with setState
                 placedTiles: [], //contains the coords of each tile
             },
             
@@ -98,7 +98,6 @@ class Board extends Component {
             if(direction === DIRECTION.DOWN){ //vertically
                 let firstTileOffset = firstTile['y'] - droppedTileY;
                 if (firstTileOffset > 0) { //tile is above first tile
-                    //diff -= 1; //because the temState of the tile placed should be null
                     for (let previousTileY = 1; previousTileY < firstTileOffset; previousTileY++){
                         if(tempBoardState[firstTile['y'] - previousTileY][droppedTileX] == null){
                             return false; //is not placable
@@ -119,7 +118,6 @@ class Board extends Component {
                         }
                     }
                 } else if (firstTileOffset < 0) { //tile is below first tile
-                    //diff += 1;
                     for (let previousTileY = 1; previousTileY < -firstTileOffset; previousTileY++){
                         if(tempBoardState[firstTile['y'] + previousTileY][droppedTileX] == null){
                             return false; //is not placable
@@ -143,7 +141,6 @@ class Board extends Component {
             } else if (direction === DIRECTION.RIGHT) { //horizonally
                 let firstTileOffset = firstTile['x'] - droppedTileX;
                 if(firstTileOffset > 0) { //tile is behind first tile
-                    //diff -= 1;
                     for (let previousTileX = 1; previousTileX < firstTileOffset; previousTileX++){
                         if(tempBoardState[droppedTileY][firstTile['x'] - previousTileX] == null){
                             return false; //is not placable
@@ -164,7 +161,6 @@ class Board extends Component {
                         }
                     }
                 } else if (firstTileOffset < 0) { //tile is in front of first tile
-                    //diff += 1;
                     for (let previousTileX = 1; previousTileX < -firstTileOffset; previousTileX++){
                         if(tempBoardState[droppedTileY][firstTile['x'] + previousTileX] == null){
                             return false; //is not placable
@@ -198,28 +194,21 @@ class Board extends Component {
                 });
                 tempBoardState[droppedTileY][droppedTileX] = value;
             }
-		 } else if (this.state.word.direction === DIRECTION.NOT_PLACED){ //if a direction hasn't been set (usually second move)
-			if(droppedTileX === placedTiles[0]['x'] && isValidPlacement(DIRECTION.DOWN)){ //coords[0][1] is the first tile placed 'j' coordinate
+		 } else if (this.state.word.direction[0] === DIRECTION.NOT_PLACED){ //if a direction hasn't been set (usually second move)
+			if(droppedTileX === placedTiles[0]['x'] && isValidPlacement(DIRECTION.DOWN)){ 
                 if(tempBoardState[droppedTileY][droppedTileX] == null){
-                    this.setState({
-                        word: {
-                            ...this.state.word,
-                            direction: DIRECTION.DOWN, //the word is going vertically
-                    }});
+                    this.state.word.direction[0] = DIRECTION.DOWN;
                     placeTileOnBoard({
                         x: droppedTileX,
                         y: droppedTileY,
                         value: value
                     });
                     tempBoardState[droppedTileY][droppedTileX] = value;
+                    console.log(this.state);
                 }
-			} else if (droppedTileY === placedTiles[0]['y'] && isValidPlacement(DIRECTION.RIGHT)){ //coords[0][0] is the first placed 'i' coordinate
+			} else if (droppedTileY === placedTiles[0]['y'] && isValidPlacement(DIRECTION.RIGHT)){
                 if(tempBoardState[droppedTileY][droppedTileX] == null){
-                    this.setState({
-                        word: {
-                            ...this.state.word,
-                            direction: DIRECTION.RIGHT, //the word is going horizontally
-                    }});
+                    this.state.word.direction[0] = DIRECTION.RIGHT;
                     placeTileOnBoard({
                         x: droppedTileX,
                         y: droppedTileY,
@@ -228,7 +217,7 @@ class Board extends Component {
                     tempBoardState[droppedTileY][droppedTileX] = value;
                 }
 			}
-		} else if (this.state.word.direction === DIRECTION.DOWN) { //if going vertically
+		} else if (this.state.word.direction[0] === DIRECTION.DOWN) { //if going vertically
 			if (droppedTileX === placedTiles[0]['x'] && isValidPlacement(DIRECTION.DOWN)){ //and make sure that there is a tiles between either side of the placement
                 placeTileOnBoard({
                     x: droppedTileX,
@@ -237,7 +226,7 @@ class Board extends Component {
                 });
 				tempBoardState[droppedTileY][droppedTileX] = value;
 			}
-		} else if (this.state.word.direction === DIRECTION.RIGHT) { //same deal but horizontally
+		} else if (this.state.word.direction[0] === DIRECTION.RIGHT) { //same deal but horizontally
 			if (droppedTileY === placedTiles[0]['y'] && isValidPlacement(DIRECTION.RIGHT)){
                 placeTileOnBoard({
                     x: droppedTileX,
@@ -253,7 +242,7 @@ class Board extends Component {
 			lastx: droppedTileX,
 			lasty: droppedTileY,
 		});
-
+        
     }
 
     _tile_class_name(i, j) {
@@ -337,19 +326,47 @@ class Board extends Component {
     play() {
 
         var placedTiles = this.state.word.placedTiles;
-        var direction = this.state.word.direction;
+        var direction = this.state.word.direction[0];
+        
+        var board = this.props.serverBoard;
+        
+        let allTiles = [];
 
         //sorts the coords in order of their i or j coordinate depending on the direction
+        console.log(direction);
+        console.log(placedTiles);
          if (direction === DIRECTION.RIGHT) { //horizonal
             placedTiles = placedTiles.sort((a, b) => a['x'] - b['x']);
+            let startX = placedTiles[0]['x'];
+            let endX = placedTiles[placedTiles.length-1]['x'];
+
+            for (let c = startX; c <= endX; c++){
+                allTiles.push({
+                                y: placedTiles[0]['y'],
+                                x: c,
+                                value: board[placedTiles[0]['y']][c]
+                            });
+            }
+            
          } else if (direction === DIRECTION.DOWN) {//vertical
             placedTiles = placedTiles.sort((a, b) => a['y'] - b['y']);
+            
+            let startY = placedTiles[0]['y'];
+            let endY = placedTiles[placedTiles.length-1]['y'];
+            
+            for (let c = startY; c <= endY; c++){
+                allTiles.push({
+                                y: c,
+                                x: placedTiles[0]['x'],
+                                value: board[c][placedTiles[0]['x']]
+                            });
+            }
         }
-
+        
         //as the word is now in order, we can simply take each letter to construct our word
-        const combinedWord = placedTiles.map(tile => tile['value']).join("");
+        const combinedWord = allTiles.map(tile => tile['value']).join("");
         if (this.state.wordList.includes(combinedWord)) { //if valid word, place it on the server and reset the state to place your next word
-            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction, this.state.word.placedTiles);
+            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], this.state.word.placedTiles);
             this.clear();
         } else { 
             alert("Invalid word!");
