@@ -26,7 +26,7 @@ class Board extends Component {
             opponent: {},
             
             word: {
-                direction: [DIRECTION.NOT_PLACED], //made into a single dimension array because was having issues with setState
+                direction: [DIRECTION.NOT_PLACED], 
                 placedTiles: [], //contains the coords of each tile
             },
             
@@ -204,7 +204,6 @@ class Board extends Component {
                         value: value
                     });
                     tempBoardState[droppedTileY][droppedTileX] = value;
-                    console.log(this.state);
                 }
 			} else if (droppedTileY === placedTiles[0]['y'] && isValidPlacement(DIRECTION.RIGHT)){
                 if(tempBoardState[droppedTileY][droppedTileX] == null){
@@ -366,7 +365,7 @@ class Board extends Component {
         //as the word is now in order, we can simply take each letter to construct our word
         const combinedWord = allTiles.map(tile => tile['value']).join("");
         if (this.state.wordList.includes(combinedWord)) { //if valid word, place it on the server and reset the state to place your next word
-            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], this.state.word.placedTiles);
+            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles);
             this.clear();
         } else { 
             alert("Invalid word!");
@@ -374,12 +373,8 @@ class Board extends Component {
     }
 
     clear() {
-        this.setState({
-            word: {
-                direction: DIRECTION.NOT_PLACED, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
-                placedTiles: [], //contains the coords of each tile
-            },
-        });
+        this.state.word.direction[0] = DIRECTION.NOT_PLACED;
+        this.state.word.placedTiles.length = 0; //delete all tiles
         this.props.getBoard(this.props.socket);
     }
 
