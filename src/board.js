@@ -375,12 +375,8 @@ class Board extends Component {
     }
 
     clear() {
-        this.setState({
-            word: {
-                direction: DIRECTION.NOT_PLACED, //direction is -1 before a tile has been placed, 0 if the word is going right, 1 if the word is going down
-                placedTiles: [], //contains the coords of each tile
-            },
-        });
+        this.state.word.direction[0] = DIRECTION.NOT_PLACED;
+	this.state.word.placedTiles.length = 0;
         this.props.getBoard(this.props.socket);
     }
 
