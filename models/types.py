@@ -27,3 +27,6 @@ class EventType(enum.Enum):
 
     GET_SCORES = "get_scores"
     SCORES_LIST = "scores_list"
+
+    GET_RACK = "get_rack"
+    SWAP_TILE = "swap_tile"

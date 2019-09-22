@@ -1,4 +1,4 @@
-import { updateGamesList, updateBoard, wordAccepted, updateScores } from "./actions";
+import {updateGamesList, updateBoard, wordAccepted, updateScores, updateRack} from "./actions";
 
 export const socketEvents = {
     GET_GAMES: 'get_games',
@@ -8,6 +8,8 @@ export const socketEvents = {
     PLACE_WORD: 'place_word',
     WORD_ACCEPTED: 'word_accepted',
     SCORES_LIST: 'scores_list',
+    GET_RACK: 'get_rack',
+    SWAP_TILE: "swap_tile",
 };
 
 
@@ -38,6 +40,13 @@ const handleWordAccepted = (dispatch, socket) => {
 };
 
 
+const handleGetRack = (dispatch) => {
+    return data => {
+        dispatch(updateRack(JSON.parse(data)));
+    };
+};
+
+
 export const dispatchFromSocket = (store) => {
     store.getState().socket.on(socketEvents.GAMES_LIST, handleGamesList(store.dispatch));
 	
@@ -46,6 +55,8 @@ export const dispatchFromSocket = (store) => {
 	store.getState().socket.on(socketEvents.WORD_ACCEPTED, handleWordAccepted(store.dispatch, store.getState().socket));
 
 	store.getState().socket.on(socketEvents.SCORES_LIST, handleScoresList(store.dispatch));
+
+	store.getState().socket.on(socketEvents.GET_RACK, handleGetRack(store.dispatch));
 };
 
 

@@ -16,11 +16,13 @@ const socket = openSocket(config['{process.env.NODE_ENV}'], {transports: ['webso
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     reducer,
+    // Set up the state of the application before receiving the current state from the back-end
     {
         socket,
         games: [],
 		serverBoard: null,
         scores: [],
+        rack: null,
     },
     composeEnhancers(applyMiddleware(thunk)),
 );

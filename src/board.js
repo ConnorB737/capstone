@@ -273,17 +273,17 @@ class Board extends Component {
         return "normaltd";
     }
 
-    handleSwapClick = (e, i) => {
+    handleSwapClick = (event, i) => {
         let temp = []
         if (this.state.swapList.length === 0) {
-            if (e.target.id==="tile") {
-                e.target.id="newTile"
+            if (event.target.id==="tile") {
+                event.target.id="newTile"
                 temp.push(i)
                 this.setState({swapList:temp})
             }
         } else {
-            if (e.target.id === "newTile") {
-                e.target.id="tile"
+            if (event.target.id === "newTile") {
+                event.target.id="tile"
                 temp = []
                 this.setState({swapList:temp})
             }
@@ -291,7 +291,9 @@ class Board extends Component {
     }
 
     handleSwapSend = () => {
-
+        // Assume I have the tile/s to send
+        const tile = "whatever"; // Get the tile/s
+        this.props.swapTile(this.props.socket, tile);
     }
 
     SwapPop = () => {
@@ -657,7 +659,7 @@ class Board extends Component {
         );
                 
 
-            let rackList = this.state.rackList;
+            let rackList = this.props.rack;
 
             return (
                 <div id="board">

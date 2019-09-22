@@ -1,7 +1,10 @@
+import json
+
 from models.types import EventType
-from pony.orm import select, db_session
+from pony.orm import select, db_session, commit
 from models.game import Game
 from service.word_service import place_word
+
 
 def attach_controller(socketio):
 
@@ -20,4 +23,37 @@ def attach_controller(socketio):
         ##
 
         socketio.emit(EventType.WORD_ACCEPTED.value)
+
+    @socketio.on(EventType.GET_RACK.value)
+    @db_session
+    def get_rack():
+        game = Game.select().first()
+        player = game.players.first()
+        rack = game.racks.filter(lambda r: rack.player == player)
+
+        response = rack.tiles
+
+        socketio.emit(EventType.GET_RACK, json.dumps(response))
+
+    @socketio.on(EventType.SWAP_TILE.value)
+    @db_session
+    def swap_tiles(message):
+        game = Game.select().first()
+        player = game.players.first()
+        tile_bag = game.tile_bag
+        rack = game.racks.filter(lambda r: rack.player == player)
+
+        # Remove the tile from the rack
+        tiles_to_remove = message['tiles']
+        for tile in tiles_to_remove:
+            rack.tiles.remove(tile)
+
+        # Fill rack
+        new_tiles = tile_bag.swap(tiles_to_remove)
+        for tile in new_tiles:
+            rack.tiles.append(tile)
+
+        commit()
+
+        socketio.emit(EventType.GET_RACK, json.dumps(rack.tiles))
 
