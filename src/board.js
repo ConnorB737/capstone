@@ -242,6 +242,7 @@ class Board extends Component {
 			lastx: droppedTileX,
 			lasty: droppedTileY,
 		});
+	    console.log(this.state);
         
     }
 
