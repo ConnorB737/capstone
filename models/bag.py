@@ -11,15 +11,13 @@ class TilesBag:
     #  recieve a index of rack list, swap with the first different element in the rest list
     def swap(self,index):
         temp = self.rack[index]
-        if len(self.rest)>0:
+        if len(self.rest) > 0:
             for i in range(len(self.rest)):
                 if self.rest[i] != temp:
                     self.rack[index] = self.rest[i]
                     self.rest[i] = temp
-                    self.bag = self.rack+self.rest
+                    self.bag = self.rack + self.rest
                     break
-                else:
-                    return False
         else:
             return False
     
@@ -27,7 +25,7 @@ class TilesBag:
     def remove(self,word):
         for letter in word:
             self.rack.remove(letter)
-        self.bag = self.rack+self.rest
+        self.bag = self.rack + self.rest
         self.rack=self.bag[:7]
         self.rest=self.bag[7:]
         
