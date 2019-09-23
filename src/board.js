@@ -332,11 +332,13 @@ class Board extends Component {
         let allTiles = [];
 
         //sorts the coords in order of their i or j coordinate depending on the direction
-        console.log(direction);
-        console.log(placedTiles);
          if (direction === DIRECTION.RIGHT) { //horizonal
             placedTiles = placedTiles.sort((a, b) => a['x'] - b['x']);
             let startX = placedTiles[0]['x'];
+            while (startX > 0 && board[placedTiles[0]['y']][startX - 1] != null){
+                startX -= 1;
+            }
+            
             let endX = placedTiles[placedTiles.length-1]['x'];
 
             for (let c = startX; c <= endX; c++){
@@ -351,6 +353,10 @@ class Board extends Component {
             placedTiles = placedTiles.sort((a, b) => a['y'] - b['y']);
             
             let startY = placedTiles[0]['y'];
+            while (startY > 0 && board[startY - 1][placedTiles[0]['x']] != null){
+                startY -= 1;
+            }
+
             let endY = placedTiles[placedTiles.length-1]['y'];
             
             for (let c = startY; c <= endY; c++){
