@@ -38,6 +38,7 @@ export class Tile extends Component {
                     ? (e) => this.onDragStart(e, this.props.value)
                     : this.preventDragHandler}
                 onDrop = {(e) => this.onDragEnd(e)}
+                onError={e => e.target.style.visibility = 'hidden'}
 
             />
         )
