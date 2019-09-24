@@ -10,7 +10,7 @@ from models.database import db
 class TileBag(db.Entity):
 
     bag = orm.Required(StrArray)
-    game = orm.Optional("Game", reversed="tile_bag")
+    game = orm.Optional("Game", reverse="tile_bag")
 
     @classmethod
     def build_bag(cls):

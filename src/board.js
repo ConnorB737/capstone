@@ -17,7 +17,6 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rackList: ['A','B','C','D','E','F','G','H','I','J','K'],
             swapList: [], // array of index related to the rackList that need to be send to backend and remove from it.
             player: {
                 name: "",
@@ -288,16 +287,16 @@ class Board extends Component {
                 this.setState({swapList:temp})
             }
         }
-    }
+    };
 
     handleSwapSend = () => {
         // Assume I have the tile/s to send
         const tile = "whatever"; // Get the tile/s
         this.props.swapTile(this.props.socket, tile);
-    }
+    };
 
     SwapPop = () => {
-        let rackBar = this.state.rackList.map((cell,i) =>
+        let rackBar = this.props.rack.map((cell,i) =>
                 <td 
                     key={i}
                     onClick={(e) => this.handleSwapClick(e, i)}
@@ -334,7 +333,7 @@ class Board extends Component {
                 }
             </Popup>
         )
-    }
+    };
 
     play() {
 
@@ -659,7 +658,18 @@ class Board extends Component {
         );
                 
 
-            let rackList = this.props.rack;
+            let rackList = [];
+            if (this.props.rack != null) {
+                rackList = this.props.rack.map(tile => {
+                    return <td>{this.renderTile(tile)}</td>
+                })
+            }
+
+            let swapPopUp = [];
+            console.log(this.props.rack);
+            if (this.props.rack != null) {
+                swapPopUp = this.SwapPop();
+            }
 
             return (
                 <div id="board">
@@ -675,11 +685,7 @@ class Board extends Component {
                         <div>
                             <table>
                                 <tbody>
-                                    <tr>{
-                                        rackList.map(tile => {
-                                            return <td>{this.renderTile(tile)}</td>
-                                        })
-                                    }
+                                    <tr>{rackList}
                                     </tr>
                                 </tbody>
                             </table>
@@ -688,7 +694,7 @@ class Board extends Component {
                             <button onClick={this.play.bind(this)}>Play</button>
                             <button onClick={this.pass.bind(this)}>Pass</button>
                             <button onClick={this.clear.bind(this)}>Clear</button>
-                            {this.SwapPop()}
+                            { swapPopUp }
                         </div>
                     </div>
                 </div>
