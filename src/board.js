@@ -341,6 +341,9 @@ class Board extends Component {
             }
             
             let endX = placedTiles[placedTiles.length-1]['x'];
+            while (endX < 14 && board[placedTiles[0]['y']][endX + 1] != null){
+                endX += 1;
+            }
 
             for (let c = startX; c <= endX; c++){
                 allTiles.push({
@@ -359,6 +362,9 @@ class Board extends Component {
             }
 
             let endY = placedTiles[placedTiles.length-1]['y'];
+            while (endY < 14 && board[endY + 1][placedTiles[0]['x']] != null){
+                endY += 1;
+            }
             
             for (let c = startY; c <= endY; c++){
                 allTiles.push({
