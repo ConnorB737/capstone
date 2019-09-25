@@ -292,7 +292,7 @@ class Board extends Component {
                 >
                 {this.renderTile(cell)}
                 </td>
-            )
+            )    
 
         return (
             <Popup trigger={<button>Swap</button>} modal>
