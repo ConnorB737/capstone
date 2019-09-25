@@ -3,7 +3,7 @@
     <head></head>
     <body>
         <h1>Welcome, {{ current_user.login }} !</h1>
-        <a href="{{ url_for("logout") }}">Logout</a>
+        <a href="{{ url_for("api.logout") }}">Logout</a>
         <h2>Joined games</h2>
         <ul>
             {% for game in joined_games %}
@@ -13,7 +13,7 @@
         <h2>Open games</h2>
         <ul>
             {% for game in open_games %}
-                <li><a href="/game/{{ game.id }}">Game #{{ game.id }}</a></li>
+                <li><a href="/api/game/{{ game.id }}">Game #{{ game.id }}</a></li>
             {% endfor %}
         </ul>
     </body>

@@ -4,6 +4,8 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 from pony.flask import Pony
 from pony.orm import set_sql_debug
+from flask_login import login_required
+
 
 from config import CONFIG
 from models.database import db
@@ -22,8 +24,9 @@ def create_app():
     app.register_blueprint(api, url_prefix='/api')
 
     @app.route('/')
+   
     def frontend():
-        return render_template("index.html")
+        return render_template("home page.html")
 
     from controllers.game_events_controller import attach_controller as attach_game_controller
     attach_game_controller(socketio)
@@ -35,7 +38,7 @@ def create_app():
     db.generate_mapping(create_tables=True)
 
     login_manager.init_app(app)
-    login_manager.login_view = 'login'
+    login_manager.login_view = 'api.login'
 
     Pony(app)
 

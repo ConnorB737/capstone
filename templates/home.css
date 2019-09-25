@@ -3,8 +3,7 @@ code {
     monospace;
 }
 body{
-    background: url("../src/image/background.jpg") no-repeat;
-;
+    background: url("background.jpg") no-repeat;
 }
 
 img{

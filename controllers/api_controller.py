@@ -1,10 +1,11 @@
 import urllib
+from pony.orm import commit
 
 from flask import jsonify, request, render_template, redirect, url_for, Blueprint
 from flask_login import login_required, current_user, login_user, logout_user
 from flask_wtf import FlaskForm
 from werkzeug.exceptions import NotFound
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash,generate_password_hash
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email, Length
 from pony.orm import select
@@ -53,7 +54,7 @@ def join_game(game_id):
 @api.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("api.dashboard"))
     form = UserForm()
     if request.method == 'POST':
         if form.validate():
@@ -68,7 +69,19 @@ def login():
 def logout():
     if current_user.is_authenticated:
         logout_user()
-    return redirect(url_for("login", next=url_for("dashboard")))
+    return redirect(url_for("api.login", next=url_for("api.dashboard")))
+
+@api.route("/register", methods=["GET", "POST"])
+
+def register():
+    form = UserForm()
+    if request.method == 'POST':
+        if form.validate():
+            User(login=form.email.data, password=generate_password_hash(form.password.data))
+            commit()
+            return redirect(url_for("api.login", next=url_for("api.dashboard")))
+    return render_template('register.html', form=form, next=request.args.get('next'))
+
 
 @login_manager.user_loader
 def load_user(user_id):
