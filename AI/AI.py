@@ -5,7 +5,7 @@ import time
 
 class AI:
     def __init__(self):
-        self.letters = ["A", "B", "C", "D", "G", "E", "R"]
+        self.letters = ["T", "D", "C", "I", "G", "E", "R"]
         self.trie = trie.Trie()
     
     def find_valid_word(self, board):
@@ -100,13 +100,14 @@ class AI:
     def check_word(self, startX, startY, board, direction, word): #checks all adjacent words are valid
         if (direction == 0): #horitzonal
             x = startX
-            while x < startX + len(word):
+            if(startX + len(word) > 14): return False
+            while x < startX + len(word) and x < 15:
                 if (startY - 1 >= 0 and board[startY - 1][x] != None) or (startY + 1 < 15 and board[startY + 1][x] != None):
                     adjWord = []
                     adjY = startY
                     while(adjY - 1 > 0 and board[adjY - 1][x] != None):
                         adjY -= 1
-                    while(board[adjY][x] != None):
+                    while(adjY < 15 and board[adjY][x] != None):
                         if adjY == startY:
                             adjWord += word[x - startX]
                         else:
@@ -117,13 +118,14 @@ class AI:
                 x += 1
         else: #vertical
             y = startY
-            while y < startY + len(word):
+            if(startY + len(word) > 14): return False
+            while y < startY + len(word) and y < 15:
                 if (startX - 1 >= 0 and board[y][startX - 1] != None) or (startX + 1 < 15 and board[y][startX + 1] != None):
                     adjWord = []
                     adjX = startX
                     while(adjX - 1 > 0 and board[y][adjX - 1] != None):
                         adjX -= 1
-                    while(board[y][adjX] != None):
+                    while(adjX < 15 and board[y][adjX] != None):
                         if adjX == startX:
                             adjWord += word[y - startY]
                         else:
