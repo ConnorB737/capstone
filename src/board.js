@@ -280,7 +280,9 @@ class Board extends Component {
 
     handleSwapSend = () => {
         // Assume I have the tile/s to send
-        const tile = "whatever"; // Get the tile/s
+        const index = this.state.swapList; // Get the tile/s
+        const tile = this.props.rack[index]
+        console.log("tile to swap: ", tile)
         this.props.swapTile(this.props.socket, tile);
     };
 

@@ -26,7 +26,7 @@ def build_game(first_player: User) -> Game:
     Rack(
         game=new_game,
         player=first_player,
-        tiles=[],
+        tiles=tile_bag.fill_rack(),
     )
     TurnState(
         game=new_game,
