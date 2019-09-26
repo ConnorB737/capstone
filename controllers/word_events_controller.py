@@ -39,7 +39,7 @@ def attach_controller(socketio):
         game = Game.select().first()
         player = game.players.select().first()
         tile_bag = game.tile_bag
-        rack = game.racks.filter(lambda r: rack.player == player)
+        rack = game.racks.filter(lambda r: r.player == player).first()
 
         # Remove the tile from the rack
         tiles_to_remove = message['tiles']
