@@ -30,14 +30,15 @@ class AI:
                 startX = x
                 startY = y
                 
+                randbackwards = random.randint(0, 7)
+                if(startX - randbackwards-1 > 0):
+                    startX = startX - randbackwards
+                    
                 while startX > 0 and board[y][startX-1] != None:
                     startX -= 1
                 
-                startX = startX - random.randint(0, 3)
-                if startX < 0: startX = 0
-                
                 xIndex = startX
-                while xIndex < 15 and xIndex <= x + 7:
+                while xIndex < 15 and (xIndex <= x + 7 or board[xIndex][y] != None):
                     conditions.append(board[y][xIndex])
                     xIndex += 1
                     
@@ -51,14 +52,16 @@ class AI:
                 startX = x
                 startY = y
                 
+                
+                randbackwards = random.randint(0, 7)
+                if(startY - randbackwards-1 > 0):
+                    startY = startY - randbackwards
+                
                 while startY > 0 and board[startY-1][x] != None:
                     startY -= 1
                 
-                startY = startY - random.randint(0, 3)
-                if startY < 0: startY = 0
-                
                 yIndex = startY
-                while yIndex < 15 and yIndex <= y + 7:
+                while yIndex < 15 and (yIndex <= y + 7 or board[yIndex][x] != None):
                     conditions.append(board[yIndex][x])
                     yIndex += 1
                     
@@ -68,8 +71,11 @@ class AI:
             letters = self.letters 
             
             words = self.get_words(startX, startY, board, direction, conditions)
-
-        return self.word_to_tiles(startX, startY, random.choice(words), direction)
+        
+        w = random.choice(words)
+        print(w)
+        print(conditions)
+        return self.word_to_tiles(startX, startY, w, direction)
     
     def place_word(self, board):
         word_tiles = self.find_valid_word(board)
@@ -105,9 +111,9 @@ class AI:
                 if (startY - 1 >= 0 and board[startY - 1][x] != None) or (startY + 1 < 15 and board[startY + 1][x] != None):
                     adjWord = []
                     adjY = startY
-                    while(adjY - 1 > 0 and board[adjY - 1][x] != None):
+                    while(adjY - 1 > 0 and board[adjY - 1][x] != None ):
                         adjY -= 1
-                    while(adjY < 15 and board[adjY][x] != None):
+                    while(adjY < 15 and (board[adjY][x] != None or adjY == startY)):
                         if adjY == startY:
                             adjWord += word[x - startX]
                         else:
@@ -125,7 +131,7 @@ class AI:
                     adjX = startX
                     while(adjX - 1 > 0 and board[y][adjX - 1] != None):
                         adjX -= 1
-                    while(adjX < 15 and board[y][adjX] != None):
+                    while(adjX < 15 and (board[y][adjX] != None or adjX == startX)):
                         if adjX == startX:
                             adjWord += word[y - startY]
                         else:
@@ -146,7 +152,7 @@ class AI:
                 min_length += 1
             else: break
             
-        for i in range(7, min_length, -1):
+        for i in range(7, min_length+1, -1):
             permutations = list(itertools.permutations(letters, i))
             for p in permutations:
                 word = ''.join(p)
