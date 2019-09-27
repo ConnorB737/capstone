@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <!--<style>body{-->
+        <!--background: url("background.jpg") no-repeat;-->
+        <!--}</style>-->
+    </head>
     <body>
+    <center>
         <h1>Welcome, {{ current_user.login }} !</h1>
         <a href="{{ url_for("api.logout") }}">Logout</a>
         <h2>Joined games</h2>
@@ -16,5 +21,6 @@
                 <li><a href="/api/game/{{ game.id }}">Game #{{ game.id }}</a></li>
             {% endfor %}
         </ul>
+    </center>
     </body>
 </html>

@@ -3,7 +3,7 @@
     monospace;
 }
 body{
-    background: url("background.jpg") no-repeat;
+    background: url("logo.png") no-repeat;
 ;
 }
 
@@ -40,20 +40,17 @@ body{
 }
 
 
-/*!* 在一级菜单中，鼠标放上去的样式 *!*/
 #nav ul li a:hover {
     color:red;
 }
 #nav ul li ul{
-    position:absolute;/*防止一级菜单随二级菜单变化而变化*/
+    position:absolute;
     left:0px;
     top:40px;
     display:none;
 }
 
-
-/*#nav ul li ul li a{*/
-    /*width:80px;*/
-/*}*/
-
+#reminder{
+    font-size: 50px;
+}
 
