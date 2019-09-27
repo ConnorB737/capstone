@@ -147,12 +147,11 @@ class AI:
         words = [] 
         
         min_length = 1
-        for x in conditions: 
-            if x == None:
-                min_length += 1
-            else: break
-            
-        for i in range(7, min_length+1, -1):
+        for x in range(len(conditions)): 
+            if conditions[x] != None:
+                min_length = x
+        
+        for i in range(7, min_length, -1):
             permutations = list(itertools.permutations(letters, i))
             for p in permutations:
                 word = ''.join(p)
