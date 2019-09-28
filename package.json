@@ -5,10 +5,13 @@
   "dependencies": {
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.1.4",
+    "connected-react-router": "^6.5.2",
+    "history": "^4.10.1",
     "jest-enzyme": "^7.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
+    "react-router-dom": "^5.1.1",
     "react-scripts": "3.0.1",
     "reactjs-popup": "^1.5.0",
     "redux": "^4.0.4",

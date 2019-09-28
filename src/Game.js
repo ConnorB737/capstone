@@ -5,13 +5,13 @@ import BoardContainer from './BoardContainer';
 export class Game extends Component {
 
     componentDidMount() {
-        this.props.getGames(this.props.socket);
-        this.props.getBoard(this.props.socket);
-        this.props.getScores(this.props.socket);
+        this.props.getGames(this.props.main.socket);
+        this.props.getBoard(this.props.main.socket);
+        this.props.getScores(this.props.main.socket);
     }
 
     render() {
-		const sBoard = this.props.serverBoard; //this.props.serverBoard is the board received from the server
+		const sBoard = this.props.main.serverBoard; //this.props.serverBoard is the board received from the server
         
         const wordsPlayed = ["hello", " world"] // contain history
         let wordsPlayedList = wordsPlayed.map((word) => 
@@ -43,8 +43,8 @@ export class Game extends Component {
                     <hr/>
                     <div id="score">
                         {
-                            Object.keys(this.props.scores).map(score => {
-                                return (<p key={score}>{score}: {this.props.scores[score]}</p>);
+                            Object.keys(this.props.main.scores).map(score => {
+                                return (<p key={score}>{score}: {this.props.main.scores[score]}</p>);
                             })
                         }
                     </div>

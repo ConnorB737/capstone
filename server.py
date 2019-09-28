@@ -24,9 +24,8 @@ def create_app():
     app.register_blueprint(api, url_prefix='/api')
 
     @app.route('/')
-   
     def frontend():
-        return render_template("home page.html")
+        return render_template("index.html")
 
     from controllers.game_events_controller import attach_controller as attach_game_controller
     attach_game_controller(socketio)
@@ -34,11 +33,14 @@ def create_app():
     from controllers.word_events_controller import attach_controller as attach_word_controller
     attach_word_controller(socketio)
 
+    from controllers.user_events_controller import attach_controller as attach_user_controller
+    attach_user_controller(socketio)
+
     set_sql_debug(True)
     db.generate_mapping(create_tables=True)
 
     login_manager.init_app(app)
-    login_manager.login_view = 'api.login'
+    login_manager.login_view = 'login'
 
     Pony(app)
 
