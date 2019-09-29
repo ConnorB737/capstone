@@ -1,6 +1,6 @@
 import { HomePage } from "./HomePage";
 import { connect } from "react-redux";
-import {getGames, redirectToLogin} from "./actions";
+import {getGames} from "./actions";
 
 
 const mapStateToProps = state => ({
@@ -9,7 +9,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getGames: (socket) => dispatch(getGames(socket)),
-  redirectToLogin: () => dispatch(redirectToLogin()),
 });
 
 export default connect(
