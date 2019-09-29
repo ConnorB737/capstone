@@ -57,7 +57,7 @@ export class Dashboard extends Component {
                 <ul>
                     {
                         this.props.main.openGames.map((game) => {
-                            return <li><Link to="/game/{ game.id }">Game #{game.id}</Link></li>
+                            return <li><Link to={ `/game/${game.id}` }>Game #{game.id}</Link></li>
                         })
                     }
                 </ul>

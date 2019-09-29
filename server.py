@@ -4,7 +4,6 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 from pony.flask import Pony
 from pony.orm import set_sql_debug
-from flask_login import login_required
 
 
 from config import CONFIG
@@ -20,12 +19,10 @@ def create_app():
     app.config["SECRET_KEY"] = "vnkdjnfjknfl1232#"
     socketio.init_app(app)
 
-    from controllers.api_controller import api
-    app.register_blueprint(api, url_prefix='/api')
-
-    @app.route('/')
-    def frontend():
-        return render_template("index.html")
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def frontend(path):
+        return app.send_static_file("index.html")
 
     from controllers.game_events_controller import attach_controller as attach_game_controller
     attach_game_controller(socketio)
