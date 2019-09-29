@@ -52,19 +52,21 @@ class TileBag(db.Entity):
 
     # Swap a tile with another tile
     def swap(self, incoming_tile: str) -> Optional[str]:
+        outgoing_list = []
         if self.tiles_left():
-            outgoing_tile = self.bag.pop()
-            self.bag += incoming_tile
-
-            # self.bag.append(incoming_tile)
-            random.shuffle(self.bag)
-
-            while [outgoing_tile] == incoming_tile:
-                self.bag.append(outgoing_tile)
-                random.shuffle(self.bag)
+            for tile in incoming_tile:
                 outgoing_tile = self.bag.pop()
+                self.bag.append(tile)
+                random.shuffle(self.bag)
 
-            return outgoing_tile
+                while outgoing_tile == tile:
+                    self.bag.append(outgoing_tile)
+                    random.shuffle(self.bag)
+                    outgoing_tile = self.bag.pop()
+
+                outgoing_list.append(outgoing_tile)
+
+            return outgoing_list
         else:
             return None
 

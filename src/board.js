@@ -261,40 +261,42 @@ class Board extends Component {
         return "normaltd";
     }
 
-    handleSwapClick = (event, i) => {
-        let temp = []
-        if (this.state.swapList.length === 0) {
-            if (event.target.id==="tile") {
-                event.target.id="newTile"
-                temp.push(i)
-                this.setState({swapList:temp})
-            }
-        } else {
-            if (event.target.id === "newTile") {
-                event.target.id="tile"
-                temp = []
-                this.setState({swapList:temp})
-            }
+    handleSwapClick = (event, value) => {
+        let temp = this.state.swapList;
+
+        if (event.target.id === "tile") {
+            event.target.id = "newTile";
+            temp.push(value);
+            this.setState({swapList:temp})
+        }
+        else {
+            event.target.id = "tile";
+            for(let i = 0; i < temp.length; i++){ 
+                if (temp[i] === value) {
+                    temp.splice(i, 1) 
+                }
+             }
+             this.setState({swapList:temp})
         }
     };
 
     handleSwapSend = () => {
-        // Assume I have the tile/s to send
-        const index = this.state.swapList; // Get the tile/s
-        const tile = this.props.rack[index]
-        console.log("tile to swap: ", tile)
-        this.props.swapTile(this.props.socket, tile);
+        console.log("tile to swap: ", this.state.swapList);
+        this.props.swapTile(this.props.socket, this.state.swapList);
+        let temp = [];
+        this.setState({swapList:temp});
     };
 
     SwapPop = () => {
+
         let rackBar = this.props.rack.map((cell,i) =>
                 <td 
                     key={i}
-                    onClick={(e) => this.handleSwapClick(e, i)}
+                    onClick={(e) => this.handleSwapClick(e, cell)}
                 >
                 {this.renderTile(cell)}
                 </td>
-            )    
+            );
 
         return (
             <Popup trigger={<button>Swap</button>} modal>
@@ -314,7 +316,10 @@ class Board extends Component {
                                 </table>
                             </div>
                             <div className="swapPopFunction">
-                                <button onClick={() => this.handleSwapSend()}>Swap</button>
+                                <button onClick={() => {
+                                    this.handleSwapSend();
+                                    close()
+                                }}>Swap</button>
                                 <button onClick={ () => {
                                     close();
                                 }}>Cancel</button>

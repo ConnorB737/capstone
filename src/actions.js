@@ -66,7 +66,7 @@ export const updateRack = (data) => {
 
 export const swapTile = (socket, tile) => {
     return dispatch => {
-        socket.emit(socketEvents.SWAP_TILE, {"tiles": [tile]});
+        socket.emit(socketEvents.SWAP_TILE, {"tiles": tile});
     }
 };
 
