@@ -24,6 +24,11 @@ const reducer = (state, action) => {
                 ...state,
                 scores: action.scores,
             };
+        case types.UPDATE_RACK:
+            return {
+                ...state,
+                rack: action.rack,
+            };
         default:
             return state;
     }
