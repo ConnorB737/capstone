@@ -1,4 +1,4 @@
-import { Dashboard } from "./Dashboard";
+import { Register } from "./Register";
 import { connect } from "react-redux";
 import {register} from "./actions";
 
@@ -14,5 +14,5 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Dashboard);
+)(Register);
 
