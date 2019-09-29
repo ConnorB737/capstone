@@ -12,7 +12,8 @@ export class Register extends Component {
         this.register = this.register.bind(this);
     }
 
-    register() {
+    register(event) {
+        event.preventDefault();
         this.props.register(this.props.main.socket, this.state.email, this.state.password);
     }
 

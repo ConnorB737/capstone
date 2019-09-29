@@ -14,7 +14,6 @@ export class Login extends Component {
 
     login(event) {
         event.preventDefault();
-        console.log("Logging in");
         this.props.login(this.props.main.socket, this.state.email, this.state.password);
     }
 
