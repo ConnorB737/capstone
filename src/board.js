@@ -51,16 +51,16 @@ class Board extends Component {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
         let temp_rack = this.state.temp_rack;
-        for (let i = 0; i < this.props.rack.length; i++) {
-            if (this.props.rack[i] === value) {
-                temp_rack.push(this.props.rack.splice(i, 1)[0]);
+        for (let i = 0; i < this.props.main.rack.length; i++) {
+            if (this.props.main.rack[i] === value) {
+                temp_rack.push(this.props.main.rack.splice(i, 1)[0]);
                 break;
             }
         }
         console.log("temp_rack: ",temp_rack);
         this.setState({temp_rack:temp_rack});
         
-        let tempBoardState = JSON.parse(JSON.stringify(this.props.serverBoard)); //cloning the object, as opposed to referencing it
+        let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
         
         let droppedTileY = coordinate[0];
         let droppedTileX = coordinate[1];
@@ -285,14 +285,14 @@ class Board extends Component {
 
     handleSwapSend = () => {
         console.log("tile to swap: ", this.state.swapList);
-        this.props.swapTile(this.props.socket, this.state.swapList);
+        this.props.swapTile(this.props.main.socket, this.state.swapList);
         let temp = [];
         this.setState({swapList:temp});
     };
 
     SwapPop = () => {
 
-        let rackBar = this.props.rack.map((cell,i) =>
+        let rackBar = this.props.main.rack.map((cell,i) =>
                 <td 
                     key={i}
                     onClick={(e) => this.handleSwapClick(e, cell)}
@@ -339,7 +339,7 @@ class Board extends Component {
         var placedTiles = this.state.word.placedTiles;
         var direction = this.state.word.direction[0];
         
-        var board = this.props.serverBoard;
+        var board = this.props.main.serverBoard;
         
         let allTiles = [];
 
@@ -552,7 +552,7 @@ class Board extends Component {
         const combinedWord = allTiles.map(tile => tile['value']).join("");
         console.log(combinedWord);
         if ((combinedWord.length <= 1 || this.state.wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
-            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles, this.state.temp_rack);
+            this.props.placeWord(this.props.main.socket, combinedWord, this.state.word.direction[0], allTiles, this.state.temp_rack);
             this.clear();
         } else { 
             alert("Invalid word!");
@@ -563,9 +563,9 @@ class Board extends Component {
     clear() {
         this.state.word.direction[0] = DIRECTION.NOT_PLACED;
         this.state.word.placedTiles.length = 0; //delete all tiles
-        this.props.getBoard(this.props.socket);
+        this.props.getBoard(this.props.main.socket);
         for (let i=0; i<this.state.temp_rack.length; i++) {
-            this.props.rack.push(this.state.temp_rack.splice(i, 1)[0])
+            this.props.main.rack.push(this.state.temp_rack.splice(i, 1)[0])
         };
         this.setState({temp_rack:[]});
         window.location.reload();
@@ -577,8 +577,8 @@ class Board extends Component {
 
 
     render() {
-        if (this.props.serverBoard) {
-            const boardState = this.props.serverBoard.map((row,i) => {
+        if (this.props.main.serverBoard) {
+            const boardState = this.props.main.serverBoard.map((row,i) => {
                 return (<tr className="normaltr" key={i}>{row.map((cell, j) =>{
                     return(<td className={this._tile_class_name(i, j)}
                                   key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
@@ -591,15 +591,15 @@ class Board extends Component {
             });
 
             let rackList = [];
-            if (this.props.rack != null) {
-                rackList = this.props.rack.map(tile => {
+            if (this.props.main.rack != null) {
+                rackList = this.props.main.rack.map(tile => {
                     return <td>{this.renderTile(tile)}</td>
                 })
             }
 
             let swapPopUp = [];
-            console.log(this.props.rack);
-            if (this.props.rack != null) {
+            console.log(this.props.main.rack);
+            if (this.props.main.rack != null) {
                 swapPopUp = this.SwapPop();
             }
 
