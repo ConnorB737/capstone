@@ -363,7 +363,7 @@ class Board extends Component {
                         letters.push(board[c][t['x']]);
                     }
                     console.log(letters.join(""));
-                    if (!wordList.includes(letters.join(""))){
+                    if (!this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
@@ -385,7 +385,7 @@ class Board extends Component {
                         letters.push(board[t['y']][c]);
                     }
                     console.log(letters.join(""));
-                    if (!wordList.includes(letters.join(""))){
+                    if (!this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
@@ -407,7 +407,7 @@ class Board extends Component {
                         letters.push(board[t['y']][c]);
                     }
                     console.log(letters.join(""));
-                    if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
+                    if (letters.join("").length > 1 && !this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
@@ -428,7 +428,7 @@ class Board extends Component {
                         letters.push(board[c][t['x']]);
                     }
                     console.log(letters.join(""));
-                    if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
+                    if (letters.join("").length > 1 && !this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
@@ -551,7 +551,7 @@ class Board extends Component {
         //as the word is now in order, we can simply take each letter to construct our word
         const combinedWord = allTiles.map(tile => tile['value']).join("");
         console.log(combinedWord);
-        if ((combinedWord.length <= 1 || wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
+        if ((combinedWord.length <= 1 || this.state.wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
             this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles, this.state.temp_rack);
             this.clear();
         } else { 
