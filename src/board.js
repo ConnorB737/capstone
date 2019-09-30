@@ -51,13 +51,13 @@ class Board extends Component {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
         let temp_rack = this.state.temp_rack;
-        // console.log("this.props.rack: ", this.props.rack)
         for (let i = 0; i < this.props.rack.length; i++) {
             if (this.props.rack[i] === value) {
                 temp_rack.push(this.props.rack.splice(i, 1)[0]);
+                break;
             }
         }
-        console.log("temp_rack: ",temp_rack)
+        console.log("temp_rack: ",temp_rack);
         this.setState({temp_rack:temp_rack});
         
         let tempBoardState = JSON.parse(JSON.stringify(this.props.serverBoard)); //cloning the object, as opposed to referencing it
@@ -342,10 +342,7 @@ class Board extends Component {
         var board = this.props.serverBoard;
         
         let allTiles = [];
-        // code relate to send temp_rack
-        console.log("this.state.temp_rack: ", this.state.temp_rack)
 
-        
         function checkAdjacentWords(tilesToCheck, dir){
             let returnVal = true;
             if (dir === DIRECTION.RIGHT) { //then the words are going to be going vertically
@@ -513,10 +510,11 @@ class Board extends Component {
         const combinedWord = allTiles.map(tile => tile['value']).join("");
         console.log(combinedWord);
         if ((combinedWord.length <= 1 || wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
-            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles);
+            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles, this.state.temp_rack);
             this.clear();
         } else { 
             alert("Invalid word!");
+            this.clear();
         }
     }
 
@@ -528,7 +526,7 @@ class Board extends Component {
             this.props.rack.push(this.state.temp_rack.splice(i, 1)[0])
         };
         this.setState({temp_rack:[]});
-        // window.location.reload();
+        window.location.reload();
     }
 
     pass() {

@@ -60,10 +60,11 @@ export const dispatchFromSocket = (store) => {
 };
 
 
-export const buildPlaceWordMessage = (word, direction, startingPosition) => {
+export const buildPlaceWordMessage = (word, direction, startingPosition, temp_rack) => {
     return {
         word,
         direction,
         startingPosition,
+        temp_rack,
     }
 };

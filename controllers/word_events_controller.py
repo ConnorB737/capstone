@@ -25,9 +25,9 @@ def attach_controller(socketio):
         rack = game.racks.filter(lambda r: r.player == player).first()
         tile_bag = game.tile_bag
         ##
-        for tile_position in message["startingPosition"]: 
+        for tile in message["temp_rack"]: 
             for i in range(len(rack.tiles)):
-                if rack.tiles[i] ==  tile_position['value']:
+                if rack.tiles[i] ==  tile:
                     rack.tiles.pop(i)
                     rack.tiles.append(tile_bag.pop())
                     break
