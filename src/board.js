@@ -17,18 +17,12 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            swapList: [], // array of index related to the rackList that need to be send to backend and remove from it.
-            player: {
-                name: "",
-                score: 0,
-            },
-            opponent: {},
-            
+            swapList: [], // array of index related to the rackList that need to be send to backend and remove from it
             word: {
                 direction: [DIRECTION.NOT_PLACED], 
                 placedTiles: [], //contains the coords of each tile
             },
-            
+            temp_rack: [],
             wordList: words["wordList"],
         }
     }
@@ -56,6 +50,15 @@ class Board extends Component {
     onDrop(ev, coordinate) {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
+        let temp_rack = this.state.temp_rack;
+        // console.log("this.props.rack: ", this.props.rack)
+        for (let i = 0; i < this.props.rack.length; i++) {
+            if (this.props.rack[i] === value) {
+                temp_rack.push(this.props.rack.splice(i, 1)[0]);
+            }
+        }
+        console.log("temp_rack: ",temp_rack)
+        this.setState({temp_rack:temp_rack});
         
         let tempBoardState = JSON.parse(JSON.stringify(this.props.serverBoard)); //cloning the object, as opposed to referencing it
         
@@ -339,6 +342,9 @@ class Board extends Component {
         var board = this.props.serverBoard;
         
         let allTiles = [];
+        // code relate to send temp_rack
+        console.log("this.state.temp_rack: ", this.state.temp_rack)
+
         
         function checkAdjacentWords(tilesToCheck, dir){
             let returnVal = true;
@@ -518,6 +524,11 @@ class Board extends Component {
         this.state.word.direction[0] = DIRECTION.NOT_PLACED;
         this.state.word.placedTiles.length = 0; //delete all tiles
         this.props.getBoard(this.props.socket);
+        for (let i=0; i<this.state.temp_rack.length; i++) {
+            this.props.rack.push(this.state.temp_rack.splice(i, 1)[0])
+        };
+        this.setState({temp_rack:[]});
+        // window.location.reload();
     }
 
     pass() {
