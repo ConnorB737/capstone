@@ -51,9 +51,9 @@ class TileBag(db.Entity):
         return [self.bag.pop() for _ in range(tiles_to_return)]
 
     # Swap a tile with another tile
-    def swap(self, incoming_tile: str) -> Optional[str]:
+    def swap(self, incoming_tile: str) -> Optional[list]:
         outgoing_list = []
-        if self.tiles_left():
+        if self.tiles_left() > len(incoming_tile):
             for tile in incoming_tile:
                 outgoing_tile = self.bag.pop()
                 self.bag.append(tile)
@@ -65,7 +65,6 @@ class TileBag(db.Entity):
                     outgoing_tile = self.bag.pop()
 
                 outgoing_list.append(outgoing_tile)
-
             return outgoing_list
         else:
             return None
@@ -74,9 +73,15 @@ class TileBag(db.Entity):
     def tiles_left(self):
         return len(self.bag)
 
+    def pop(self):
+        return self.bag.pop()
+
 
 class Rack(db.Entity):
 
     game = orm.Required("Game", reverse="racks")
     player = orm.Required("User", reverse="racks")
     tiles = orm.Optional(StrArray)
+
+    def remove(self, tile):
+        self.tiles.remove(tile)

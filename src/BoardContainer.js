@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    placeWord: (socket, word, direction, startingPosition) => dispatch(placeWord(socket, word, direction, startingPosition)),
+    placeWord: (socket, word, direction, startingPosition, temp_rack) => dispatch(placeWord(socket, word, direction, startingPosition, temp_rack)),
     placeTile: (placedTile) => dispatch(placeTile(placedTile)),
     getBoard: (socket) => dispatch(getBoard(socket)),
     swapTile: (socket, tile) => dispatch(swapTile(socket, tile)),

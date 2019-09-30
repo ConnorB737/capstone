@@ -77,9 +77,9 @@ export const wordAccepted = (socket) => {
     }
 };
 
-export const placeWord = (socket, word, direction, startingPosition) => {
+export const placeWord = (socket, word, direction, startingPosition, temp_rack) => {
     return (dispatch) => {
-        socket.emit(socketEvents.PLACE_WORD, buildPlaceWordMessage(word, direction, startingPosition))
+        socket.emit(socketEvents.PLACE_WORD, buildPlaceWordMessage(word, direction, startingPosition, temp_rack))
     }
 };
 

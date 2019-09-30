@@ -20,9 +20,22 @@ def attach_controller(socketio):
         games = select(game for game in Game)[:]
         user = list(user for user in games[0].players)[0]
         place_word(games[0].id, user, message["startingPosition"])
+        game = Game.select().first()
+        player = game.players.select().first()
+        rack = game.racks.filter(lambda r: r.player == player).first()
+        tile_bag = game.tile_bag
         ##
+        for tile in message["temp_rack"]: 
+            for i in range(len(rack.tiles)):
+                if rack.tiles[i] ==  tile:
+                    rack.tiles.pop(i)
+                    rack.tiles.append(tile_bag.pop())
+                    break
+
+        commit()
 
         socketio.emit(EventType.WORD_ACCEPTED.value)
+        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
 
     @socketio.on(EventType.GET_RACK.value)
     @db_session
