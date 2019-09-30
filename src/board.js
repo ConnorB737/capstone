@@ -478,7 +478,76 @@ class Board extends Component {
                             });
             }
         }
-        
+
+                 //sorts the coords in order of their i or j coordinate depending on the direction
+        let adjacentTiles = [];
+        if(direction === DIRECTION.NOT_PLACED){
+             if((placedTiles[0]['y'] - 1 >= 0 && board[placedTiles[0]['y'] - 1][placedTiles[0]['x']] != null) ||
+                (placedTiles[0]['y'] + 1 <= 14 && board[placedTiles[0]['y'] + 1][placedTiles[0]['x']] != null)) {
+                direction = DIRECTION.DOWN;
+                } else {
+                    direction = DIRECTION.RIGHT;
+                }
+        }
+         if (direction === DIRECTION.RIGHT) { //horizonal
+            placedTiles = placedTiles.sort((a, b) => a['x'] - b['x']);
+            let startX = placedTiles[0]['x'];
+            while (startX > 0 && board[placedTiles[0]['y']][startX - 1] != null){
+                startX -= 1;
+            }
+
+            let endX = placedTiles[placedTiles.length-1]['x'];
+            while (endX < 14 && board[placedTiles[0]['y']][endX + 1] != null){
+                endX += 1;
+            }
+
+            for (let c = startX; c <= endX; c++){
+                allTiles.push({
+                                y: placedTiles[0]['y'],
+                                x: c,
+                                value: board[placedTiles[0]['y']][c]
+                            });
+                if((placedTiles[0]['y'] - 1 >= 0 && board[placedTiles[0]['y'] - 1][c] != null) ||
+                (placedTiles[0]['y'] + 1 <= 14 && board[placedTiles[0]['y'] + 1][c] != null)) { //if there are tiles adjacent to the word
+                    adjacentTiles.push({
+                                y: placedTiles[0]['y'],
+                                x: c,
+                                value: board[placedTiles[0]['y']][c]
+                            });
+                }
+            }
+
+         } else if (direction === DIRECTION.DOWN) {//vertical
+            placedTiles = placedTiles.sort((a, b) => a['y'] - b['y']);
+
+            let startY = placedTiles[0]['y'];
+            while (startY > 0 && board[startY - 1][placedTiles[0]['x']] != null){
+                startY -= 1;
+            }
+
+            let endY = placedTiles[placedTiles.length-1]['y'];
+            while (endY < 14 && board[endY + 1][placedTiles[0]['x']] != null){
+                endY += 1;
+            }
+
+            for (let c = startY; c <= endY; c++){
+                allTiles.push({
+                                y: c,
+                                x: placedTiles[0]['x'],
+                                value: board[c][placedTiles[0]['x']]
+                            });
+                if((placedTiles[0]['x'] - 1 >= 0 && board[c][placedTiles[0]['x'] - 1] != null) ||
+                (placedTiles[0]['x'] + 1 <= 14 && board[c][placedTiles[0]['x'] + 1] != null)) { //if there are tiles adjacent to the word
+                    adjacentTiles.push({
+                                y: c,
+                                x: placedTiles[0]['x'],
+                                value: board[placedTiles[0]['y']][c]
+                            });
+                }
+            }
+        }
+
+
         //as the word is now in order, we can simply take each letter to construct our word
         const combinedWord = allTiles.map(tile => tile['value']).join("");
         console.log(combinedWord);
