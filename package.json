@@ -10,6 +10,8 @@
     "jest-enzyme": "^7.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-native": "^0.61.1",
+    "react-native-flexi-radio-button": "^0.2.2",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.1.1",
     "react-scripts": "3.0.1",
