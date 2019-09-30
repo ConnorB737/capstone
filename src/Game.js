@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../src/image/logo.png';
 import BoardContainer from './BoardContainer';
+import {Link} from "react-router-dom";
 
 export class Game extends Component {
 
@@ -26,10 +27,9 @@ export class Game extends Component {
                     <BoardContainer serverBoard={sBoard} />
                 </div>
                 <div id="leftButton">
-                    <button className="main">Main Menu</button>
+                    <Link to="/HomePage"><button className="main">Main Menu</button></Link>
                     <button className="stop">Stop Game</button>
-                    <button className="help" onClick={()=>{
-                        window.location. assign("../public/help.html")}}>Help</button>
+                    <Link to="/dashboard"><button className="help">Help</button></Link>
 
                 </div>
 

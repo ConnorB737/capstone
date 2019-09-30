@@ -17,8 +17,8 @@ import HomePageContainer from "./HomePageContainer";
 import LoginContainer from "./LoginContainer";
 import RegisterContainer from "./RegisterContainer";
 import DashboardContainer from "./DashboardContainer";
-
-
+import Help from "./Help";
+import HelpContainer from "./HelpContainer"
 const socket = openSocket(config['{process.env.NODE_ENV}'], {transports: ['websocket', 'polling']});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -55,6 +55,9 @@ render(
               </Route>
               <Route path="/register">
                   <RegisterContainer />
+              </Route>
+              <Route path="/Help">
+                  <HelpContainer />
               </Route>
               <Route exact path="/dashboard">
                   <DashboardContainer />

@@ -29,7 +29,7 @@ export class HomePage extends Component {
                                 }}
                                 id="play">Play</button>
                         </Link>
-                        <Link to="help.html">
+                        <Link to="/Help">
                             <button
                                 style={{
                                     width: '580px',
