@@ -6,7 +6,7 @@ export class HomePage extends Component {
     render() {
         return (
             <div>
-                <img src="logo.png"/>
+                <img src="../src/image/logo.png"/>
 
                 <div className="white">
                     <div className="button">

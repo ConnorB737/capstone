@@ -20,6 +20,7 @@ export class Login extends Component {
     render() {
         return (
             <center>
+	        <img src="../src/image/logo.png"/>
                 <h1>Login</h1>
                 <form action="#" method="post">
                     <p>Email</p>
