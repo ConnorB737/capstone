@@ -20,7 +20,7 @@ export class Register extends Component {
     render() {
         return (
             <center>
-                <h1>Login</h1>
+                <h1>Register</h1>
                 <form action="#" method="post">
                     <p>Email</p>
                     <input
