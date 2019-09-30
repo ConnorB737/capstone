@@ -28,9 +28,9 @@ export class Game extends Component {
                     <BoardContainer serverBoard={sBoard} />
                 </div>
                 <div id="leftButton">
-                    <Link to="/HomePage"><button className="main">Main Menu</button></Link>
+                    <Link to="/"><button className="main">Main Menu</button></Link>
                     <button className="stop">Stop Game</button>
-                    <Link to="/dashboard"><button className="help">Help</button></Link>
+                    <Link to="/Help"><button className="help">Help</button></Link>
 
                 </div>
 
