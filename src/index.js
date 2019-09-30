@@ -36,6 +36,7 @@ const store = createStore(
             joinedGames: [],
             openGames: [],
             user: null,
+            rack: null,
         },
     },
     composeEnhancers(applyMiddleware(thunk, routerMiddleware(history))),

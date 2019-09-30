@@ -31,3 +31,6 @@ class EventType(enum.Enum):
     LOGIN = "login"
     REGISTER = "register"
     USER_LOGGED_IN = "user_logged_in"
+
+    GET_RACK = "get_rack"
+    SWAP_TILE = "swap_tile"

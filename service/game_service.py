@@ -3,6 +3,7 @@ from pony.orm import commit
 from models.board import BoardState
 from models.game import Game
 from models.score import Score
+from models.tile_bag import TileBag, Rack
 from models.turn_state import TurnState
 from models.user import User
 
@@ -14,10 +15,18 @@ class GameError(RuntimeError):
 
 
 def build_game(first_player: User) -> Game:
+    tile_bag = TileBag.build_bag()
     new_game = Game(
         players={first_player},
         board=BoardState().serialize(),
         round=FIRST_ROUND,
+        tile_bag=tile_bag,
+    )
+    tile_bag.game = new_game
+    Rack(
+        game=new_game,
+        player=first_player,
+        tiles=tile_bag.fill_rack(),
     )
     TurnState(
         game=new_game,
@@ -46,6 +55,11 @@ def join_existing_game(game_id: int, player: User) -> Game:
             game=game,
             player=player,
             has_placed=False,
+        )
+        Rack(
+            game=game,
+            player=player,
+            tiles=[],
         )
         Score(
             game=game,

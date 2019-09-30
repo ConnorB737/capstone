@@ -17,19 +17,12 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rackList: ['A','B','C','D','E','F','G','H','I','J','K'],
-            swapList: [], // array of index related to the rackList that need to be send to backend and remove from it.
-            player: {
-                name: "",
-                score: 0,
-            },
-            opponent: {},
-            
+            swapList: [], // array of index related to the rackList that need to be send to backend and remove from it
             word: {
                 direction: [DIRECTION.NOT_PLACED], 
                 placedTiles: [], //contains the coords of each tile
             },
-            
+            temp_rack: [],
             wordList: words["wordList"],
         }
     }
@@ -57,6 +50,15 @@ class Board extends Component {
     onDrop(ev, coordinate) {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
+        let temp_rack = this.state.temp_rack;
+        for (let i = 0; i < this.props.rack.length; i++) {
+            if (this.props.rack[i] === value) {
+                temp_rack.push(this.props.rack.splice(i, 1)[0]);
+                break;
+            }
+        }
+        console.log("temp_rack: ",temp_rack);
+        this.setState({temp_rack:temp_rack});
         
         let tempBoardState = JSON.parse(JSON.stringify(this.props.serverBoard)); //cloning the object, as opposed to referencing it
         
@@ -262,36 +264,42 @@ class Board extends Component {
         return "normaltd";
     }
 
-    handleSwapClick = (e, i) => {
-        let temp = []
-        if (this.state.swapList.length === 0) {
-            if (e.target.id==="tile") {
-                e.target.id="newTile"
-                temp.push(i)
-                this.setState({swapList:temp})
-            }
-        } else {
-            if (e.target.id === "newTile") {
-                e.target.id="tile"
-                temp = []
-                this.setState({swapList:temp})
-            }
+    handleSwapClick = (event, value) => {
+        let temp = this.state.swapList;
+
+        if (event.target.id === "tile") {
+            event.target.id = "newTile";
+            temp.push(value);
+            this.setState({swapList:temp})
         }
-    }
+        else {
+            event.target.id = "tile";
+            for(let i = 0; i < temp.length; i++){ 
+                if (temp[i] === value) {
+                    temp.splice(i, 1) 
+                }
+             }
+             this.setState({swapList:temp})
+        }
+    };
 
     handleSwapSend = () => {
-
-    }
+        console.log("tile to swap: ", this.state.swapList);
+        this.props.swapTile(this.props.socket, this.state.swapList);
+        let temp = [];
+        this.setState({swapList:temp});
+    };
 
     SwapPop = () => {
-        let rackBar = this.state.rackList.map((cell,i) =>
+
+        let rackBar = this.props.rack.map((cell,i) =>
                 <td 
                     key={i}
-                    onClick={(e) => this.handleSwapClick(e, i)}
+                    onClick={(e) => this.handleSwapClick(e, cell)}
                 >
                 {this.renderTile(cell)}
                 </td>
-            )
+            );
 
         return (
             <Popup trigger={<button>Swap</button>} modal>
@@ -311,7 +319,10 @@ class Board extends Component {
                                 </table>
                             </div>
                             <div className="swapPopFunction">
-                                <button onClick={() => this.handleSwapSend()}>Swap</button>
+                                <button onClick={() => {
+                                    this.handleSwapSend();
+                                    close()
+                                }}>Swap</button>
                                 <button onClick={ () => {
                                     close();
                                 }}>Cancel</button>
@@ -321,7 +332,7 @@ class Board extends Component {
                 }
             </Popup>
         )
-    }
+    };
 
     play() {
 
@@ -331,6 +342,99 @@ class Board extends Component {
         var board = this.props.serverBoard;
         
         let allTiles = [];
+
+        function checkAdjacentWords(tilesToCheck, dir){
+            let returnVal = true;
+            if (dir === DIRECTION.RIGHT) { //then the words are going to be going vertically
+                tilesToCheck.forEach(t => {
+                    let letters = [];
+                    
+                    let startY = t['y'];
+                    while (startY > 0 && board[startY - 1][t['x']] != null){
+                        startY -= 1;
+                    }
+
+                    let endY = t['y'];
+                    while (endY < 14 && board[endY + 1][t['x']] != null){
+                        endY += 1;
+                    }
+                    
+                    for (let c = startY; c <= endY; c++){
+                        letters.push(board[c][t['x']]);
+                    }
+                    console.log(letters.join(""));
+                    if (!wordList.includes(letters.join(""))){
+                        returnVal = false;
+                    }
+                });
+            } else if (dir === DIRECTION.DOWN) {
+                tilesToCheck.forEach(t => {
+                    let letters = [];
+                    
+                    let startX = t['x'];
+                    while (startX > 0 && board[t['y']][startX - 1] != null){
+                        startX -= 1;
+                    }
+
+                    let endX = t['x'];
+                    while (endX < 14 && board[t['y']][endX + 1] != null){
+                        endX += 1;
+                    }
+                    
+                    for (let c = startX; c <= endX; c++){
+                        letters.push(board[t['y']][c]);
+                    }
+                    console.log(letters.join(""));
+                    if (!wordList.includes(letters.join(""))){
+                        returnVal = false;
+                    }
+                });
+            } else { //check both directions -- usually when only one letter has been placed
+                tilesToCheck.forEach(t => {
+                    let letters = [];
+                    
+                    let startX = t['x'];
+                    while (startX > 0 && board[t['y']][startX - 1] != null){
+                        startX -= 1;
+                    }
+
+                    let endX = t['x'];
+                    while (endX < 14 && board[t['y']][endX + 1] != null){
+                        endX += 1;
+                    }
+                    
+                    for (let c = startX; c <= endX; c++){
+                        letters.push(board[t['y']][c]);
+                    }
+                    console.log(letters.join(""));
+                    if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
+                        returnVal = false;
+                    }
+                });
+                tilesToCheck.forEach(t => {
+                    let letters = [];
+                    
+                    let startY = t['y'];
+                    while (startY > 0 && board[startY - 1][t['x']] != null){
+                        startY -= 1;
+                    }
+
+                    let endY = t['y'];
+                    while (endY < 14 && board[endY + 1][t['x']] != null){
+                        endY += 1;
+                    }
+                    
+                    for (let c = startY; c <= endY; c++){
+                        letters.push(board[c][t['x']]);
+                    }
+                    console.log(letters.join(""));
+                    if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
+                        returnVal = false;
+                    }
+                });
+            }
+            return returnVal;
+        }
 
         //sorts the coords in order of their i or j coordinate depending on the direction
          if (direction === DIRECTION.RIGHT) { //horizonal
@@ -377,11 +481,13 @@ class Board extends Component {
         
         //as the word is now in order, we can simply take each letter to construct our word
         const combinedWord = allTiles.map(tile => tile['value']).join("");
-        if (this.state.wordList.includes(combinedWord)) { //if valid word, place it on the server and reset the state to place your next word
-            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles);
+        console.log(combinedWord);
+        if ((combinedWord.length <= 1 || wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
+            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles, this.state.temp_rack);
             this.clear();
         } else { 
             alert("Invalid word!");
+            this.clear();
         }
     }
 
@@ -389,6 +495,11 @@ class Board extends Component {
         this.state.word.direction[0] = DIRECTION.NOT_PLACED;
         this.state.word.placedTiles.length = 0; //delete all tiles
         this.props.getBoard(this.props.socket);
+        for (let i=0; i<this.state.temp_rack.length; i++) {
+            this.props.rack.push(this.state.temp_rack.splice(i, 1)[0])
+        };
+        this.setState({temp_rack:[]});
+        window.location.reload();
     }
 
     pass() {
@@ -410,7 +521,18 @@ class Board extends Component {
                 </tr>)
             });
 
-            let rackList = this.state.rackList;
+            let rackList = [];
+            if (this.props.rack != null) {
+                rackList = this.props.rack.map(tile => {
+                    return <td>{this.renderTile(tile)}</td>
+                })
+            }
+
+            let swapPopUp = [];
+            console.log(this.props.rack);
+            if (this.props.rack != null) {
+                swapPopUp = this.SwapPop();
+            }
 
             return (
                 <div id="board">
@@ -426,11 +548,7 @@ class Board extends Component {
                         <div>
                             <table>
                                 <tbody>
-                                    <tr>{
-                                        rackList.map(tile => {
-                                            return <td>{this.renderTile(tile)}</td>
-                                        })
-                                    }
+                                    <tr>{rackList}
                                     </tr>
                                 </tbody>
                             </table>
@@ -439,7 +557,7 @@ class Board extends Component {
                             <button onClick={this.play.bind(this)}>Play</button>
                             <button onClick={this.pass.bind(this)}>Pass</button>
                             <button onClick={this.clear.bind(this)}>Clear</button>
-                            {this.SwapPop()}
+                            { swapPopUp }
                         </div>
                     </div>
                 </div>

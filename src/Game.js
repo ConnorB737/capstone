@@ -9,6 +9,7 @@ export class Game extends Component {
         this.props.getGames(this.props.main.socket);
         this.props.getBoard(this.props.main.socket);
         this.props.getScores(this.props.main.socket);
+        this.props.getRack(this.props.main.socket);
     }
 
     render() {

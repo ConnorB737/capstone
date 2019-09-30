@@ -36,6 +36,11 @@ const mainReducer = (state, action) => {
                 ...state,
                 user: action.user,
             };
+        case types.UPDATE_RACK:
+            return {
+                ...state,
+                rack: action.rack,
+            };
         default:
             return state || null;
     }

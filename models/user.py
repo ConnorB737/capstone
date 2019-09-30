@@ -17,3 +17,4 @@ class User(db.Entity, UserMixin):
     games = Set('Game')
     turn_states = Set('TurnState')
     scores = Set('Score')
+    racks = Set('Rack')

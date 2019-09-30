@@ -10,6 +10,7 @@ export const types = {
     LOGOUT: "logout",
     REGISTER: "register",
     USER_LOGGED_IN: "user_logged_in",
+    UPDATE_RACK: "update_rack"
 };
 
 
@@ -28,6 +29,12 @@ export const getBoard = (socket) => {
 export const getScores = (socket) => {
     return dispatch => {
         socket.emit(socketEvents.GET_SCORES);
+    };
+};
+
+export const getRack = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_RACK);
     };
 };
 
@@ -54,6 +61,18 @@ export const updateScores = (data) => {
     }
 };
 
+export const updateRack = (data) => {
+    return {
+        type: types.UPDATE_RACK,
+        rack: data,
+    }
+};
+
+export const swapTile = (socket, tile) => {
+    return dispatch => {
+        socket.emit(socketEvents.SWAP_TILE, {"tiles": tile});
+    }
+};
 
 export const wordAccepted = (socket) => {
     return dispatch => {
@@ -62,9 +81,9 @@ export const wordAccepted = (socket) => {
     }
 };
 
-export const placeWord = (socket, word, direction, startingPosition) => {
+export const placeWord = (socket, word, direction, startingPosition, temp_rack) => {
     return (dispatch) => {
-        socket.emit(socketEvents.PLACE_WORD, buildPlaceWordMessage(word, direction, startingPosition))
+        socket.emit(socketEvents.PLACE_WORD, buildPlaceWordMessage(word, direction, startingPosition, temp_rack))
     }
 };
 
