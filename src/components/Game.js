@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from '../src/image/logo.png';
-import BoardContainer from './BoardContainer';
+import logo from '../image/logo.png';
+import BoardContainer from '../containers/BoardContainer';
 import {Link} from "react-router-dom";
 
 export class Game extends Component {

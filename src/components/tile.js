@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Images from './imageCollection';
+import Images from '../imageCollection';
 
 
 export class Tile extends Component {

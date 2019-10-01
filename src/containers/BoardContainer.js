@@ -1,6 +1,6 @@
-import Board from "./board";
+import Board from "../components/board/board";
 import { connect } from "react-redux";
-import {getBoard, placeTile, placeWord, swapTile} from "./actions";
+import {getBoard, placeTile, placeWord, swapTile} from "../actions";
 
 
 const mapStateToProps = state => ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import GameContainer from "./GameContainer";
+import GameContainer from "./containers/GameContainer";
 
 const App = () => (
   <GameContainer />

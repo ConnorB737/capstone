@@ -1,5 +1,5 @@
 import React from 'react';
-import App from './GameContainer';
+import App from './containers/GameContainer';
 import { shallow } from 'enzyme';
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";

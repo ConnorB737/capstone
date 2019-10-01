@@ -1,6 +1,6 @@
-import { Game } from "./Game";
+import { Dashboard } from "../components/Dashboard";
 import { connect } from "react-redux";
-import {getGames, getBoard, getScores, getRack} from "./actions";
+import {getGames, logout, redirectTo} from "../actions";
 
 
 const mapStateToProps = state => ({
@@ -9,13 +9,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getGames: (socket) => dispatch(getGames(socket)),
-  getBoard: (socket) => dispatch(getBoard(socket)),
-  getScores: (socket) => dispatch(getScores(socket)),
-  getRack: (socket) => dispatch(getRack(socket)),
+  redirectToLogin: () => dispatch(redirectTo("/login")),
+  logout: () => dispatch(logout()),
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Game);
+)(Dashboard);
 

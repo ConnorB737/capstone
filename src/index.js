@@ -7,18 +7,18 @@ import createRootReducer from './reducers';
 import * as serviceWorker from './serviceWorker';
 import openSocket from "socket.io-client";
 import { dispatchFromSocket } from "./Api";
-import GameContainer from "./GameContainer";
+import GameContainer from "./containers/GameContainer";
 import './index.css';
 import config from './config';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware, ConnectedRouter } from 'connected-react-router';
 import { Switch, Route, Link } from "react-router-dom";
-import HomePageContainer from "./HomePageContainer";
-import LoginContainer from "./LoginContainer";
-import RegisterContainer from "./RegisterContainer";
-import DashboardContainer from "./DashboardContainer";
-import Help from "./Help";
-import HelpContainer from "./HelpContainer"
+import HomePageContainer from "./containers/HomePageContainer";
+import LoginContainer from "./containers/LoginContainer";
+import RegisterContainer from "./containers/RegisterContainer";
+import DashboardContainer from "./containers/DashboardContainer";
+import Help from "./components/Help";
+import HelpContainer from "./components/HelpContainer"
 const socket = openSocket(config['{process.env.NODE_ENV}'], {transports: ['websocket', 'polling']});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

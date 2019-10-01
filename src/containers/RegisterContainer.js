@@ -1,6 +1,6 @@
-import { Login } from "./Login";
+import { Register } from "../components/Register";
 import { connect } from "react-redux";
-import {login} from "./actions";
+import {register} from "../actions";
 
 
 const mapStateToProps = state => ({
@@ -8,11 +8,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  login: (socket, email, password) => dispatch(login(socket, email, password)),
+  register: (socket, email, password) => dispatch(register(socket, email, password)),
 });
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(Login);
+)(Register);
 
