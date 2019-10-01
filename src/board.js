@@ -568,7 +568,7 @@ class Board extends Component {
             this.props.main.rack.push(this.state.temp_rack.splice(i, 1)[0])
         };
         this.setState({temp_rack:[]});
-        window.location.reload();
+        // window.location.reload();
     }
 
     pass() {
