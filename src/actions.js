@@ -1,4 +1,5 @@
-import {buildPlaceWordMessage, socketEvents} from "./Api";
+import {buildLoginMessage, buildPlaceWordMessage, buildRegisterMessage, socketEvents} from "./Api";
+import { push } from 'connected-react-router'
 
 export const types = {
     SOCKET: 'socket',
@@ -6,6 +7,9 @@ export const types = {
 	UPDATE_BOARD: "update_board",
     PLACE_TILE: "place_tile",
     UPDATE_SCORES: "update_scores",
+    LOGOUT: "logout",
+    REGISTER: "register",
+    USER_LOGGED_IN: "user_logged_in",
     UPDATE_RACK: "update_rack"
 };
 
@@ -90,3 +94,36 @@ export const placeTile = (data) => {
     }
 };
 
+export const redirectTo = (path) => {
+    return dispatch => {
+        dispatch(push(path))
+    };
+};
+
+export const logout = () => {
+    return {
+        type: types.LOGOUT,
+    }
+};
+
+export const login = (socket, email, password) => {
+    return dispatch => {
+        socket.emit(socketEvents.LOGIN, buildLoginMessage(email, password));
+    }
+};
+
+export const register = (socket, email, password) => {
+    return dispatch => {
+        socket.emit(socketEvents.REGISTER, buildRegisterMessage(email, password));
+    }
+};
+
+export const userLoggedIn = (data) => {
+    return dispatch => {
+        dispatch({
+            type: types.USER_LOGGED_IN,
+            user: data,
+        });
+        dispatch(push("/dashboard"));
+    };
+};

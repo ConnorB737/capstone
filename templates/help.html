@@ -4,17 +4,145 @@
     <link rel="stylesheet" href="help.css" type="text/css" />
     <meta charset="UTF-8">
     <title>Help</title>
+    <style>
+        #reminder{
+            position: relative;
+            font-size: 50px;
+            top:30px;
+            left:420px;
+        }
+        #setUp{
+            position: relative;
+            font-size: 30px;
+            top:30px;
+            left:390px;
+        }
+        #gamePlay{
+            position: relative;
+            font-size: 18px;
+            top:0px;
+            left:430px;
+        }
+        #scoring{
+            position: relative;
+            font-size: 19px;
+            top:0px;
+            left:420px;
+        }
+    </style>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#scoring").hide();
+            $("#setUp").hide();
+            $("#gamePlay").hide();
+            $("#b2").click(function () {
+                $("#setUp").show();
+                $("#scoring").hide();
+                $("#gamePlay").hide();
+                $("#reminder").hide();
+            });
+            $("#b3").click(function () {
+                $("#scoring").hide();
+                $("#setUp").hide();
+                $("#gamePlay").show();
+                $("#reminder").hide();
+
+            });
+            $("#b4").click(function () {
+                $("#setUp").hide();
+                $("#gamePlay").hide();
+                $("#scoring").show();
+                $("#reminder").hide();
+
+            });
+        });
+    </script>
+
 </head>
 <body>
-<img src="../src/image/logo.png">
+<img src="logo.png">
 
 <div id="nav">
     <ul>
         <li><a href="home%20page.html">Home</a></li>
-        <li><a href="">Set Up</a></li>
-        <li><a href="">Game Play</a></li>
-        <li><a href="">Scoring</a></li>
+        <li><a  id="b2" >Set Up</a></li>
+        <li><a id="b3" >Game Play</a></li>
+        <li><a id="b4">Scoring</a></li>
     </ul>
+</div>
+
+<div id="reminder"><p>Welcome to scrabble!<br> Please check rules first before game!</p>
+</div>
+<div id="setUp">
+    <p> (need to be modified)Click 'Play' button to start a game,register <br>a account using the email
+        and login. You can choose a game<br> room you've played before or just set up to start a game.
+        After <br>clicking the game number,you should have a game board, 15x15 <br>
+        letter tiles, a letter bag, and 7 racks.
+
+    </p>
+</div>
+
+<div id="gamePlay">
+    <p>
+        1. There can be between 3 and 6 players<br>
+         2. Players can be other users, or versus the computer
+        <br>3. The game commences when word of 2 or more letters (horizontally or vertically,
+        diagonally<br> now allowed) in placed in the center square. As turns can be taken in parallel,
+        this is merely the <br>first person to place a word.
+        <br>4. The game continues in rounds, where each player gets to take an action; place a word,
+        skip<br> their turn, or swap their tiles out for new ones from the tile bag. Once every player
+        has taken<br> an action, the next round begins.
+        <br>5. In the case where two players try and place a word in the same place, either the first
+        person<br> to place a word gets the spot or if they placed at the exact same time, the word
+        with the highest <br>score gets the position.
+        <br>6. Placing a word will happen all at once; no one will see you placing tiles until you click<br>
+        ‘play’ and your entire word will appear on their screen.
+        <br>7. New words must be at least of length 2, and must create words from left to right or
+        from <br>top to bottom with any tiles that the new word’s tiles are adjacent to.
+        <br>8. No tile may be shifted or replaced after it has been played and scored
+        <br>9. The game ends when all the letters have been drawn from the tile bag and one player
+        uses<br> his or her last letter, or when all possible plays have been made.
+    </p>
+    {/*<p>*/}
+    {/*1. There can be between 3 and 6 players<br></br>*/}
+    {/*2. Players can be other users, or versus the computer*/}
+    {/*<br></br>3. The game commences when word of 2 or more letters (horizontally or vertically,*/}
+    {/*diagonally<br></br> now allowed) in placed in the center square. As turns can be taken in parallel,*/}
+    {/*this is merely the <br></br>first person to place a word.*/}
+    {/*<br></br>4. The game continues in rounds, where each player gets to take an action; place a word,*/}
+    {/*skip<br> </br>their turn, or swap their tiles out for new ones from the tile bag. Once every player*/}
+    {/*has taken<br> </br>an action, the next round begins.*/}
+    {/*<br></br>5. In the case where two players try and place a word in the same place, either the first*/}
+    {/*person<br> </br>to place a word gets the spot or if they placed at the exact same time, the word*/}
+    {/*with the highest <br></br>score gets the position.*/}
+    {/*<br></br>6. Placing a word will happen all at once; no one will see you placing tiles until you click<br></br>*/}
+    {/*‘play’ and your entire word will appear on their screen.*/}
+    {/*<br></br>7. New words must be at least of length 2, and must create words from left to right or*/}
+    {/*from <br></br>top to bottom with any tiles that the new word’s tiles are adjacent to.*/}
+    {/*<br></br>8. No tile may be shifted or replaced after it has been played and scored*/}
+    {/*<br></br>9. The game ends when all the letters have been drawn from the tile bag and one player*/}
+    {/*uses<br></br> his or her last letter, or when all possible plays have been made.*/}
+    {/*</p>*/}
+</div>
+
+<div id="scoring">
+    <p>
+        1. The score box on the game page shows each player’s score. The score value of<br>
+        each letter is indicated by a number at the bottom of the tile.
+        <br>2. The score for each turn is the sum of the letter values in each word(s) formed or
+        modified<br> on that turn. If the letter is placed on the bonus squares, the score of letter or
+        the whole <br>word will be doubled or tripled.
+        <br>3. Letter and word premiums count only on the turn in which they are played. On later
+        <br>turns, letters already played on premium squares count at face value.
+        <br>4. When two or more words are formed in the same play, each is scored. The common
+        <br>letter is counted (with full premium value, if any) for each word.
+        <br>5. Unplayed letters: when the game ends, each player’s score is reduced by the sum<br> of his
+        or her unplayed letters. In addition, if a player has used all of his or her letters,<br> the sum
+        of the other players'unplayed letters are added to that player’s score.
+        <br>6. The player with the highest final score wins the game. In the case of a tie, the player
+        <br>with the highest score before adding or deducting unplayed letters wins.
+    </p>
 </div>
 
 </body>

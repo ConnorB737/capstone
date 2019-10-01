@@ -1,11 +1,13 @@
 import { types } from "./actions";
+import {combineReducers} from "redux";
+import { connectRouter } from 'connected-react-router';
 
-const reducer = (state, action) => {
+const mainReducer = (state, action) => {
     switch (action.type) {
         case types.UPDATE_GAMES_LIST:
             return {
                 ...state,
-                games: action.games,
+                joinedGames: action.games,
             };
 		case types.UPDATE_BOARD:
 			return {
@@ -24,14 +26,29 @@ const reducer = (state, action) => {
                 ...state,
                 scores: action.scores,
             };
+        case types.LOGOUT:
+            return {
+                ...state,
+                user: null,
+            };
+        case types.USER_LOGGED_IN:
+            return {
+                ...state,
+                user: action.user,
+            };
         case types.UPDATE_RACK:
             return {
                 ...state,
                 rack: action.rack,
             };
         default:
-            return state;
+            return state || null;
     }
 };
 
-export default reducer;
+const createRootReducer = (history) => combineReducers({
+    router: connectRouter(history),
+    main: mainReducer,
+});
+
+export default createRootReducer;

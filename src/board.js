@@ -51,16 +51,16 @@ class Board extends Component {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
         let temp_rack = this.state.temp_rack;
-        for (let i = 0; i < this.props.rack.length; i++) {
-            if (this.props.rack[i] === value) {
-                temp_rack.push(this.props.rack.splice(i, 1)[0]);
+        for (let i = 0; i < this.props.main.rack.length; i++) {
+            if (this.props.main.rack[i] === value) {
+                temp_rack.push(this.props.main.rack.splice(i, 1)[0]);
                 break;
             }
         }
         console.log("temp_rack: ",temp_rack);
         this.setState({temp_rack:temp_rack});
         
-        let tempBoardState = JSON.parse(JSON.stringify(this.props.serverBoard)); //cloning the object, as opposed to referencing it
+        let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
         
         let droppedTileY = coordinate[0];
         let droppedTileX = coordinate[1];
@@ -285,14 +285,14 @@ class Board extends Component {
 
     handleSwapSend = () => {
         console.log("tile to swap: ", this.state.swapList);
-        this.props.swapTile(this.props.socket, this.state.swapList);
+        this.props.swapTile(this.props.main.socket, this.state.swapList);
         let temp = [];
         this.setState({swapList:temp});
     };
 
     SwapPop = () => {
 
-        let rackBar = this.props.rack.map((cell,i) =>
+        let rackBar = this.props.main.rack.map((cell,i) =>
                 <td 
                     key={i}
                     onClick={(e) => this.handleSwapClick(e, cell)}
@@ -335,11 +335,11 @@ class Board extends Component {
     };
 
     play() {
+
         var placedTiles = this.state.word.placedTiles;
         var direction = this.state.word.direction[0];
-        var wordList = this.state.wordList;
         
-        var board = this.props.serverBoard;
+        var board = this.props.main.serverBoard;
         
         let allTiles = [];
 
@@ -363,7 +363,7 @@ class Board extends Component {
                         letters.push(board[c][t['x']]);
                     }
                     console.log(letters.join(""));
-                    if (!wordList.includes(letters.join(""))){
+                    if (!this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
@@ -385,7 +385,7 @@ class Board extends Component {
                         letters.push(board[t['y']][c]);
                     }
                     console.log(letters.join(""));
-                    if (!wordList.includes(letters.join(""))){
+                    if (!this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
@@ -407,7 +407,7 @@ class Board extends Component {
                         letters.push(board[t['y']][c]);
                     }
                     console.log(letters.join(""));
-                    if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
+                    if (letters.join("").length > 1 && !this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
@@ -428,26 +428,15 @@ class Board extends Component {
                         letters.push(board[c][t['x']]);
                     }
                     console.log(letters.join(""));
-                    if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
+                    if (letters.join("").length > 1 && !this.state.wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
                 });
             }
             return returnVal;
         }
-        
-        
 
         //sorts the coords in order of their i or j coordinate depending on the direction
-        let adjacentTiles = [];
-        if(direction === DIRECTION.NOT_PLACED){
-             if((placedTiles[0]['y'] - 1 >= 0 && board[placedTiles[0]['y'] - 1][placedTiles[0]['x']] != null) || 
-                (placedTiles[0]['y'] + 1 <= 14 && board[placedTiles[0]['y'] + 1][placedTiles[0]['x']] != null)) {
-                direction = DIRECTION.DOWN;
-                } else {
-                    direction = DIRECTION.RIGHT;
-                }
-        }
          if (direction === DIRECTION.RIGHT) { //horizonal
             placedTiles = placedTiles.sort((a, b) => a['x'] - b['x']);
             let startX = placedTiles[0]['x'];
@@ -466,14 +455,6 @@ class Board extends Component {
                                 x: c,
                                 value: board[placedTiles[0]['y']][c]
                             });
-                if((placedTiles[0]['y'] - 1 >= 0 && board[placedTiles[0]['y'] - 1][c] != null) || 
-                (placedTiles[0]['y'] + 1 <= 14 && board[placedTiles[0]['y'] + 1][c] != null)) { //if there are tiles adjacent to the word
-                    adjacentTiles.push({
-                                y: placedTiles[0]['y'],
-                                x: c,
-                                value: board[placedTiles[0]['y']][c]
-                            });
-                }
             }
             
          } else if (direction === DIRECTION.DOWN) {//vertical
@@ -495,7 +476,67 @@ class Board extends Component {
                                 x: placedTiles[0]['x'],
                                 value: board[c][placedTiles[0]['x']]
                             });
-                if((placedTiles[0]['x'] - 1 >= 0 && board[c][placedTiles[0]['x'] - 1] != null) || 
+            }
+        }
+
+                 //sorts the coords in order of their i or j coordinate depending on the direction
+        let adjacentTiles = [];
+        if(direction === DIRECTION.NOT_PLACED){
+             if((placedTiles[0]['y'] - 1 >= 0 && board[placedTiles[0]['y'] - 1][placedTiles[0]['x']] != null) ||
+                (placedTiles[0]['y'] + 1 <= 14 && board[placedTiles[0]['y'] + 1][placedTiles[0]['x']] != null)) {
+                direction = DIRECTION.DOWN;
+                } else {
+                    direction = DIRECTION.RIGHT;
+                }
+        }
+         if (direction === DIRECTION.RIGHT) { //horizonal
+            placedTiles = placedTiles.sort((a, b) => a['x'] - b['x']);
+            let startX = placedTiles[0]['x'];
+            while (startX > 0 && board[placedTiles[0]['y']][startX - 1] != null){
+                startX -= 1;
+            }
+
+            let endX = placedTiles[placedTiles.length-1]['x'];
+            while (endX < 14 && board[placedTiles[0]['y']][endX + 1] != null){
+                endX += 1;
+            }
+
+            for (let c = startX; c <= endX; c++){
+                allTiles.push({
+                                y: placedTiles[0]['y'],
+                                x: c,
+                                value: board[placedTiles[0]['y']][c]
+                            });
+                if((placedTiles[0]['y'] - 1 >= 0 && board[placedTiles[0]['y'] - 1][c] != null) ||
+                (placedTiles[0]['y'] + 1 <= 14 && board[placedTiles[0]['y'] + 1][c] != null)) { //if there are tiles adjacent to the word
+                    adjacentTiles.push({
+                                y: placedTiles[0]['y'],
+                                x: c,
+                                value: board[placedTiles[0]['y']][c]
+                            });
+                }
+            }
+
+         } else if (direction === DIRECTION.DOWN) {//vertical
+            placedTiles = placedTiles.sort((a, b) => a['y'] - b['y']);
+
+            let startY = placedTiles[0]['y'];
+            while (startY > 0 && board[startY - 1][placedTiles[0]['x']] != null){
+                startY -= 1;
+            }
+
+            let endY = placedTiles[placedTiles.length-1]['y'];
+            while (endY < 14 && board[endY + 1][placedTiles[0]['x']] != null){
+                endY += 1;
+            }
+
+            for (let c = startY; c <= endY; c++){
+                allTiles.push({
+                                y: c,
+                                x: placedTiles[0]['x'],
+                                value: board[c][placedTiles[0]['x']]
+                            });
+                if((placedTiles[0]['x'] - 1 >= 0 && board[c][placedTiles[0]['x'] - 1] != null) ||
                 (placedTiles[0]['x'] + 1 <= 14 && board[c][placedTiles[0]['x'] + 1] != null)) { //if there are tiles adjacent to the word
                     adjacentTiles.push({
                                 y: c,
@@ -505,12 +546,13 @@ class Board extends Component {
                 }
             }
         }
-        
+
+
         //as the word is now in order, we can simply take each letter to construct our word
         const combinedWord = allTiles.map(tile => tile['value']).join("");
         console.log(combinedWord);
-        if ((combinedWord.length <= 1 || wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
-            this.props.placeWord(this.props.socket, combinedWord, this.state.word.direction[0], allTiles, this.state.temp_rack);
+        if ((combinedWord.length <= 1 || this.state.wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
+            this.props.placeWord(this.props.main.socket, combinedWord, this.state.word.direction[0], allTiles, this.state.temp_rack);
             this.clear();
         } else { 
             alert("Invalid word!");
@@ -521,9 +563,9 @@ class Board extends Component {
     clear() {
         this.state.word.direction[0] = DIRECTION.NOT_PLACED;
         this.state.word.placedTiles.length = 0; //delete all tiles
-        this.props.getBoard(this.props.socket);
+        this.props.getBoard(this.props.main.socket);
         for (let i=0; i<this.state.temp_rack.length; i++) {
-            this.props.rack.push(this.state.temp_rack.splice(i, 1)[0])
+            this.props.main.rack.push(this.state.temp_rack.splice(i, 1)[0])
         };
         this.setState({temp_rack:[]});
         window.location.reload();
@@ -535,8 +577,8 @@ class Board extends Component {
 
 
     render() {
-        if (this.props.serverBoard) {
-            const boardState = this.props.serverBoard.map((row,i) => {
+        if (this.props.main.serverBoard) {
+            const boardState = this.props.main.serverBoard.map((row,i) => {
                 return (<tr className="normaltr" key={i}>{row.map((cell, j) =>{
                     return(<td className={this._tile_class_name(i, j)}
                                   key={i * 15 + j} onDragOver={(e) => this.onDragOver(e)} onDrop={(e) => this.onDrop(e, [i, j])}
@@ -549,15 +591,15 @@ class Board extends Component {
             });
 
             let rackList = [];
-            if (this.props.rack != null) {
-                rackList = this.props.rack.map(tile => {
+            if (this.props.main.rack != null) {
+                rackList = this.props.main.rack.map(tile => {
                     return <td>{this.renderTile(tile)}</td>
                 })
             }
 
             let swapPopUp = [];
-            console.log(this.props.rack);
-            if (this.props.rack != null) {
+            console.log(this.props.main.rack);
+            if (this.props.main.rack != null) {
                 swapPopUp = this.SwapPop();
             }
 

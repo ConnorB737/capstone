@@ -5,6 +5,7 @@ from flask_socketio import SocketIO
 from pony.flask import Pony
 from pony.orm import set_sql_debug
 
+
 from config import CONFIG
 from models.database import db
 from models.user import login_manager
@@ -18,18 +19,19 @@ def create_app():
     app.config["SECRET_KEY"] = "vnkdjnfjknfl1232#"
     socketio.init_app(app)
 
-    from controllers.api_controller import api
-    app.register_blueprint(api, url_prefix='/api')
-
-    @app.route('/')
-    def frontend():
-        return render_template("index.html")
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def frontend(path):
+        return app.send_static_file("index.html")
 
     from controllers.game_events_controller import attach_controller as attach_game_controller
     attach_game_controller(socketio)
 
     from controllers.word_events_controller import attach_controller as attach_word_controller
     attach_word_controller(socketio)
+
+    from controllers.user_events_controller import attach_controller as attach_user_controller
+    attach_user_controller(socketio)
 
     set_sql_debug(True)
     db.generate_mapping(create_tables=True)
