@@ -52,7 +52,6 @@ class Board extends Component {
                 break;
             }
         }
-        console.log("temp_rack: ",temp_rack);
         this.setState({temp_rack:temp_rack});
 
         let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
@@ -120,7 +119,7 @@ class Board extends Component {
     };
 
     handleSwapSend = () => {
-        console.log("tile to swap: ", this.state.swapList);
+        //console.log("tile to swap: ", this.state.swapList);
         this.props.swapTile(this.props.main.socket, this.state.swapList);
         let temp = [];
         this.setState({swapList:temp});
@@ -182,6 +181,8 @@ class Board extends Component {
         const word = this.state.word;
 
         playTile(placedTiles, direction, board, wordList, placeWord, socket, tempRack, word);
+        
+        this.clear();
     }
 
     clear() {
@@ -190,7 +191,7 @@ class Board extends Component {
         this.props.getBoard(this.props.main.socket);
         for (let i=0; i<this.state.temp_rack.length; i++) {
             this.props.main.rack.push(this.state.temp_rack.splice(i, 1)[0])
-        };
+        }; 
         this.setState({temp_rack:[]});
         // window.location.reload();
     }
@@ -222,7 +223,6 @@ class Board extends Component {
             }
 
             let swapPopUp = [];
-            console.log(this.props.main.rack);
             if (this.props.main.rack != null) {
                 swapPopUp = this.SwapPop();
             }

@@ -142,11 +142,16 @@ scoring_info = {
 #ST2 - is the center, doubles score for the first word
 #include double/triple scored letters before doubling entire word score
 
-def calculate_word_score(wordArray):
+def calculate_word_score(game_id, wordArray):
     print(wordArray)
     doubleWord = False
     tripleWord = False
     score = 0
+    
+    game = Game[game_id]
+    board = BoardState.deserialize(game.board)
+    #wordArray += get_adjacent_tiles(wordArray[0]["x"], wordArray[0]["y"], board, 0 if wordArray[0]["x"] != wordArray[1]["x"] else 1, wordArray)
+    
     for letter in wordArray:
         score += scoring_info["LETTERS"][letter["value"]]
         coords = [letter["x"], letter["y"]]
@@ -164,3 +169,37 @@ def calculate_word_score(wordArray):
 
     print(score)
     return score
+
+def get_adjacent_tiles(self, startX, startY, board, direction, word): #returns tiles of adjacent words
+    adjTiles = []
+    if (direction == 0): #horitzonal
+        x = startX
+        if(startX + len(word) > 14): return False
+        while x < startX + len(word) and x < 15:
+            if (startY - 1 >= 0 and board[startY - 1][x] != None) or (startY + 1 < 15 and board[startY + 1][x] != None):
+                adjY = startY
+                while(adjY - 1 > 0 and board[adjY - 1][x] != None ):
+                    adjY -= 1
+                while(adjY < 15 and (board[adjY][x] != None or adjY == startY)):
+                    if adjY == startY:
+                        adjTiles += [word[x - startX]]
+                    else:
+                        adjTiles += [{"x":x, "y":adjY, "value":board[adjY][x]}]
+                    adjY += 1
+            x += 1
+    else: #vertical
+        y = startY
+        if(startY + len(word) > 14): return False
+        while y < startY + len(word) and y < 15:
+            if (startX - 1 >= 0 and board[y][startX - 1] != None) or (startX + 1 < 15 and board[y][startX + 1] != None):
+                adjX = startX
+                while(adjX - 1 > 0 and board[y][adjX - 1] != None):
+                    adjX -= 1
+                while(adjX < 15 and (board[y][adjX] != None or adjX == startX)):
+                    if adjX == startX:
+                        adjTiles += [word[y - startY]]
+                    else:
+                        adjTiles += [{"x":adjX, "y":y, "value":board[adjY][x]}]
+                    adjX += 1
+            y += 1
+    return True

@@ -150,8 +150,9 @@ class AI:
         for x in range(len(conditions)): 
             if conditions[x] != None:
                 min_length = x
-        
-        for i in range(7, min_length, -1):
+        lengths = list(range(7, min_length, -1))
+        random.shuffle(lengths)
+        for i in lengths:
             permutations = list(itertools.permutations(letters, i))
             for p in permutations:
                 word = ''.join(p)
@@ -162,5 +163,5 @@ class AI:
                 word = ''.join(word_as_list)
 
                 if(self.trie.search(word) and self.check_word(startX, startY, board, direction, word)):
-                    words.append(word)
+                    return [word]
         return words

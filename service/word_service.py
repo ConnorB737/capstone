@@ -17,6 +17,6 @@ def place_word(game_id: int, player: User, placed_tiles: List[Dict]):
         board.place_tile(tile_position["x"], tile_position['y'], tile_position['value'])
     game.board = board.serialize()
     score_obj = select(score for score in Score).filter(lambda s: s.game == game).filter(lambda s: s.user == player).first()
-    score = gps.calculate_word_score(placed_tiles)
+    score = gps.calculate_word_score(game_id, placed_tiles)
     score_obj.value += score
     commit()
