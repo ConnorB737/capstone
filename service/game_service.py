@@ -1,3 +1,5 @@
+from typing import Union
+
 from pony.orm import commit
 
 from models.board import BoardState
@@ -10,63 +12,56 @@ from models.user import User
 FIRST_ROUND: int = 1
 
 
-class GameError(RuntimeError):
-    pass
-
-
-def build_game(first_player: User) -> Game:
+def build_game(first_player: User, human_player_count: int, ai_player_count: int) -> Game:
     tile_bag = TileBag.build_bag()
     new_game = Game(
-        players={first_player},
+        human_players={first_player},
+        human_player_count=human_player_count,
+        ai_player_count=ai_player_count,
         board=BoardState().serialize(),
         round=FIRST_ROUND,
         tile_bag=tile_bag,
     )
     tile_bag.game = new_game
-    Rack(
-        game=new_game,
-        player=first_player,
-        tiles=tile_bag.fill_rack(),
-    )
-    TurnState(
-        game=new_game,
-        player=first_player,
-        has_placed=False,
-    )
-    Score(
-        game=new_game,
-        user=first_player,
-        value=0,
-    )
     commit()
+    join_existing_game(new_game, first_player)
+    for ai_player_index in range(1, ai_player_count + 1):
+        join_existing_game(new_game, ai_player_index)
     return new_game
 
 
-def join_existing_game(game_id: int, player: User) -> Game:
-    game = Game.get(id=game_id)
-    if game is None:
-        raise GameError(f"Could not find game with id: {game_id}")
+def join_existing_game(game: Game, player: Union[User, int]) -> Game:
+    player_config = None
+    if isinstance(player, User):
+        if game.has_human_player(player):
+            return game
 
-    if game.has_player(player):
-        return game
-    elif len(game.players) < 2:
-        game.players.add(player)
-        TurnState(
-            game=game,
-            player=player,
-            has_placed=False,
-        )
-        Rack(
-            game=game,
-            player=player,
-            tiles=[],
-        )
-        Score(
-            game=game,
-            user=player,
-            value=0,
-        )
-        commit()
-        return game
+        elif len(game.human_players) < game.human_player_count:
+            game.human_players.add(player)
+            player_config = dict(
+                human_player=player,
+                ai_player=None,
+            )
     else:
-        raise GameError(f"No room to join game with id: {game_id}")
+        player_config = dict(
+            human_player=None,
+            ai_player=player,
+        )
+
+    TurnState(
+        game=game,
+        has_placed=False,
+        **player_config,
+    )
+    Rack(
+        game=game,
+        tiles=game.tile_bag.fill_rack(),
+        **player_config,
+    )
+    Score(
+        game=game,
+        value=0,
+        **player_config,
+    )
+    commit()
+    return game

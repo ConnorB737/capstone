@@ -29,11 +29,11 @@ const store = createStore(
     {
         main: {
             socket,
-            games: [],
+            openGames: [],
+            joinedGames: [],
+            readyGames: [],
 		    serverBoard: null,
             scores: [],
-            joinedGames: [],
-            openGames: [],
             user: null,
             rack: null,
         },

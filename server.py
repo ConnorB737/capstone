@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask
 from flask_socketio import SocketIO
 from pony.flask import Pony
 from pony.orm import set_sql_debug
@@ -8,10 +8,15 @@ from pony.orm import set_sql_debug
 
 from config import CONFIG
 from models.database import db
-from models.user import login_manager
+from models.user import login_manager, User
 from seed import seed_database_for_development
 
 socketio = SocketIO()
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User[user_id]
 
 
 def create_app():

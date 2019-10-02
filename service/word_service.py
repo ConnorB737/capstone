@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Union
 
 from pony.orm import commit, db_session, select
 
@@ -10,13 +10,12 @@ import service.gameplay_service as gps
 
 
 @db_session
-def place_word(game_id: int, player: User, placed_tiles: List[Dict]):
-    game = Game[game_id]
+def place_word(game: Game, player: Union[User, int], placed_tiles: List[Dict]):
     board = BoardState.deserialize(game.board)
     for tile_position in placed_tiles:
         board.place_tile(tile_position["x"], tile_position['y'], tile_position['value'])
     game.board = board.serialize()
     score_obj = select(score for score in Score).filter(lambda s: s.game == game).filter(lambda s: s.user == player).first()
-    score = gps.calculate_word_score(game_id, placed_tiles)
+    score = gps.calculate_word_score(game.id, placed_tiles)
     score_obj.value += score
     commit()

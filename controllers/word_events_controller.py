@@ -1,8 +1,12 @@
 import json
 
+from flask import session
+from flask_login import current_user
+
 from models.types import EventType
 from pony.orm import select, db_session, commit
 from models.game import Game
+from models.user import User
 from service.word_service import place_word
 
 
@@ -17,42 +21,38 @@ def attach_controller(socketio):
         #just getting something displaying from one
         #game to the next currently.
 
-        games = select(game for game in Game)[:]
-        user = list(user for user in games[0].players)[0]
-        place_word(games[0].id, user, message["startingPosition"])
-        game = Game.select().first()
-        player = game.players.select().first()
-        rack = game.racks.filter(lambda r: r.player == player).first()
+        game = Game[session['game_id']]
+        place_word(game, current_user, message["startingPosition"])
+        rack = game.racks.filter(lambda r: r.human_player == current_user).first()
         tile_bag = game.tile_bag
-        ##
+
+        # TODO: Figure out what this is supposed to do
         for tile in message["temp_rack"]: 
             for i in range(len(rack.tiles)):
-                if rack.tiles[i] ==  tile:
+                if rack.tiles[i] == tile:
                     rack.tiles.pop(i)
                     rack.tiles.append(tile_bag.pop())
                     break
 
         commit()
 
-        socketio.emit(EventType.WORD_ACCEPTED.value)
+        socketio.emit(EventType.WORD_ACCEPTED.value, room=session['game_id'])
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
 
     @socketio.on(EventType.GET_RACK.value)
     @db_session
     def get_rack():
-        game = Game.select().first()
-        player = game.players.select().first()
-        rack = game.racks.filter(lambda r: r.player == player).first()
+        game = Game[session['game_id']]
+        rack = game.racks.filter(lambda r: r.human_player == current_user).first()
 
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
 
     @socketio.on(EventType.SWAP_TILE.value)
     @db_session
     def swap_tiles(message):
-        game = Game.select().first()
-        player = game.players.select().first()
+        game = Game[session['game_id']]
         tile_bag = game.tile_bag
-        rack = game.racks.filter(lambda r: r.player == player).first()
+        rack = game.racks.filter(lambda r: r.human_player == current_user).first()
 
         # Remove the tile from the rack
         tiles_to_remove = message['tiles']

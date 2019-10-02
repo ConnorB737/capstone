@@ -1,4 +1,10 @@
-import {buildLoginMessage, buildPlaceWordMessage, buildRegisterMessage, socketEvents} from "./Api";
+import {
+    buildJoinGameMessage,
+    buildLoginMessage,
+    buildPlaceWordMessage,
+    buildRegisterMessage,
+    socketEvents
+} from "./Api";
 import { push } from 'connected-react-router'
 
 export const types = {
@@ -41,7 +47,7 @@ export const getRack = (socket) => {
 export const updateGamesList = (data) => {
     return {
         type: types.UPDATE_GAMES_LIST,
-        games: data.games,
+        ...data,
     }
 };
 
@@ -101,9 +107,12 @@ export const redirectTo = (path) => {
 };
 
 export const logout = () => {
-    return {
-        type: types.LOGOUT,
-    }
+    return dispatch => {
+        dispatch({
+            type: types.LOGOUT,
+        });
+        dispatch(push("/login"))
+    };
 };
 
 export const login = (socket, email, password) => {
@@ -125,5 +134,12 @@ export const userLoggedIn = (data) => {
             user: data,
         });
         dispatch(push("/dashboard"));
+    };
+};
+
+export const joinGame = (socket, gameId) => {
+    return dispatch => {
+        socket.emit(socketEvents.JOIN_GAME, buildJoinGameMessage(gameId));
+        dispatch(push(`/game/${gameId}`));
     };
 };

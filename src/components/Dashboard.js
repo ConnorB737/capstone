@@ -20,6 +20,10 @@ export class Dashboard extends Component {
     //     this.props.handleChange(this.props.main.socket, this.state.mode, this.state.number);
     // }
 
+    joinGame(gameId) {
+        this.props.joinGame(this.props.main.socket, gameId);
+    }
+
     render() {
         if (this.props.main.user == null) {
             return null;
@@ -48,11 +52,19 @@ export class Dashboard extends Component {
                 {/*<div> {this.state.number}</div>*/}
                 <h1>Welcome, { this.props.main.user.email } !</h1>
                 <a onClick={this.props.logout}>Logout</a>
+                <h2>Ready games</h2>
+                <ul>
+                    {
+                        this.props.main.readyGames.map((game) => {
+                            return <li onClick={this.joinGame.bind(this, game.id)}>Game #{game.id}</li>
+                        })
+                    }
+                </ul>
                 <h2>Joined games</h2>
                 <ul>
                     {
                         this.props.main.joinedGames.map((game) => {
-                            return <li><Link to={ `/game/${game.id}` }>Game #{game.id}</Link></li>
+                            return <li>Game #{game.id}</li>
                         })
                     }
                 </ul>
@@ -60,7 +72,7 @@ export class Dashboard extends Component {
                 <ul>
                     {
                         this.props.main.openGames.map((game) => {
-                            return <li><Link to={ `/game/${game.id}` }>Game #{game.id}</Link></li>
+                            return <li>Game #{game.id} - <span onClick={this.joinGame.bind(this, game.id)}>Join</span></li>
                         })
                     }
                 </ul></center></div>
