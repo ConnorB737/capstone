@@ -176,7 +176,7 @@ def get_adjacent_tiles(startX, startY, board, direction, word): #returns tiles o
     adjTiles = []
     if (direction == 0): #horitzonal
         x = startX
-        if(startX + len(word) > 14): return False
+        if(startX + len(word) > 15): return []
         while x < startX + len(word) and x < 15:
             if (startY - 1 >= 0 and board[startY - 1][x] != None) or (startY + 1 < 15 and board[startY + 1][x] != None):
                 adjY = startY
@@ -191,7 +191,7 @@ def get_adjacent_tiles(startX, startY, board, direction, word): #returns tiles o
             x += 1
     else: #vertical
         y = startY
-        if(startY + len(word) > 14): return False
+        if(startY + len(word) > 15): return []
         while y < startY + len(word) and y < 15:
             if (startX - 1 >= 0 and board[y][startX - 1] != None) or (startX + 1 < 15 and board[y][startX + 1] != None):
                 adjX = startX

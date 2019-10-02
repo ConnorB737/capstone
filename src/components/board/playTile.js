@@ -8,7 +8,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
             if (dir === DIRECTION.RIGHT) { //then the words are going to be going vertically
                 tilesToCheck.forEach(t => {
                     let letters = [];
-                    
                     let startY = t['y'];
                     while (startY > 0 && board[startY - 1][t['x']] != null){
                         startY -= 1;
@@ -30,7 +29,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
             } else if (dir === DIRECTION.DOWN) {
                 tilesToCheck.forEach(t => {
                     let letters = [];
-                    
                     let startX = t['x'];
                     while (startX > 0 && board[t['y']][startX - 1] != null){
                         startX -= 1;
@@ -52,7 +50,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
             } else { //check both directions -- usually when only one letter has been placed
                 tilesToCheck.forEach(t => {
                     let letters = [];
-                    
                     let startX = t['x'];
                     while (startX > 0 && board[t['y']][startX - 1] != null){
                         startX -= 1;
@@ -73,7 +70,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
                 });
                 tilesToCheck.forEach(t => {
                     let letters = [];
-                    
                     let startY = t['y'];
                     while (startY > 0 && board[startY - 1][t['x']] != null){
                         startY -= 1;
@@ -92,7 +88,7 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
                         returnVal = false;
                     }
                 });
-            }
+            }            
             return returnVal;
         }
         
@@ -164,8 +160,15 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
             }
         }
     //as the word is now in order, we can simply take each letter to construct our word
+    
     const combinedWord = allTiles.map(tile => tile['value']).join("");
-    if ((combinedWord.length <= 1 || wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
+    
+    if(board[7][7] == null){
+        alert("First word needs to be placed in the center");
+    } else if (!allTiles.some(tile => tile["x"] == 7 && tile["y"] == 7) && adjacentTiles.length == 0) { //if not placing the first word, and not adjacent to another word
+        alert("Your word must come off another word")
+    }
+    else if ((combinedWord.length <= 1 || wordList.includes(combinedWord)) && checkAdjacentWords(adjacentTiles, direction)) { //if valid word, place it on the server and reset the state to place your next word
         placeWord(socket, combinedWord, word.direction[0], allTiles, temp_rack);
         alert("Word Placed!");
     } else {
