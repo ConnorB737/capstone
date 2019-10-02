@@ -149,8 +149,10 @@ def calculate_word_score(game_id, wordArray):
     score = 0
     
     game = Game[game_id]
-    board = BoardState.deserialize(game.board)
-    #wordArray += get_adjacent_tiles(wordArray[0]["x"], wordArray[0]["y"], board, 0 if wordArray[0]["x"] != wordArray[1]["x"] else 1, wordArray)
+    board = BoardState.deserialize(game.board).get_state()
+    direction = 0 if wordArray[0]["x"] != wordArray[1]["x"] else 1
+    wordArray += get_adjacent_tiles(wordArray[0]["x"], wordArray[0]["y"], board, direction, wordArray)
+    print(wordArray)
     
     for letter in wordArray:
         score += scoring_info["LETTERS"][letter["value"]]
@@ -167,10 +169,10 @@ def calculate_word_score(game_id, wordArray):
     if(doubleWord): score *= 2
     if(tripleWord): score *= 3
 
-    print(score)
+    print("Score", score)
     return score
 
-def get_adjacent_tiles(self, startX, startY, board, direction, word): #returns tiles of adjacent words
+def get_adjacent_tiles(startX, startY, board, direction, word): #returns tiles of adjacent words
     adjTiles = []
     if (direction == 0): #horitzonal
         x = startX
@@ -199,7 +201,7 @@ def get_adjacent_tiles(self, startX, startY, board, direction, word): #returns t
                     if adjX == startX:
                         adjTiles += [word[y - startY]]
                     else:
-                        adjTiles += [{"x":adjX, "y":y, "value":board[adjY][x]}]
+                        adjTiles += [{"x":adjX, "y":y, "value":board[y][adjX]}]
                     adjX += 1
             y += 1
-    return True
+    return adjTiles

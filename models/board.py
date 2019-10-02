@@ -23,3 +23,9 @@ class BoardState:
 
     def place_tile(self, x_position, y_position, character):
         self.state[y_position][x_position] = character
+
+    def read_tile(self, x_position, y_position):
+        return self.state[y_position][x_position]
+
+    def get_state(self):
+        return self.state
