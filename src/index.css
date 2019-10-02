@@ -12,18 +12,15 @@ code {
   monospace;
 }
 body{
-  background: url("../src/image/background.jpg") no-repeat;
-;
+  background-image: url(../src/image/background.jpg);
 }
+
 .logo{
   margin-left: 50px;
 }
 .game {
   width: 800px;
   height: 620px;
-  /*position: relative;*/
-  /*align-self: auto;*/
-  /*margin: 0 auto;*/
 }
 
 #board table {
@@ -124,23 +121,7 @@ body{
   background: url("../src/bonus/TW.jpg") no-repeat;
   line-height: 0;
 }
-/*#leftBar {*/
-  /*position: absolute;*/
-  /*left: 0px;*/
-  /*width: 225px;*/
-  /*height: 525px;*/
-  /*background-color: lightskyblue;*/
-  /*border: 1px solid black;*/
 
-/*}*/
-
-/*#gamesList {*/
-  /*height: 150px;*/
-/*}*/
-
-/*#gameListNav {*/
-  /*text-align: center;*/
-/*}*/
 #leftButton{
   position: relative;
   bottom:32px;
@@ -153,7 +134,6 @@ body{
   text-align: center;
   border-radius: 20%;
   background-color: wheat;
-  /*font-weight: bolder;*/
   font-size: 20px;
 }
 
@@ -184,14 +164,10 @@ body{
   text-align: center;
 }
 
-
 #functionBar {
-  /*text-align: center;/\*/
   position: relative;
   top: 400px;
-  /*right:0px;*/
-  left:330px;
-  /*left: 100px;*/
+  left:420px;
 }
 #tile {
   width: 31px;
@@ -199,20 +175,13 @@ body{
   border-radius: 10%;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
-  /*position: absolute;*/
-  /*margin-left: 2px;*/
-  /*bottom: 20px;*/
-  /*top:0px;*/
 }
-
 
 #functionBar table {
   position: absolute;
   top: 0px;
   left:300px;
-  /*margin-left: 13000px;*/
   margin: 0 auto;
-  /*border-spacing: 10px;*/
 }
 
 #functionBar th, #functionBar td {
@@ -222,30 +191,16 @@ body{
   border-radius: 10%;
   line-height: 0;
   border: 1px solid black;
-  /*top:220px;*/
 }
 
 #functionBar button {
   background-color: burlywood;
   border-radius: 25%;
-  /*padding: 2px;*/
   margin: 2px;
-  /*top:130px;*/
-  /*left: 200px;*/
-  /*right:20px;*/
-  /*text-align: center;*/
   font-size: 18px;
   width: 69px;
   height: 35px;
 }
-
-/*#tile {*/
-  /*width: 31px;*/
-  /*height: 30px;*/
-  /*border-radius: 10%;*/
-  /*border-right: 1px solid black;*/
-  /*border-bottom: 1px solid black;*/
-/*}*/
 #newTile {
   width: 29px;
   height: 29px;
