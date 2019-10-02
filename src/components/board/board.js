@@ -45,19 +45,24 @@ class Board extends Component {
     onDrop(ev, coordinate) {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
-        let temp_rack = this.state.temp_rack;
-        for (let i = 0; i < this.props.main.rack.length; i++) {
-            if (this.props.main.rack[i] === value) {
-                temp_rack.push(this.props.main.rack.splice(i, 1)[0]);
-                break;
-            }
-        }
-        this.setState({temp_rack:temp_rack});
 
         let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
 
         let droppedTileY = coordinate[0];
         let droppedTileX = coordinate[1];
+
+        // this part handles the remove tile from rack once it been placed on the board
+        let temp_rack = this.state.temp_rack;
+        if (tempBoardState[droppedTileY][droppedTileX] === null) {
+            for (let i = 0; i < this.props.main.rack.length; i++) {
+                if (this.props.main.rack[i] === value) {
+                    temp_rack.push(this.props.main.rack.splice(i, 1)[0]);
+                    break;
+                }
+            }
+            this.setState({temp_rack:temp_rack});
+        } 
+
 
 		//this part of the code handles the checking of whether you're placing tiles in a logical order
 		//it won't let you place tiles randomly,
@@ -119,7 +124,6 @@ class Board extends Component {
     };
 
     handleSwapSend = () => {
-        //console.log("tile to swap: ", this.state.swapList);
         this.props.swapTile(this.props.main.socket, this.state.swapList);
         let temp = [];
         this.setState({swapList:temp});
@@ -173,7 +177,6 @@ class Board extends Component {
         const placedTiles = this.state.word.placedTiles;
         const direction = this.state.word.direction[0];
         const board = this.props.main.serverBoard;
-
         const wordList = this.state.wordList;
         const placeWord = this.props.placeWord.bind(this);
         const socket = this.props.main.socket;
@@ -188,12 +191,11 @@ class Board extends Component {
     clear() {
         this.state.word.direction[0] = DIRECTION.NOT_PLACED;
         this.state.word.placedTiles.length = 0; //delete all tiles
-        this.props.getBoard(this.props.main.socket);
+        this.props.main.serverBoard = this.props.getBoard(this.props.main.socket);
         for (let i=0; i<this.state.temp_rack.length; i++) {
-            this.props.main.rack.push(this.state.temp_rack.splice(i, 1)[0])
-        }; 
+            this.props.main.rack.push(this.state.temp_rack[i])
+        };
         this.setState({temp_rack:[]});
-        // window.location.reload();
     }
 
     pass() {
