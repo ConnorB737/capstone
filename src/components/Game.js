@@ -21,7 +21,10 @@ export class Game extends Component {
 
 
         return (
+            <div className="bgimg">
             <div className="game">
+
+
                 <div className="logo"><img src={logo} alt="" /></div>
                
                 <div className="game-board">
@@ -57,6 +60,7 @@ export class Game extends Component {
                     </div>
 
                 </div>
+            </div>
             </div>
         );
     }

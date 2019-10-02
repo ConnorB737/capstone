@@ -26,7 +26,10 @@ export class Dashboard extends Component {
         }
 
         return (
-            <center>
+
+                <div className="bgimg">
+                    <div style={{positive:'relative'}}>
+                        <center>
                 <label><input type="radio" name="mode" value="Normal"
                               onChange={(event) => this.setState({mode: event.target.value})}/>Normal</label>
                 <label><input type="radio" name="mode" value="AI"
@@ -60,8 +63,8 @@ export class Dashboard extends Component {
                             return <li><Link to={ `/game/${game.id}` }>Game #{game.id}</Link></li>
                         })
                     }
-                </ul>
-            </center>
+                </ul></center></div>
+                </div>
         );
     }
 

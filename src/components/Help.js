@@ -4,7 +4,8 @@ export class Help extends Component {
 
     render() {
         return (
-            <div>
+            <div className="bgimg">
+
                 <img style={{
                     position:'absolute'}} src={logo}/>
 

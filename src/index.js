@@ -17,7 +17,6 @@ import HomePageContainer from "./containers/HomePageContainer";
 import LoginContainer from "./containers/LoginContainer";
 import RegisterContainer from "./containers/RegisterContainer";
 import DashboardContainer from "./containers/DashboardContainer";
-import Help from "./components/Help";
 import HelpContainer from "./components/HelpContainer"
 const socket = openSocket(config['{process.env.NODE_ENV}'], {transports: ['websocket', 'polling']});
 

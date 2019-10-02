@@ -20,7 +20,9 @@ export class Register extends Component {
 
     render() {
         return (
+            <div className="bgimg">
                 <div style={{positive:'relative'}}>
+                    <div className="bgimg"></div>
                     <img src={logo} style={{ positive:'relative',marginLeft: '555px'}}/>
                     <h1 style={{ positive:'relative',marginLeft: '680px'}} >Register</h1>
                     <form action="#" method="post">
@@ -94,6 +96,7 @@ export class Register extends Component {
                         fontSize:'17px',
                         borderRadius: '10%'
                     }} >Login</button></Link>
+            </div>
             </div>
         );
     }

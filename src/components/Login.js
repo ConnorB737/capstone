@@ -21,8 +21,10 @@ export class Login extends Component {
 
     render() {
         return (
+            <div className="bgimg">
                 <div style={{positive:'relative'}}>
-                <img src={logo} style={{ positive:'relative',marginLeft: '555px'}}/>
+
+                    <img src={logo} style={{ positive:'relative',marginLeft: '555px'}}/>
                 <h1 style={{ positive:'relative',marginLeft: '680px'}} >Login</h1>
                 <form action="#" method="post">
                     <p style={{
@@ -95,6 +97,7 @@ export class Login extends Component {
                         fontSize:'17px',
                         borderRadius: '10%'
                     }} >Register</button></Link>
+            </div>
             </div>
         );
     }
