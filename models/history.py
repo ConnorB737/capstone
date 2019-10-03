@@ -18,6 +18,3 @@ class History(db.Entity):
 
     def add(self, word):
         self.words.append(word)
-    
-    # def getHistory(self):
-    #     return self.history

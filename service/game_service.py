@@ -31,10 +31,6 @@ def build_game(first_player: User) -> Game:
         player=first_player,
         tiles=tile_bag.fill_rack(),
     )
-    # History(
-    #     game = new_game,
-    #     history = [],
-    # )
     TurnState(
         game=new_game,
         player=first_player,
