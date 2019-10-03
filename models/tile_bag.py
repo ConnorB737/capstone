@@ -85,3 +85,4 @@ class Rack(db.Entity):
 
     def remove(self, tile):
         self.tiles.remove(tile)
+

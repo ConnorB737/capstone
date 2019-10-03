@@ -36,6 +36,8 @@ const store = createStore(
             openGames: [],
             user: null,
             rack: null,
+            tiles_left: null,
+            history:[],
         },
     },
     composeEnhancers(applyMiddleware(thunk, routerMiddleware(history))),

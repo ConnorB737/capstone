@@ -4,6 +4,7 @@ from models.board import BoardState
 from models.game import Game
 from models.score import Score
 from models.tile_bag import TileBag, Rack
+from models.history import History
 from models.turn_state import TurnState
 from models.user import User
 
@@ -16,11 +17,13 @@ class GameError(RuntimeError):
 
 def build_game(first_player: User) -> Game:
     tile_bag = TileBag.build_bag()
+    words_history = History.build_history()
     new_game = Game(
         players={first_player},
         board=BoardState().serialize(),
         round=FIRST_ROUND,
         tile_bag=tile_bag,
+        words_history = words_history,
     )
     tile_bag.game = new_game
     Rack(

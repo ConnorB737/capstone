@@ -24,7 +24,12 @@ def attach_controller(socketio):
         player = game.players.select().first()
         rack = game.racks.filter(lambda r: r.player == player).first()
         tile_bag = game.tile_bag
+        history = game.words_history
+        word = message["word"]
+
         ##
+        history.add(word)
+
         for tile in message["temp_rack"]: 
             for i in range(len(rack.tiles)):
                 if rack.tiles[i] ==  tile:
@@ -36,6 +41,9 @@ def attach_controller(socketio):
 
         socketio.emit(EventType.WORD_ACCEPTED.value)
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
+        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
+        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
+
 
     @socketio.on(EventType.GET_RACK.value)
     @db_session
@@ -68,3 +76,18 @@ def attach_controller(socketio):
 
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
 
+    @socketio.on(EventType.GET_TILES_LEFT.value)
+    @db_session
+    def get_tiles_left():
+        game = Game.select().first()
+        tile_bag = game.tile_bag
+
+        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
+
+    @socketio.on(EventType.GET_HISTORY.value)
+    @db_session
+    def get_history():
+        game = Game.select().first()
+        history = game.words_history
+
+        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
