@@ -3,7 +3,8 @@ from pony.orm import commit
 from models.board import BoardState
 from models.game import Game
 from models.score import Score
-from models.tile_bag import TileBag, Rack, History
+from models.tile_bag import TileBag, Rack
+from models.history import History
 from models.turn_state import TurnState
 from models.user import User
 
@@ -30,10 +31,10 @@ def build_game(first_player: User) -> Game:
         player=first_player,
         tiles=tile_bag.fill_rack(),
     )
-    History(
-        game = new_game,
-        history = [],
-    )
+    # History(
+    #     game = new_game,
+    #     history = [],
+    # )
     TurnState(
         game=new_game,
         player=first_player,

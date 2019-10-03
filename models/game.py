@@ -2,7 +2,8 @@ from pony import orm
 
 from models.database import db
 from models.score import Score
-from models.tile_bag import TileBag, Rack, History
+from models.tile_bag import TileBag, Rack
+from models.history import History
 from models.turn_state import TurnState
 from models.user import User
 

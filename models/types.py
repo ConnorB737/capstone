@@ -34,5 +34,5 @@ class EventType(enum.Enum):
 
     GET_RACK = "get_rack"
     SWAP_TILE = "swap_tile"
-    GET_TIELS_LEFT = "get_tiles_left"
+    GET_TILES_LEFT = "get_tiles_left"
     GET_HISTORY = "get_history"

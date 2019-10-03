@@ -41,8 +41,8 @@ def attach_controller(socketio):
 
         socketio.emit(EventType.WORD_ACCEPTED.value)
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
-        socketio.emit(EventType.GET_TIELS_LEFT.value, json.dumps(tile_bag.tiles_left()))
-        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.getHistory()))
+        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
+        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
 
 
     @socketio.on(EventType.GET_RACK.value)
@@ -56,8 +56,8 @@ def attach_controller(socketio):
 
 
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
-        socketio.emit(EventType.GET_TIELS_LEFT.value, json.dumps(tile_bag.tiles_left()))
-        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.getHistory()))
+        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
+        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
 
 
     @socketio.on(EventType.SWAP_TILE.value)

@@ -86,21 +86,3 @@ class Rack(db.Entity):
     def remove(self, tile):
         self.tiles.remove(tile)
 
-class History(db.Entity):
-
-    game = orm.Optional("Game", reverse="words_history")
-    history = orm.Optional(StrArray)
-
-
-    @classmethod
-    def build_history(cls):
-        history = []
-        return cls(
-            history=history,
-        )
-
-    def add(self, word):
-        self.history.append(word)
-    
-    def getHistory(self):
-        return self.history
