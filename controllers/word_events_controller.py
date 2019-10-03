@@ -36,6 +36,8 @@ def attach_controller(socketio):
 
         socketio.emit(EventType.WORD_ACCEPTED.value)
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
+        socketio.emit(EventType.GET_TIELS_LEFT.value, json.dumps(tile_bag.tiles_left()))
+
 
     @socketio.on(EventType.GET_RACK.value)
     @db_session
@@ -43,8 +45,11 @@ def attach_controller(socketio):
         game = Game.select().first()
         player = game.players.select().first()
         rack = game.racks.filter(lambda r: r.player == player).first()
+        tile_bag = game.tile_bag
 
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
+        socketio.emit(EventType.GET_TIELS_LEFT.value, json.dumps(tile_bag.tiles_left()))
+
 
     @socketio.on(EventType.SWAP_TILE.value)
     @db_session
