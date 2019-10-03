@@ -51,14 +51,8 @@ def attach_controller(socketio):
         game = Game.select().first()
         player = game.players.select().first()
         rack = game.racks.filter(lambda r: r.player == player).first()
-        tile_bag = game.tile_bag
-        history = game.words_history
-
 
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
-        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
-        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
-
 
     @socketio.on(EventType.SWAP_TILE.value)
     @db_session
@@ -81,3 +75,19 @@ def attach_controller(socketio):
         commit()
 
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
+
+    @socketio.on(EventType.GET_TILES_LEFT.value)
+    @db_session
+    def get_tiles_left():
+        game = Game.select().first()
+        tile_bag = game.tile_bag
+
+        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
+
+    @socketio.on(EventType.GET_HISTORY.value)
+    @db_session
+    def get_history():
+        game = Game.select().first()
+        history = game.words_history
+
+        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
