@@ -11,13 +11,13 @@ export class Game extends Component {
         this.props.getScores(this.props.main.socket);
         this.props.getRack(this.props.main.socket);
         this.props.getTilesLeft(this.props.main.socket);
+        this.props.getHistory(this.props.main.socket);
     }
 
     render() {
 		const sBoard = this.props.main.serverBoard; //this.props.serverBoard is the board received from the server
         
-        const wordsPlayed = ["hello", " world"] // contain history
-        let wordsPlayedList = wordsPlayed.map((word) => 
+        let wordsPlayedList = this.props.main.history.map((word) => 
         <li key={word.toString()}> {word} </li>)
 
 
