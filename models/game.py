@@ -10,11 +10,17 @@ from models.user import User
 
 class Game(db.Entity):
     """
-    Represents a Scrabble game between two players. The players are differentiated at this stage by the
-    URL they use to access the game. There is no difference between the "first" and "second" player.
+    Represents a Scrabble game between player_count players.
     """
 
-    players = orm.Set(User, reverse="games")
+    # The set of human players
+    human_players = orm.Set(User, reverse="games")
+
+    # Total number of players
+    human_player_count = orm.Required(int)
+
+    # Number of AI players
+    ai_player_count = orm.Required(int)
 
     # The source-of-truth state of the board
     board = orm.Required(str)
@@ -30,8 +36,10 @@ class Game(db.Entity):
 
     racks = orm.Set(Rack, reverse="game")
 
+    def has_human_player(self, player):
+        return player.id in (existing_player.id for existing_player in self.human_players)
+
     words_history = orm.Required(History, reverse = "game")
 
-    def has_player(self, player):
-        return player.id in (existing_player.id for existing_player in self.players)
-
+    def is_ready(self):
+        return len(self.human_players) == self.human_player_count

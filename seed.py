@@ -28,11 +28,19 @@ def seed_database_for_development():
 
         commit()
 
-        if select(game for game in Game if first_player in game.players and second_player in game.players).first() is None:
-            joined_game = build_game(first_player)
-            join_existing_game(joined_game.id, second_player)
+        if select(game for game in Game if first_player in game.human_players and second_player in game.human_players).first() is None:
+            joined_game = build_game(
+                first_player=first_player,
+                human_player_count=2,
+                ai_player_count=1,
+            )
+            join_existing_game(joined_game, second_player)
 
-        if select(game for game in Game if first_player in game.players and second_player not in game.players).first() is None:
-            build_game(first_player)
+        if select(game for game in Game if first_player in game.human_players and second_player not in game.human_players).first() is None:
+            build_game(
+                first_player=first_player,
+                human_player_count=2,
+                ai_player_count=1,
+            )
 
         commit()

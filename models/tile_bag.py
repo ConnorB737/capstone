@@ -5,6 +5,7 @@ from pony import orm
 from pony.orm import StrArray
 
 from models.database import db
+from models.mixins import HasPlayer
 
 
 class TileBag(db.Entity):
@@ -77,10 +78,11 @@ class TileBag(db.Entity):
         return self.bag.pop()
 
 
-class Rack(db.Entity):
-
+class Rack(db.Entity, HasPlayer):
     game = orm.Required("Game", reverse="racks")
-    player = orm.Required("User", reverse="racks")
+    human_player = orm.Optional("User", reverse="racks")
+    # The index of AI player for the game
+    ai_player = orm.Optional(int)
     tiles = orm.Optional(StrArray)
 
     def remove(self, tile):

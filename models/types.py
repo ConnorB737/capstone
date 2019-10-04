@@ -7,10 +7,11 @@ class EventType(enum.Enum):
     """
 
     # Events related to starting a game
+    CREATE_GAME = "create_game"
+    GAMES_UPDATED = "games_updated"
     GET_GAMES = "get_games"
     GAMES_LIST = "games_list"
     JOIN_GAME = "join_game"
-    GAME_JOINED = "game_joined"
 
     # Events related to placing a word
     PLACE_WORD = "place_word"
