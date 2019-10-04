@@ -61,30 +61,31 @@ class Board extends Component {
                 }
             }
             this.setState({temp_rack:temp_rack});
+
+            //this part of the code handles the checking of whether you're placing tiles in a logical order
+            //it won't let you place tiles randomly,
+            //but instead enforces that tiles are inline horizontally or vertically
+            //and all touching
+
+            var placedTiles = this.state.word.placedTiles;
+            function placeTileOnBoard(placedTile) {
+                placedTiles.push(placedTile);
+                this.props.placeTile(placedTile);
+            }
+            placeTileOnBoard = placeTileOnBoard.bind(this);
+
+            const word = this.state.word;
+            const lasts = handleOnDrop(word, value, droppedTileX, droppedTileY, placeTileOnBoard, tempBoardState, placedTiles);
+
+            this.setState({
+                ...this.state,
+                ...lasts,
+            });
+            
+            if (tempBoardState[droppedTileY][droppedTileX] === null) {
+                this.props.main.rack.push(this.state.temp_rack.splice(this.state.temp_rack.length-1, 1)[0])
+            }
         } 
-
-
-		//this part of the code handles the checking of whether you're placing tiles in a logical order
-		//it won't let you place tiles randomly,
-		//but instead enforces that tiles are inline horizontally or vertically
-		//and all touching
-
-        var placedTiles = this.state.word.placedTiles;
-        function placeTileOnBoard(placedTile) {
-            placedTiles.push(placedTile);
-            this.props.placeTile(placedTile);
-        }
-        placeTileOnBoard = placeTileOnBoard.bind(this);
-
-        const word = this.state.word;
-        const lasts = handleOnDrop(word, value, droppedTileX, droppedTileY, placeTileOnBoard, tempBoardState, placedTiles);
-
-		this.setState({
-            ...this.state,
-			...lasts,
-		});
-	    console.log(this.state);
-
     }
 
     _tile_class_name(i, j) {
