@@ -5,7 +5,6 @@ export class HomePage extends Component {
 
     render() {
         return (
-
             <div className="bgimg">
                 <img src={logo}/>
 

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask,redirect,url_for
 from flask_socketio import SocketIO
 from pony.flask import Pony
 from pony.orm import set_sql_debug
@@ -24,9 +24,13 @@ def create_app():
     app.config["SECRET_KEY"] = "vnkdjnfjknfl1232#"
     socketio.init_app(app)
 
-    @app.route('/', defaults={'path': ''})
-    @app.route('/<path:path>')
-    def frontend(path):
+   
+    @app.errorhandler(404)
+    def page_not_found(path):
+       return redirect('/')
+    
+    @app.route('/')
+    def frontend():
         return app.send_static_file("index.html")
 
     from controllers.game_events_controller import attach_controller as attach_game_controller
@@ -50,7 +54,7 @@ def create_app():
 
     return app
 
-
+    
 if __name__ == "__main__":
     app = create_app()
     port = int(os.environ.get('PORT', 5000))

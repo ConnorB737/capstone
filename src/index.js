@@ -25,6 +25,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const history = createBrowserHistory();
 
 const store = createStore(
+    // history
     createRootReducer(history),
     {
         main: {
@@ -42,23 +43,23 @@ const store = createStore(
     },
     composeEnhancers(applyMiddleware(thunk, routerMiddleware(history))),
 );
-
 dispatchFromSocket(store);
 
 render(
   <Provider store={store}>
+
       <ConnectedRouter history={history}>
           <Switch>
               <Route exact path="/">
                   <HomePageContainer />
               </Route>
-              <Route path="/login">
+              <Route  path="/login">
                   <LoginContainer />
               </Route>
-              <Route path="/register">
+              <Route  path="/register">
                   <RegisterContainer />
               </Route>
-              <Route path="/Help">
+              <Route exact path="/Help">
                   <HelpContainer />
               </Route>
               <Route exact path="/dashboard">
