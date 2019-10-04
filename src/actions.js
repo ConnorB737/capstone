@@ -16,7 +16,9 @@ export const types = {
     LOGOUT: "logout",
     REGISTER: "register",
     USER_LOGGED_IN: "user_logged_in",
-    UPDATE_RACK: "update_rack"
+    UPDATE_RACK: "update_rack",
+    UPDATE_TILES_LEFT: "update_tiles_left",
+    UPDATE_HISTORY: "update_history",
 };
 
 
@@ -41,6 +43,18 @@ export const getScores = (socket) => {
 export const getRack = (socket) => {
     return dispatch => {
         socket.emit(socketEvents.GET_RACK);
+    };
+};
+
+export const getHistory = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_HISTORY);
+    };
+};
+
+export const getTilesLeft = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_TILES_LEFT);
     };
 };
 
@@ -71,6 +85,20 @@ export const updateRack = (data) => {
     return {
         type: types.UPDATE_RACK,
         rack: data,
+    }
+};
+
+export const updateHistory = (data) => {
+    return {
+        type: types.UPDATE_HISTORY,
+        history: data,
+    }
+};
+
+export const updateTilesLeft = (data) => {
+    return {
+        type: types.UPDATE_TILES_LEFT,
+        tiles_left: data,
     }
 };
 

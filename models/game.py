@@ -3,6 +3,7 @@ from pony import orm
 from models.database import db
 from models.score import Score
 from models.tile_bag import TileBag, Rack
+from models.history import History
 from models.turn_state import TurnState
 from models.user import User
 
@@ -37,6 +38,8 @@ class Game(db.Entity):
 
     def has_human_player(self, player):
         return player.id in (existing_player.id for existing_player in self.human_players)
+
+    words_history = orm.Required(History, reverse = "game")
 
     def is_ready(self):
         return len(self.human_players) == self.human_player_count

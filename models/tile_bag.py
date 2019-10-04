@@ -87,3 +87,4 @@ class Rack(db.Entity, HasPlayer):
 
     def remove(self, tile):
         self.tiles.remove(tile)
+

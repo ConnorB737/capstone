@@ -1,4 +1,4 @@
-import {updateGamesList, updateBoard, wordAccepted, updateScores, userLoggedIn, updateRack, getGames} from "./actions";
+import {updateGamesList, updateBoard, wordAccepted, updateScores, userLoggedIn, updateRack, getGames, updateTilesLeft, updateHistory} from "./actions";
 
 export const socketEvents = {
     GET_GAMES: 'get_games',
@@ -15,6 +15,8 @@ export const socketEvents = {
     SWAP_TILE: "swap_tile",
     JOIN_GAME: "join_game",
     GAMES_UPDATED: "games_updated",
+    GET_TILES_LEFT: "get_tiles_left",
+    GET_HISTORY: "get_history",
 };
 
 
@@ -58,6 +60,18 @@ const handleGetRack = (dispatch) => {
     };
 };
 
+const handleGetTilesLeft = (dispatch) => {
+    return data => {
+        dispatch(updateTilesLeft(JSON.parse(data)));
+    };
+};
+
+const handleGetHistory = (dispatch) => {
+    return data => {
+        dispatch(updateHistory(JSON.parse(data)));
+    };
+};
+
 
 const handleGamesUpdated = (dispatch, socket) => {
     return () => {
@@ -82,6 +96,10 @@ export const dispatchFromSocket = (store) => {
 	store.getState().main.socket.on(socketEvents.GET_RACK, handleGetRack(store.dispatch));
 
 	store.getState().main.socket.on(socketEvents.GAMES_UPDATED, handleGamesUpdated(store.dispatch, store.getState().main.socket));
+    
+    store.getState().main.socket.on(socketEvents.GET_TILES_LEFT, handleGetTilesLeft(store.dispatch));
+
+    store.getState().main.socket.on(socketEvents.GET_HISTORY, handleGetHistory(store.dispatch));
 };
 
 

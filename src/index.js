@@ -36,6 +36,8 @@ const store = createStore(
             scores: [],
             user: null,
             rack: null,
+            tiles_left: null,
+            history:[],
         },
     },
     composeEnhancers(applyMiddleware(thunk, routerMiddleware(history))),

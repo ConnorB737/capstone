@@ -43,6 +43,16 @@ const mainReducer = (state, action) => {
                 ...state,
                 rack: action.rack,
             };
+        case types.UPDATE_TILES_LEFT:
+            return {
+                ...state,
+                tiles_left: action.tiles_left,
+            };
+        case types.UPDATE_HISTORY:
+            return {
+                ...state,
+                history: action.history,
+            };
         default:
             return state || null;
     }

@@ -36,7 +36,7 @@ code {
   margin-left: 50px;
 }
 .game {
-  width: 800px;
+  width: 420px;
   height: 620px;
 }
 
@@ -176,9 +176,6 @@ code {
 
 #scoreBar {
   height: 150px;
-}
-#scoreBarNav{
-  text-align: center;
 }
 
 #functionBar {
