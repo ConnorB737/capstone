@@ -25,20 +25,28 @@ export class Login extends Component {
                 <div style={{positive:'relative'}}>
 
                     <img src={logo} style={{ positive:'relative',marginLeft: '555px'}}/>
-                <h1 style={{ positive:'relative',marginLeft: '680px'}} >Login</h1>
+                <div style={{
+                    width: '700px',
+                    height: '370px',
+                    backgroundColor: 'white',
+                    marginLeft: '420px',
+                    marginTop: '20px',
+                    Top:'20px',
+                    borderRadius: '10%'
+                }}><h1 style={{ positive:'relative',marginTop:'20px',marginLeft: '280px'}} >Login</h1>
                 <form action="#" method="post">
                     <p style={{
                         positive:'relative',
-                        marginLeft: '570px',
+                        marginLeft: '90px',
                         marginTop: '0px',
                         fontSize:'24px'
                     }} >Email</p>
                     <input style={{
                         positive:'relative',
-                        width: '340px',
+                        width: '540px',
                         height: '45px',
-                        backgroundColor: 'burlywood',
-                        marginLeft: '570px',
+                        backgroundColor: '#FFFF99',
+                        marginLeft: '90px',
                         top:'10px',
                         marginTop: '0px',
                         fontSize:'20px',
@@ -51,52 +59,51 @@ export class Login extends Component {
                     />
                     <p style={{
                         positive:'relative',
-                        marginLeft: '570px',
-                        Top: '3px',
+                        marginLeft: '90px',
+                        marginTop:'10px',
+                        Top: '8px',
                         fontSize:'24px'
                     }}>Password</p>
                     <input
                         style={{
                             positive:'relative',
-                            width: '340px',
+                            width: '540px',
                             height: '45px',
-                            backgroundColor: 'burlywood',
-                            marginLeft: '570px',
+                            backgroundColor: '#FFFF99',
+                            marginLeft: '90px',
                             Top: '0px',
                             fontSize:'20px',
-                            borderRadius: '3%'
+                            borderRadius: '3%',
+                            marginBottom:'10px'
                         }}
                         type="password"
                         name="password"
                         value={this.state.password}
                         onChange={(event) => this.setState({password: event.target.value})}
                     />
-                    <br/>
-                    <br/>
+
                     <input style={{
                         positive:'relative',
-                        width: '100px',
-                        height: '40px',
+                        width: '400px',
+                        height: '50px',
                         backgroundColor: 'wheat',
-                        marginLeft: '690px',
-                        Top: '10px',
-                        fontSize:'17px',
-                        borderRadius: '10%'
+                        marginLeft: '148px',
+                        Top: '30px',
+                        // marginTop:'30x',
+                        fontSize:'20px'
                     }} type="submit" value="Submit" onClick={this.login}/>
 
                 </form>
                 <Link to="/register"><button
                     style={{
                         positive:'relative',
-                        width: '100px',
-                        height: '40px',
+                        width: '400px',
+                        height: '50px',
                         backgroundColor: 'wheat',
-                        marginLeft: '690px',
-                        marginTop:'6px',
-                        // Top: '10px',
-                        fontSize:'17px',
-                        borderRadius: '10%'
-                    }} >Register</button></Link>
+                        marginLeft: '148px',
+                        marginTop:'10px',
+                        fontSize:'20px'
+                    }} >Register</button></Link></div>
             </div>
             </div>
         );

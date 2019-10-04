@@ -34,14 +34,14 @@ export class Dashboard extends Component {
                 <div className="bgimg">
                     <div style={{positive:'relative'}}>
                         <center>
-                <label><input type="radio" name="mode" value="Normal"
+                <label><input type="radio" name="mode" value="Normal"  checked="checked"
                               onChange={(event) => this.setState({mode: event.target.value})}/>Normal</label>
                 <label><input type="radio" name="mode" value="AI"
                               onChange={(event) => this.setState({mode: event.target.value})}/>AI</label>
                 <br/>
                       {/*<div>{this.state.mode}</div>*/}
 
-                <label><input type="radio" name="number" value="3"
+                <label><input type="radio" name="number" value="3"  checked="checked"
                               onChange={(event) => this.setState({number: event.target.value})}/>3</label>
                 <label><input type="radio" name="number" value="4"
                               onChange={(event) => this.setState({number: event.target.value})}/>4</label>
