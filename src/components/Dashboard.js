@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import './dashboard_style.css';
+import logo from '../image/logo.png';
 
 export class Dashboard extends Component {
 
@@ -16,67 +18,64 @@ export class Dashboard extends Component {
         // this.handleChange = this.handleChange.bind(this);
     }
     // handleChange(event) {
-    //     event.preventDefault();
-    //     this.props.handleChange(this.props.main.socket, this.state.mode, this.state.number);
+        // event.preventDefault();
+        // this.props.handleChange(this.props.main.socket, this.state.mode, this.state.number);
     // }
 
     joinGame(gameId) {
         this.props.joinGame(this.props.main.socket, gameId);
     }
+    
+    renderGames(props){
+        if (this.props.main.readyGames.length > 0) {
+            this.props.main.readyGames.map((game) => {
+                return <li onClick={this.joinGame.bind(this, game.id)}>Game #{game.id}</li>
+            })
+        } else {
+            return <p> There appears to be no games! Make your own down below </p>
+        }
+    }
 
     render() {
-        if (this.props.main.user == null) {
-            return null;
-        }
-
         return (
-
-                <div className="bgimg">
+            <div className="bgimg">
+                <div className="dashboard_container">
                     <div style={{positive:'relative'}}>
-                        <center>
-                <label><input type="radio" name="mode" value="Normal"  checked="checked"
-                              onChange={(event) => this.setState({mode: event.target.value})}/>Normal</label>
-                <label><input type="radio" name="mode" value="AI"
-                              onChange={(event) => this.setState({mode: event.target.value})}/>AI</label>
-                <br/>
-                      {/*<div>{this.state.mode}</div>*/}
-
-                <label><input type="radio" name="number" value="3"  checked="checked"
-                              onChange={(event) => this.setState({number: event.target.value})}/>3</label>
-                <label><input type="radio" name="number" value="4"
-                              onChange={(event) => this.setState({number: event.target.value})}/>4</label>
-                <label><input type="radio" name="number" value="5"
-                              onChange={(event) => this.setState({number: event.target.value})}/>5</label>
-                <label><input type="radio" name="number" value="6"
-                              onChange={(event) => this.setState({number: event.target.value})}/>6</label>
-                {/*<div> {this.state.number}</div>*/}
-                <h1>Welcome, { this.props.main.user.email } !</h1>
-                <a onClick={this.props.logout}>Logout</a>
-                <h2>Ready games</h2>
-                <ul>
-                    {
-                        this.props.main.readyGames.map((game) => {
-                            return <li onClick={this.joinGame.bind(this, game.id)}>Game #{game.id}</li>
-                        })
-                    }
-                </ul>
-                <h2>Joined games</h2>
-                <ul>
-                    {
-                        this.props.main.joinedGames.map((game) => {
-                            return <li>Game #{game.id}</li>
-                        })
-                    }
-                </ul>
-                <h2>Open games</h2>
-                <ul>
-                    {
-                        this.props.main.openGames.map((game) => {
-                            return <li>Game #{game.id} - <span onClick={this.joinGame.bind(this, game.id)}>Join</span></li>
-                        })
-                    }
-                </ul></center></div>
+                        <img className="DB_logo" src={logo}/>
+                        <div className="dashboard_head">
+                            <h1 className="DB_h1">Join an existing game</h1>
+                            <div className="login_area">
+                                <label className="DB_l">Welcome!</label>
+                                <a className="DB_a" onClick={this.props.logout}>Logout</a>
+                            </div>
+                        </div>
+                        
+                        <div className="DB_content">
+                            <ul>
+                                {
+                                    this.props.main.readyGames.map((game) => {
+                                        return <li onClick={this.joinGame.bind(this, game.id)}>Game #{game.id}</li>
+                                    })
+                                }
+                            </ul>
+                            <br/><br/>
+                        </div>
+                            
+                        <div className="dashboard_head">
+                            <h1 className="DB_h1"> Make your own game </h1>
+                        </div>
+                        
+                        <div className="DB_content">
+                            <label>Human Players (between 3 and 6) </label> <input type="number" min="3" max="6" onChange={(event) => this.setState({number: event.target.value})} />
+                            <br/>
+                            <label>Have an AI player? </label> <input type="radio" name="mode" value="AI" onChange={(event) => this.setState({mode: event.target.value})} />
+                            <br/> <br/>
+                            <input type="button" value="Start Game"/>
+                        </div>
+                    
+                    </div>
                 </div>
+            </div>
         );
     }
 

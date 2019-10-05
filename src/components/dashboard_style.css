@@ -1,0 +1,98 @@
+.dashboard_container{
+    margin: 20px auto;
+    padding: 20px;
+    padding-top: 0px;
+    
+    width: 60%;
+    height: 100px auto;
+    background-color: #FBF7CE;
+    border-radius: 5px;
+    text-align: center;    
+}
+
+.dashboard_head{
+    width: 90%;
+    margin: 0 auto;
+    
+    display: inline-block;
+    
+    margin-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.login_area{
+    display: inline-block;
+    height: 100%;
+    
+    float: right;
+    width: 20%;
+}
+
+.DB_l{
+    float: left;
+    width: 100%;
+}
+
+.DB_h1{
+    width: 50%;
+    height: auto;
+    float: left;
+    
+    display: inline-block;
+    
+    margin: 0;
+    
+    text-align: left;
+    padding-left: 10%;
+}
+
+.DB_a {
+    display: inline-block;
+
+    color: blue;
+    font-style: underline;
+    
+    width: 100%;
+    height: 100%;
+    float: left;
+    
+    margin: 0;
+    
+    border-radius: 5px;
+}
+
+.DB_a:hover {
+    color: darkblue;
+    cursor: pointer;
+}
+
+.DB_content {
+    width: 50%;
+    margin: 0px auto;
+    padding: 0;
+    
+    text-align: left;
+}
+
+ul {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+li {
+    color: blue;
+}
+
+li:hover {
+    color: darkblue;
+    cursor: pointer;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+
+.DB_logo{
+    margin-bottom: 15px;
+}
