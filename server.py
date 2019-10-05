@@ -24,10 +24,9 @@ def create_app():
     app.config["SECRET_KEY"] = "vnkdjnfjknfl1232#"
     socketio.init_app(app)
 
-   
     @app.errorhandler(404)
     def page_not_found(path):
-       return redirect('/')
+        return app.send_static_file("index.html")
     
     @app.route('/')
     def frontend():
