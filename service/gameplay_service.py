@@ -2,7 +2,6 @@ from pony.orm import commit
 
 from models.board import BoardState
 from models.game import Game
-from models.turn_state import TurnState
 from models.user import User
 
 scoring_info = {

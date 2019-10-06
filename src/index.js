@@ -39,6 +39,7 @@ const store = createStore(
             rack: null,
             tiles_left: null,
             history:[],
+            roundStatus: null,
         },
     },
     composeEnhancers(applyMiddleware(thunk, routerMiddleware(history))),

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import './dashboard_style.css';
 import logo from '../image/logo.png';
+import {push} from "connected-react-router";
 
 export class Dashboard extends Component {
 
@@ -15,12 +16,17 @@ export class Dashboard extends Component {
         this.state = {
             mode: '',number:''
         };
-        // this.handleChange = this.handleChange.bind(this);
     }
-    // handleChange(event) {
-        // event.preventDefault();
-        // this.props.handleChange(this.props.main.socket, this.state.mode, this.state.number);
-    // }
+
+    componentDidMount() {
+
+    }
+
+    componentDidUpdate(oldProps, oldState, snapshot) {
+        if (oldProps.main.readyGame == null && this.props.main.readyGame != null) {
+            this.joinGame(this.props.main.readyGame.id);
+        }
+    }
 
     joinGame(gameId) {
         this.props.joinGame(this.props.main.socket, gameId);
@@ -49,11 +55,11 @@ export class Dashboard extends Component {
                                 <a className="DB_a" onClick={this.props.logout}>Logout</a>
                             </div>
                         </div>
-                        
+
                         <div className="DB_content">
                             <ul>
                                 {
-                                    this.props.main.readyGames.map((game) => {
+                                    this.props.main.openGames.map((game) => {
                                         return <li onClick={this.joinGame.bind(this, game.id)}>Game #{game.id}</li>
                                     })
                                 }
@@ -68,7 +74,7 @@ export class Dashboard extends Component {
                         <div className="DB_content">
                             <label>Human Players (between 3 and 6) </label> <input type="number" min="3" max="6" onChange={(event) => this.setState({number: event.target.value})} />
                             <br/>
-                            <label>Have an AI player? </label> <input type="radio" name="mode" value="AI" onChange={(event) => this.setState({mode: event.target.value})} />
+                            <label>Have an AI player? </label> <input type="checkbox" name="mode" value="AI" onChange={(event) => this.setState({mode: event.target.value})} />
                             <br/> <br/>
                             <input type="button" value="Start Game"/>
                         </div>

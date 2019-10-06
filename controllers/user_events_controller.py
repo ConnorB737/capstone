@@ -19,16 +19,15 @@ def attach_controller(socketio: SocketIO):
     def handle_login(message):
         print(f"Received {EventType.LOGIN.value} event")
         check_user = select(user for user in User if user.login == message["email"]).first()
-        if check_user:
-            if check_password_hash(check_user.password, message["password"]):
-                login_user(check_user)
-                response = json.dumps({
-                    'id': check_user.id,
-                    'login': check_user.login,
-                })
-                print(f"Sending response: {response}")
-                socketio.emit(EventType.USER_LOGGED_IN.value, response)
-                return
+        if check_user and check_password_hash(check_user.password, message["password"]):
+            login_user(check_user)
+            response = json.dumps({
+                'id': check_user.id,
+                'login': check_user.login,
+            })
+            print(f"Sending response: {response}")
+            socketio.emit(EventType.USER_LOGGED_IN.value, response)
+            return
 
     @socketio.on(EventType.REGISTER.value)
     @db_session

@@ -7,9 +7,8 @@ const mainReducer = (state, action) => {
         case types.UPDATE_GAMES_LIST:
             return {
                 ...state,
-                joinedGames: action.joinedGames,
                 openGames: action.openGames,
-                readyGames: action.readyGames,
+                readyGame: action.readyGame,
             };
 		case types.UPDATE_BOARD:
 			return {
@@ -52,6 +51,11 @@ const mainReducer = (state, action) => {
             return {
                 ...state,
                 history: action.history,
+            };
+        case types.UPDATE_ROUND_STATUS:
+            return {
+                ...state,
+                roundStatus: action.roundStatus,
             };
         default:
             return state || null;

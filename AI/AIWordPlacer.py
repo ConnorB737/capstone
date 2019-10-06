@@ -1,9 +1,10 @@
-import trie
+from AI import trie
 import itertools
 import random
 import time
 
-class AI:
+
+class AIWordPlacer:
     def __init__(self):
         self.letters = ["T", "D", "C", "I", "G", "E", "R"]
         self.trie = trie.Trie()

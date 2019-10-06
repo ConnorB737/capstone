@@ -1,9 +1,11 @@
 import json
+from collections import defaultdict
+from typing import Dict, DefaultDict
 
 from flask import session
 from flask_login import current_user
 from flask_socketio import SocketIO, join_room
-from pony.orm import select, db_session
+from pony.orm import db_session
 
 from models.game import Game
 from models.types import EventType
@@ -33,21 +35,21 @@ def attach_controller(socketio: SocketIO):
     @db_session
     def get_games_list():
         print(f"Received {EventType.GET_GAMES.value} event")
-        open_games = []
-        joined_games = []
-        ready_games = []
-        for game in select(game for game in Game)[:]:
-            if game.has_human_player(current_user):
-                if game.is_ready():
-                    ready_games.append(game)
-                else:
-                    joined_games.append(game)
-            elif not game.is_ready():
-                open_games.append(game)
+        open_games = Game.select().filter(lambda game: not game.is_ready())[:]
+        for game in open_games:
+            print(
+                f"Game #{game.id} has {len(game.human_players)} out of {game.human_player_count} and "
+                f"is {'not ' if not game.is_ready() else ''}ready"
+            )
+        ready_game = Game.select().filter(lambda game: current_user in game.human_players and not game.has_finished).first()
+        if ready_game:
+            print(
+                f"Game #{ready_game.id} has {len(ready_game.human_players)} out of {ready_game.human_player_count} and "
+                f"is {'not ' if not ready_game.is_ready() else ''}ready"
+            )
         response = json.dumps({
             "openGames": [{'id': game.id} for game in open_games],
-            "joinedGames": [{'id': game.id} for game in joined_games],
-            "readyGames": [{'id': game.id} for game in ready_games],
+            "readyGame": {'id': ready_game.id} if ready_game else None,
         })
         print(f"Sending response: {response}")
         socketio.emit(EventType.GAMES_LIST.value, response)
@@ -67,11 +69,31 @@ def attach_controller(socketio: SocketIO):
     def get_scores():
         print(f"Received {EventType.GET_SCORES.value} event")
         game = Game[session['game_id']]
-        response = json.dumps({
-            score.user.id: score.value
-            for score
-            in game.scores
-        })
+        scores_by_player: DefaultDict[Dict] = defaultdict(dict)
+        for game_round in game.rounds:
+            for placed_word in game_round.placed_words:
+                if placed_word.human_player is not None:
+                    score_for_player: Dict = scores_by_player[placed_word.human_player]
+                    score_for_player['is_ai'] = False
+                    score_for_player['is_human'] = True
+                    score_for_player['score'] = score_for_player.get('score', 0) + placed_word.score_gained
+
+        response = json.dumps(scores_by_player)
 
         print(f"Sending response: {response}")
         socketio.emit(EventType.SCORES_LIST.value, response)
+
+    @socketio.on(EventType.GET_ROUND_STATUS.value)
+    @db_session
+    def get_round_status():
+        print(f"Received {EventType.GET_ROUND_STATUS.value} event")
+        game = Game[session['game_id']]
+        current_round = game.current_round()
+        if current_round:
+            response = json.dumps({
+                "roundNumber": current_round,
+            })
+        else:
+            response = {}
+        print(f"Sending response: {response}")
+        socketio.emit(EventType.ROUND_STATUS.value, response)

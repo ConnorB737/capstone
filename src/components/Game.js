@@ -12,14 +12,22 @@ export class Game extends Component {
         this.props.getRack(this.props.main.socket);
         this.props.getTilesLeft(this.props.main.socket);
         this.props.getHistory(this.props.main.socket);
+        this.props.getRoundStatus(this.props.main.socket);
     }
 
     render() {
 		const sBoard = this.props.main.serverBoard; //this.props.serverBoard is the board received from the server
         
         let wordsPlayedList = this.props.main.history.map((word) => 
-        <li key={word.toString()}> {word} </li>)
+            <li key={word.toString()}> {word} </li>
+        );
 
+        let roundStatus;
+        if (this.props.main.roundStatus) {
+            roundStatus = <h3>Round: {this.props.main.roundStatus.roundNumber}</h3>
+        } else {
+            roundStatus = <h3>Waiting...</h3>
+        }
 
         return (
             <div className="bgimg">
@@ -44,6 +52,10 @@ export class Game extends Component {
                             <h3>Words Played</h3>
                         </div>
                         <ul>{wordsPlayedList}</ul>
+                    </div>
+                    <hr/>
+                    <div id="roundStatus">
+                        {roundStatus}
                     </div>
                     <hr/>
                     <div id="score">

@@ -37,3 +37,7 @@ class EventType(enum.Enum):
     SWAP_TILE = "swap_tile"
     GET_TILES_LEFT = "get_tiles_left"
     GET_HISTORY = "get_history"
+
+    # Rounds
+    GET_ROUND_STATUS = "get_round_status"
+    ROUND_STATUS = "round_status"

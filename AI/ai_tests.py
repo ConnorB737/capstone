@@ -44,7 +44,7 @@ def print_board_nicely(board):
 
 print_board_nicely(board)
 
-ai = AI.AI()
+ai = AI.AIWordPlacer()
 
 for x in range(10):
 	ai.place_word(board)

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask,redirect,url_for
+from flask import Flask
 from flask_socketio import SocketIO
 from pony.flask import Pony
 from pony.orm import set_sql_debug

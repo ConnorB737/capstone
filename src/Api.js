@@ -1,4 +1,4 @@
-import {updateGamesList, updateBoard, wordAccepted, updateScores, userLoggedIn, updateRack, getGames, updateTilesLeft, updateHistory} from "./actions";
+import {updateGamesList, updateBoard, wordAccepted, updateScores, userLoggedIn, updateRack, getGames, updateTilesLeft, updateHistory, updateRoundStatus} from "./actions";
 
 export const socketEvents = {
     GET_GAMES: 'get_games',
@@ -17,6 +17,8 @@ export const socketEvents = {
     GAMES_UPDATED: "games_updated",
     GET_TILES_LEFT: "get_tiles_left",
     GET_HISTORY: "get_history",
+    GET_ROUND_STATUS: "get_round_status",
+    ROUND_STATUS: "round_status",
 };
 
 
@@ -80,6 +82,13 @@ const handleGamesUpdated = (dispatch, socket) => {
 };
 
 
+const handleRoundStatus = (dispatch) => {
+    return data => {
+        dispatch(updateRoundStatus(JSON.parse(data)));
+    };
+};
+
+
 export const dispatchFromSocket = (store) => {
     store.getState().main.socket.on(socketEvents.GAMES_LIST, handleGamesList(store.dispatch));
 	
@@ -100,6 +109,8 @@ export const dispatchFromSocket = (store) => {
     store.getState().main.socket.on(socketEvents.GET_TILES_LEFT, handleGetTilesLeft(store.dispatch));
 
     store.getState().main.socket.on(socketEvents.GET_HISTORY, handleGetHistory(store.dispatch));
+
+    store.getState().main.socket.on(socketEvents.ROUND_STATUS, handleRoundStatus(store.dispatch));
 };
 
 

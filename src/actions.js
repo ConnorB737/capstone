@@ -19,6 +19,7 @@ export const types = {
     UPDATE_RACK: "update_rack",
     UPDATE_TILES_LEFT: "update_tiles_left",
     UPDATE_HISTORY: "update_history",
+    UPDATE_ROUND_STATUS: "update_round_status",
 };
 
 
@@ -52,6 +53,12 @@ export const getHistory = (socket) => {
     };
 };
 
+export const getRoundStatus = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_ROUND_STATUS);
+    };
+};
+
 export const getTilesLeft = (socket) => {
     return dispatch => {
         socket.emit(socketEvents.GET_TILES_LEFT);
@@ -59,10 +66,12 @@ export const getTilesLeft = (socket) => {
 };
 
 export const updateGamesList = (data) => {
-    return {
-        type: types.UPDATE_GAMES_LIST,
-        ...data,
-    }
+    return dispatch => {
+        dispatch({
+            type: types.UPDATE_GAMES_LIST,
+            ...data,
+        });
+    };
 };
 
 
@@ -79,6 +88,13 @@ export const updateScores = (data) => {
         type: types.UPDATE_SCORES,
         scores: data,
     }
+};
+
+export const updateRoundStatus = (data) => {
+    return {
+        type: types.UPDATE_ROUND_STATUS,
+        roundStatus: data,
+    };
 };
 
 export const updateRack = (data) => {
