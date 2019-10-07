@@ -18,7 +18,8 @@ export class Help extends Component {
                     height:'550px',
                     marginLeft:'370px',
                     marginTop:'40px',
-                    borderRadius:'10%'
+                    borderRadius:'10%',
+                    boxShadow:"8px 8px 8px 0 #25170e"
                 }} src={rule1}/>
                 <img style={{
                 position:'absolute',
@@ -27,7 +28,7 @@ export class Help extends Component {
                     borderRadius:'10%',
                     marginLeft:'870px',
                     marginTop:'40px',
-
+                    boxShadow:"8px 8px 8px 0 #25170e"
                 }} src={rule2}/>
 
             </div>
