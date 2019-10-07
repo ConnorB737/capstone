@@ -55,6 +55,7 @@ export class Game extends Component {
                     </div>
                     <hr/>
                     <div id="roundStatus">
+                        {this.props.main.user.login}
                         {roundStatus}
                     </div>
                     <hr/>
