@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash
 from config import APP_ENV
 from models.game import Game
 from models.user import User
+from models.tile_bag import Rack
 from service.game_service import build_game, join_existing_game
 
 
@@ -44,3 +45,5 @@ def seed_database_for_development():
             )
 
         commit()
+
+        print(f"Total number of racks after seeding: {len(Rack.select()[:])}")

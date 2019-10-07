@@ -1,6 +1,6 @@
 import json
 
-from flask import session
+from flask import session, request
 from flask_login import login_user
 from flask_socketio import SocketIO
 from pony.orm import select, db_session, commit
@@ -26,7 +26,7 @@ def attach_controller(socketio: SocketIO):
                 'login': check_user.login,
             })
             print(f"Sending response: {response}")
-            socketio.emit(EventType.USER_LOGGED_IN.value, response)
+            socketio.emit(EventType.USER_LOGGED_IN.value, response, room=request.sid)
             return
 
     @socketio.on(EventType.REGISTER.value)
@@ -38,5 +38,5 @@ def attach_controller(socketio: SocketIO):
         socketio.emit(EventType.USER_LOGGED_IN.value, json.dumps({
             'id': user.id,
             'login': user.login,
-        }))
+        }), room=request.sid)
         return

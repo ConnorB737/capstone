@@ -8,7 +8,6 @@ export class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props);
         if (this.props.main.user == null) {
             this.props.redirectToLogin();
         } else {

@@ -14,7 +14,7 @@ FIRST_ROUND: int = 1
 def build_game(first_player: User, human_player_count: int, ai_player_count: int) -> Game:
     tile_bag = TileBag.build_bag()
     new_game = Game(
-        human_players={first_player},
+        human_players={},
         human_player_count=human_player_count,
         ai_player_count=ai_player_count,
         board=BoardState().serialize(),
@@ -36,32 +36,35 @@ def build_game(first_player: User, human_player_count: int, ai_player_count: int
 
 
 def join_existing_game(game: Game, player: Union[User, int]) -> Game:
-    player_config = None
+    print(f"Player {player} is joining game {game}")
+
     if isinstance(player, User):
         if game.has_human_player(player):
             return game
 
-        elif len(game.human_players) < game.human_player_count:
-            game.human_players.add(player)
-            player_config = dict(
-                human_player=player,
-                ai_player=None,
+        game.human_players.add(player)
+        player_config = dict(
+            human_player=player,
+            ai_player=None,
+        )
+        if game.is_ready():
+            Round(
+                game=game,
+                round_number=1,
             )
-            if game.is_ready():
-                Round(
-                    game=game,
-                    round_number=1,
-                )
     else:
         player_config = dict(
             human_player=None,
             ai_player=player,
         )
 
-    Rack(
+    rack = Rack(
         game=game,
         tiles=game.tile_bag.fill_rack(),
         **player_config,
     )
     commit()
+    print(f"Created rack {rack} for human player {rack.human_player} and ai player {rack.ai_player}")
+    num_racks = len(Rack.select()[:])
+    print(f"Total number of racks: {num_racks}")
     return game

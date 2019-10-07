@@ -23,6 +23,18 @@ export const types = {
 };
 
 
+export const getEverything = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_GAMES);
+        socket.emit(socketEvents.GET_BOARD);
+        socket.emit(socketEvents.GET_SCORES);
+        socket.emit(socketEvents.GET_RACK);
+        socket.emit(socketEvents.GET_HISTORY);
+        socket.emit(socketEvents.GET_ROUND_STATUS);
+        socket.emit(socketEvents.GET_TILES_LEFT);
+    };
+};
+
 export const getGames = (socket) => {
     return dispatch => {
         socket.emit(socketEvents.GET_GAMES);

@@ -1,6 +1,6 @@
 import json
 
-from flask import session
+from flask import session, request
 from flask_login import current_user
 
 from models.types import EventType
@@ -41,18 +41,19 @@ def attach_controller(socketio):
         commit()
 
         socketio.emit(EventType.WORD_ACCEPTED.value, room=session['game_id'])
-        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
-        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
-        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
-
+        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles), room=request.sid)
+        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()), room=request.sid)
+        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words), room=request.sid)
 
     @socketio.on(EventType.GET_RACK.value)
     @db_session
     def get_rack():
+        print(f"Request from {request.sid} to get rack")
         game = Game[session['game_id']]
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
 
-        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
+        print(f"Sending response to {request.sid} with rack {json.dumps(rack.tiles)}")
+        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles), room=request.sid)
 
     @socketio.on(EventType.SWAP_TILE.value)
     @db_session
@@ -73,7 +74,7 @@ def attach_controller(socketio):
 
         commit()
 
-        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles))
+        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles), room=request.sid)
 
     @socketio.on(EventType.GET_TILES_LEFT.value)
     @db_session
@@ -81,7 +82,7 @@ def attach_controller(socketio):
         game = Game.select().first()
         tile_bag = game.tile_bag
 
-        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()))
+        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()), room=request.sid)
 
     @socketio.on(EventType.GET_HISTORY.value)
     @db_session
@@ -89,4 +90,4 @@ def attach_controller(socketio):
         game = Game.select().first()
         history = game.words_history
 
-        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words))
+        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history), room=request.sid)

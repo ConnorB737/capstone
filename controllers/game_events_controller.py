@@ -2,14 +2,14 @@ import json
 from collections import defaultdict
 from typing import Dict, DefaultDict
 
-from flask import session
+from flask import session, request
 from flask_login import current_user
 from flask_socketio import SocketIO, join_room
 from pony.orm import db_session
 
 from models.game import Game
 from models.types import EventType
-from service.game_service import build_game
+from service.game_service import build_game, join_existing_game
 
 
 def attach_controller(socketio: SocketIO):
@@ -23,13 +23,14 @@ def attach_controller(socketio: SocketIO):
         )
         join_room(game.id)
         session['game_id'] = game.id
-        socketio.emit(EventType.GAMES_UPDATED.value)
+        socketio.emit(EventType.GAMES_UPDATED.value, room=request.sid)
 
     @socketio.on(EventType.JOIN_GAME.value)
     def handle_join_game(message):
         join_room(message['game_id'])
         session['game_id'] = message['game_id']
-        socketio.emit(EventType.GAMES_UPDATED.value)
+        join_existing_game(Game[message['game_id']], current_user)
+        socketio.emit(EventType.GAMES_UPDATED.value, room=message['game_id'])
 
     @socketio.on(EventType.GET_GAMES.value)
     @db_session
@@ -52,7 +53,7 @@ def attach_controller(socketio: SocketIO):
             "readyGame": {'id': ready_game.id} if ready_game else None,
         })
         print(f"Sending response: {response}")
-        socketio.emit(EventType.GAMES_LIST.value, response)
+        socketio.emit(EventType.GAMES_LIST.value, response, room=request.sid)
 
     @socketio.on(EventType.GET_BOARD.value)
     @db_session
@@ -62,7 +63,7 @@ def attach_controller(socketio: SocketIO):
         response = game.board
 
         print(f"Sending response: {response}")
-        socketio.emit(EventType.GET_BOARD.value, response)
+        socketio.emit(EventType.GET_BOARD.value, response, room=request.sid)
 
     @socketio.on(EventType.GET_SCORES.value)
     @db_session
@@ -81,7 +82,7 @@ def attach_controller(socketio: SocketIO):
         response = json.dumps(scores_by_player)
 
         print(f"Sending response: {response}")
-        socketio.emit(EventType.SCORES_LIST.value, response)
+        socketio.emit(EventType.SCORES_LIST.value, response, room=request.sid)
 
     @socketio.on(EventType.GET_ROUND_STATUS.value)
     @db_session
@@ -96,4 +97,4 @@ def attach_controller(socketio: SocketIO):
         else:
             response = {}
         print(f"Sending response: {response}")
-        socketio.emit(EventType.ROUND_STATUS.value, response)
+        socketio.emit(EventType.ROUND_STATUS.value, response, room=request.sid)

@@ -27,7 +27,7 @@ def place_word(game: Game, player: Union[User, int], placed_tiles: List[Dict]):
     )
 
     # If this is the last word placed for this round, create another round
-    if len(current_round.placed_words) == game.total_ai_count():
+    if len(current_round.placed_words) == game.ai_player_count:
         Round(
            round_number=current_round.round_number + 1,
            game=game,

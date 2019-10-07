@@ -1,4 +1,16 @@
-import {updateGamesList, updateBoard, wordAccepted, updateScores, userLoggedIn, updateRack, getGames, updateTilesLeft, updateHistory, updateRoundStatus} from "./actions";
+import {
+    updateGamesList,
+    updateBoard,
+    wordAccepted,
+    updateScores,
+    userLoggedIn,
+    updateRack,
+    getGames,
+    updateTilesLeft,
+    updateHistory,
+    updateRoundStatus,
+    getRack, getScores, getEverything
+} from "./actions";
 
 export const socketEvents = {
     GET_GAMES: 'get_games',
@@ -77,7 +89,7 @@ const handleGetHistory = (dispatch) => {
 
 const handleGamesUpdated = (dispatch, socket) => {
     return () => {
-        dispatch(getGames(socket));
+        dispatch(getEverything(socket));
     };
 };
 
