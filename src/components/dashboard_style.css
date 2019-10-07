@@ -49,23 +49,12 @@
 }
 
 .DB_a {
-    display: inline-block;
-
-    color: blue;
-    font-style: underline;
-    
-    width: 100%;
-    height: 100%;
-    float: left;
-    
-    margin: 0;
-    
-    border-radius: 5px;
-}
-
-.DB_a:hover {
-    color: darkblue;
-    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    background-color: wheat;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 20px;
 }
 
 .DB_content {
@@ -100,9 +89,10 @@ p{
 }
 
 #start{
-    width: 100px;
-    height: 38px;
+    width: 150px;
+    height: 50px;
     background-color: wheat;
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: bold;
     border-radius: 20px;
 }

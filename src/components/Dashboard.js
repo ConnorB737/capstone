@@ -57,7 +57,7 @@ export class Dashboard extends Component {
                             <h1 className="DB_h1">Join an existing game</h1>
                             <div className="login_area">
                                 <label className="DB_l">Welcome!</label>
-                                <a className="DB_a" onClick={this.props.logout}>Logout</a>
+                                <button className="DB_a" onClick={this.props.logout}>Logout</button>
                             </div>
                         </div>
 

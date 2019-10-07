@@ -67,7 +67,7 @@ export class Help extends Component {
                                     borderRadius: '20px',
                                     margin: '10px',
                                     }}>
-                                Continue
+                                Start
                             </button>
                         </Link>
                         <Link to="/">
