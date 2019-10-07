@@ -58,8 +58,7 @@ export class Login extends Component {
                                     top:'10px',
                                     marginTop: '0px',
                                     fontSize:'20px',
-                                    borderRadius: '10px', 
-                                    color: 'transparent',
+                                    borderRadius: '10px',
                                     boxShadow: '2px 2px gray',
                                     }}
                                 type="text"
@@ -87,7 +86,6 @@ export class Login extends Component {
                                     fontSize:'20px',
                                     borderRadius: '10px',                                    
                                     marginBottom:'10px',
-                                    color: 'transparent',
                                     boxShadow: '2px 2px gray',
                                     }}
                                 type="password"
