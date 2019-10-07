@@ -76,7 +76,7 @@ export class Dashboard extends Component {
                             <br/>
                             <label>Have an AI player? </label> <input type="checkbox" name="mode" value="AI" onChange={(event) => this.setState({mode: event.target.value})} />
                             <br/> <br/>
-                            <input type="button" value="Start Game"/>
+                            <input id="start" type="button" value="Start Game"/>
                         </div>
                     
                     </div>

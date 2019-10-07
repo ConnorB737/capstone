@@ -96,3 +96,10 @@ p{
 .DB_logo{
     margin-bottom: 15px;
 }
+
+#start{
+    width: 100px;
+    height: 38px;
+    background-color: wheat;
+    font-size: 16px;
+}
