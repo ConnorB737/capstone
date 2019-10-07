@@ -14,7 +14,8 @@ export class Dashboard extends Component {
             this.props.getGames(this.props.main.socket);
         }
         this.state = {
-            mode: '',number:''
+            hasAI: false,
+            number: '',
         };
     }
 
@@ -40,6 +41,10 @@ export class Dashboard extends Component {
         } else {
             return <p> There appears to be no games! Make your own down below </p>
         }
+    }
+
+    createGame(event) {
+        this.props.createGame(this.props.main.socket, this.state.number, this.state.hasAI ? 1: 0);
     }
 
     render() {
@@ -76,11 +81,9 @@ export class Dashboard extends Component {
                             <label>Human Players (between 3 and 6) </label> 
                             <input type="number" min="3" max="6" onChange={(event) => this.setState({number: event.target.value})} />
                             <br/>
-                            <label>Have an AI player? </label> 
-                            <input type="checkbox" name="mode" value="AI" onChange={(event) => this.setState({mode: event.target.value})} />
-                            <br/> 
-                            <br/>
-                            <input id="start" type="button" value="Start Game"/>
+                            <label>Have an AI player? </label> <input type="checkbox" name="mode" value="AI" onChange={(event) => this.setState({hasAI: event.target.checked})} />
+                            <br/> <br/>
+                            <input id="start" type="button" value="Start Game" onClick={this.createGame.bind(this)}/>
                         </div>
                     </div>
                 </div>

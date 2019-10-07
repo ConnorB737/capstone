@@ -31,6 +31,7 @@ export const socketEvents = {
     GET_HISTORY: "get_history",
     GET_ROUND_STATUS: "get_round_status",
     ROUND_STATUS: "round_status",
+    CREATE_GAME: "create_game",
 };
 
 

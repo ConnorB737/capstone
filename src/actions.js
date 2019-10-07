@@ -183,6 +183,15 @@ export const register = (socket, email, password) => {
     }
 };
 
+export const createGame = (socket, numberOfHumanPlayers, numberOfAiPlayers) => {
+    return dispatch => {
+        socket.emit(socketEvents.CREATE_GAME, {
+           human_player_count: numberOfHumanPlayers,
+           ai_player_count: numberOfAiPlayers,
+        });
+    };
+};
+
 export const userLoggedIn = (data) => {
     return dispatch => {
         dispatch({
