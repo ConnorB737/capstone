@@ -20,6 +20,7 @@ export const types = {
     UPDATE_TILES_LEFT: "update_tiles_left",
     UPDATE_HISTORY: "update_history",
     UPDATE_ROUND_STATUS: "update_round_status",
+    UPDATE_PLAYERS_LEFT: "update_players_left",
 };
 
 
@@ -71,6 +72,12 @@ export const getRoundStatus = (socket) => {
     };
 };
 
+export const getPlayersLeft = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.GET_PLAYERS_LEFT);
+    };
+};
+
 export const getTilesLeft = (socket) => {
     return dispatch => {
         socket.emit(socketEvents.GET_TILES_LEFT);
@@ -106,6 +113,13 @@ export const updateRoundStatus = (data) => {
     return {
         type: types.UPDATE_ROUND_STATUS,
         roundStatus: data,
+    };
+};
+
+export const updatePlayersLeft = (data) => {
+    return {
+        type: types.UPDATE_PLAYERS_LEFT,
+        playersLeft: data,
     };
 };
 

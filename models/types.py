@@ -41,3 +41,4 @@ class EventType(enum.Enum):
     # Rounds
     GET_ROUND_STATUS = "get_round_status"
     ROUND_STATUS = "round_status"
+    GET_PLAYERS_LEFT = "get_players_left"

@@ -45,6 +45,18 @@ class Game(db.Entity):
         else:
             return None
 
+    def current_round_as_round_type(self):
+        if self.is_ready():
+            max_round = None
+            for round in self.rounds:
+                if max_round == None:
+                    max_round = round
+                elif round.round_number > max_round:
+                    max_round = round
+            return max_round
+        else:
+            return None
+
     def rack_for_player(self, player: Union[int, User]) -> Rack:
         if isinstance(player, User):
             return self.racks.filter(lambda rack: rack.human_player == player)

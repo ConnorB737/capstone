@@ -27,6 +27,7 @@ def attach_controller(socketio: SocketIO):
         socketio.emit(EventType.GAMES_UPDATED.value, room=request.sid)
 
     @socketio.on(EventType.JOIN_GAME.value)
+    @db_session
     def handle_join_game(message):
         join_room(message['game_id'])
         session['game_id'] = message['game_id']
@@ -99,3 +100,17 @@ def attach_controller(socketio: SocketIO):
             response = {}
         print(f"Sending response: {response}")
         socketio.emit(EventType.ROUND_STATUS.value, response, room=request.sid)
+
+    @socketio.on(EventType.GET_PLAYERS_LEFT.value)
+    @db_session
+    def get_players_left():
+        print(f"Received {EventType.GET_PLAYERS_LEFT.value} event")
+        game = Game[session['game_id']]
+        current_round = game.current_round()
+        response = json.dumps({
+            "playersLeft": game.human_player_count - len(game.human_players),
+            "playersNeeded": game.human_player_count,
+            "playersInGame": len(game.human_players),
+        })
+        print(f"Sending response: {response}")
+        socketio.emit(EventType.GET_PLAYERS_LEFT.value, response, room=request.sid)

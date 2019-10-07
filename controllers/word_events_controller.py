@@ -29,7 +29,7 @@ def attach_controller(socketio):
         word = message["word"]
 
         ##
-        history.add(word)
+        history.append(word)
 
         for tile in message["temp_rack"]: 
             for i in range(len(rack.tiles)):

@@ -16,7 +16,7 @@ def place_word(game: Game, player: Union[User, int], placed_tiles: List[Dict]):
     for tile_position in placed_tiles:
         board.place_tile(tile_position["x"], tile_position['y'], tile_position['value'])
     game.board = board.serialize()
-    current_round = game.current_round()
+    current_round = game.current_round_as_round_type()
     score = gps.calculate_word_score(game.id, placed_tiles)
     PlacedWord(
         human_player=player if isinstance(player, User) else None,
