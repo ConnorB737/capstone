@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import './dashboard_style.css';
 import logo from '../image/logo.png';
-import {push} from "connected-react-router";
 
 export class Dashboard extends Component {
 
