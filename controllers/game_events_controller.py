@@ -27,6 +27,7 @@ def attach_controller(socketio: SocketIO):
         socketio.emit(EventType.GAMES_UPDATED.value, room=request.sid)
 
     @socketio.on(EventType.JOIN_GAME.value)
+    @db_session
     def handle_join_game(message):
         join_room(message['game_id'])
         session['game_id'] = message['game_id']
