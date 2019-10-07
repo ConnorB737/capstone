@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import './dashboard_style.css';
 import logo from '../image/logo.png';
 
+
 export class Dashboard extends Component {
 
     constructor(props) {
@@ -51,7 +52,7 @@ export class Dashboard extends Component {
                         <div className="dashboard_head">
                             <h1 className="DB_h1">Join an existing game</h1>
                             <div className="login_area">
-                                <label className="DB_l">Welcome, {this.props.main.user.login}!</label>
+                                <label className="DB_l">Welcome!</label>
                                 <a className="DB_a" onClick={this.props.logout}>Logout</a>
                             </div>
                         </div>
@@ -64,7 +65,8 @@ export class Dashboard extends Component {
                                     })
                                 }
                             </ul>
-                            <br/><br/>
+                            <br/>
+                            <br/>
                         </div>
                             
                         <div className="dashboard_head">
@@ -72,13 +74,15 @@ export class Dashboard extends Component {
                         </div>
                         
                         <div className="DB_content">
-                            <label>Human Players (between 3 and 6) </label> <input type="number" min="3" max="6" onChange={(event) => this.setState({number: event.target.value})} />
+                            <label>Human Players (between 3 and 6) </label> 
+                            <input type="number" min="3" max="6" onChange={(event) => this.setState({number: event.target.value})} />
                             <br/>
-                            <label>Have an AI player? </label> <input type="checkbox" name="mode" value="AI" onChange={(event) => this.setState({mode: event.target.value})} />
-                            <br/> <br/>
+                            <label>Have an AI player? </label> 
+                            <input type="checkbox" name="mode" value="AI" onChange={(event) => this.setState({mode: event.target.value})} />
+                            <br/> 
+                            <br/>
                             <input id="start" type="button" value="Start Game"/>
                         </div>
-                    
                     </div>
                 </div>
             </div>

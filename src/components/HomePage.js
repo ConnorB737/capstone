@@ -7,37 +7,40 @@ export class HomePage extends Component {
         return (
             <div className="bgimg">
                 <img src={logo}/>
-
-                <div className="white"  style={{
-                    width: '700px',
-                    height: '370px',
-                    backgroundColor: 'white',
-                    margin: '0 auto',
-                    borderRadius: '10%'
-                }}>
-                    <div className="button">
+                <div className="FormContainer" >
+                    <div 
+                        className="button">
                         <Link to="/dashboard">
                             <button
                                 style={{
-                                    width: '580px',
-                                    height: '120px',
-                                    fontSize: '50px',
+                                    width: '300px',
+                                    height: '150px',
+                                    fontSize: '70px',
+                                    fontWeight: 'bold',
                                     backgroundColor: 'wheat',
-                                    marginLeft: '78px',
-                                    marginTop: '36px'
-                                }}
-                                id="play">Play</button>
+                                    marginLeft: '200px',
+                                    marginTop: '60px',
+                                    borderRadius: '30px',
+                                    }}
+                                id="play">
+                                Start
+                            </button>
                         </Link>
                         <Link to="/Help">
                             <button
                                 style={{
-                                    width: '580px',
-                                    height: '120px',
-                                    fontSize: '50px',
+                                    width: '400px',
+                                    height: '60px',
+                                    fontSize: '40px',
                                     backgroundColor: 'wheat',
-                                    marginLeft: '78px',
-                                    marginTop: '36px'
-                                }}id="check">Check Rules</button>
+                                    marginLeft: '150px',
+                                    marginTop: '80px',
+                                    borderRadius: '20px',
+                                    backgroundColor: 'lightgrey',
+                                    }}
+                                id="check">
+                                Check Rules
+                            </button>
                         </Link>
                     </div>
                 </div>
