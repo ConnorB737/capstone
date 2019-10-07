@@ -7,6 +7,7 @@ from models.game import Game
 from models.round import PlacedWord, Round
 from models.user import User
 import service.gameplay_service as gps
+import AI.AIWordPlacer
 
 
 @db_session
@@ -26,7 +27,7 @@ def place_word(game: Game, player: Union[User, int], placed_tiles: List[Dict]):
     )
 
     # If this is the last word placed for this round, create another round
-    if len(current_round.placed_words) == game.total_player_count():
+    if len(current_round.placed_words) == game.total_ai_count():
         Round(
            round_number=current_round.round_number + 1,
            game=game,

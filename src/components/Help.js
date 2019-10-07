@@ -9,28 +9,33 @@ export class Help extends Component {
     render() {
         return (
             <div className="bgimg">
-
-                <img style={{
-                    position:'absolute'}} src={logo}/>
-                <img style={{
-                    position:'absolute',
-                    width:'460px',
-                    height:'550px',
-                    marginLeft:'370px',
-                    marginTop:'40px',
-                    borderRadius:'10%',
-                    boxShadow:"8px 8px 8px 0 #25170e"
-                }} src={rule1}/>
-                <img style={{
-                position:'absolute',
-                    width:'440px',
-                    height:'550px',
-                    borderRadius:'10%',
-                    marginLeft:'870px',
-                    marginTop:'40px',
-                    boxShadow:"8px 8px 8px 0 #25170e"
-                }} src={rule2}/>
-
+                <div style={{ 
+                    width: '1000px',
+                    margin: '0 auto'
+                    }}>
+                    <div style={{
+                        width: '100%',
+                        textAlign: 'center'
+                    }}>                
+                <img src={logo}/>
+                </div>
+                    <img style={{
+                        margin: '10px',
+                        width:'460px',
+                        height:'550px',
+                        float: 'left',
+                        borderRadius:'10%',
+                        boxShadow:"8px 8px 8px 0 #25170e"
+                    }} src={rule1}/>
+                    <img style={{
+                        margin: '10px',
+                        width:'440px',
+                        height:'550px',
+                        borderRadius:'10%',
+                        float: 'left',
+                        boxShadow:"8px 8px 8px 0 #25170e"
+                    }} src={rule2}/>
+                </div>
             </div>
         );
     }

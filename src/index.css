@@ -25,7 +25,8 @@ code {
        /*min-width: 1000px;*/
        z-index:-10;
        zoom: 1;
-       background: url(../src/image/background.jpg) no-repeat;
+       /* background: url(../src/image/background.jpg) no-repeat; */
+       background-color: firebrick;
        background-size: cover;
        -webkit-background-size: cover;
        -o-background-size: cover;
@@ -35,8 +36,13 @@ code {
   margin-left: 50px;
 }
 .game {
-  width: 420px;
-  height: 620px;
+  margin: 10px;
+  width: 1000px auto;
+  height: 700px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, .15);
+  backdrop-filter: blur(5px);
+  margin: 0 auto;
 }
 
 #board table {

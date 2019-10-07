@@ -12,8 +12,7 @@ export class HomePage extends Component {
                     width: '700px',
                     height: '370px',
                     backgroundColor: 'white',
-                    marginLeft: '420px',
-                    marginTop: '20px',
+                    margin: '0 auto',
                     borderRadius: '10%'
                 }}>
                     <div className="button">

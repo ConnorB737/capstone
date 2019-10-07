@@ -39,9 +39,19 @@ class Game(db.Entity):
     def is_ready(self):
         return len(self.human_players) == self.human_player_count and not self.has_finished
 
+    def get_current_round(self):
+        if self.rounds.length > 0:
+            max_round = self.rounds[0]
+            for r in self.rounds:
+                if r.round_number > max_round.round_number:
+                    max_round = r
+            return max_round
+        else:
+            return None
+
     def current_round(self):
         if self.is_ready():
-            return max(round.round_number for round in self.rounds)
+            return self.current_round()
         else:
             return None
 
@@ -60,3 +70,6 @@ class Game(db.Entity):
 
     def total_player_count(self):
         return self.human_player_count + self.ai_player_count
+
+    def total_ai_count(self):
+        return self.ai_player_count

@@ -29,9 +29,7 @@ export class Login extends Component {
                     width: '700px',
                     height: '370px',
                     backgroundColor: 'white',
-                    marginLeft: '420px',
-                    marginTop: '20px',
-                    Top:'20px',
+                    margin: '0 auto',
                     borderRadius: '10%'
                 }}><h1 style={{ positive:'relative',marginTop:'20px',marginLeft: '280px'}} >Login</h1>
                 <form action="#" method="post">
