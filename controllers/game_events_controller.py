@@ -94,10 +94,12 @@ def attach_controller(socketio: SocketIO):
         game = Game[session['game_id']]
         current_round = game.current_round()
         if current_round:
+            current_user_action = current_round.round_actions.filter(lambda round_action: round_action.human_player == current_user).first()
             response = json.dumps({
                 "roundNumber": current_round.round_number,
                 "currentRound": {
                     "actions": [round_action.to_dict() for round_action in current_round.round_actions],
+                    "currentUserHasPlayed": current_user_action is not None,
                 },
             })
         else:
