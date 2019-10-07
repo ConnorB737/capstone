@@ -15,9 +15,10 @@ from service.game_service import build_game, join_existing_game
 def attach_controller(socketio: SocketIO):
 
     @socketio.on(EventType.CREATE_GAME.value)
+    @db_session
     def handle_create_game(message):
         game = build_game(
-            first_player=current_user,
+            first_player=current_user._get_current_object(),
             human_player_count=message['human_player_count'],
             ai_player_count=message['ai_player_count'],
         )
@@ -29,7 +30,7 @@ def attach_controller(socketio: SocketIO):
     def handle_join_game(message):
         join_room(message['game_id'])
         session['game_id'] = message['game_id']
-        join_existing_game(Game[message['game_id']], current_user)
+        join_existing_game(Game[message['game_id']], current_user._get_current_object())
         socketio.emit(EventType.GAMES_UPDATED.value, room=message['game_id'])
 
     @socketio.on(EventType.GET_GAMES.value)

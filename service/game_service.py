@@ -36,9 +36,16 @@ def build_game(first_player: User, human_player_count: int, ai_player_count: int
 
 
 def join_existing_game(game: Game, player: Union[User, int]) -> Game:
-    print(f"Player {player} is joining game {game}")
+    print(f"Player {player} of type {type(player)} is joining game {game}")
 
-    if isinstance(player, User):
+    if isinstance(player, int):
+        print(f"Player {player} is an AI player")
+        player_config = dict(
+            human_player=None,
+            ai_player=player,
+        )
+    else:
+        print(f"Player {player} is a human player")
         if game.has_human_player(player):
             return game
 
@@ -52,11 +59,6 @@ def join_existing_game(game: Game, player: Union[User, int]) -> Game:
                 game=game,
                 round_number=1,
             )
-    else:
-        player_config = dict(
-            human_player=None,
-            ai_player=player,
-        )
 
     rack = Rack(
         game=game,

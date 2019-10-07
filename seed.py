@@ -27,6 +27,13 @@ def seed_database_for_development():
                 password=generate_password_hash("password"),
             )
 
+        third_player = select(user for user in User if user.login == "third_player@email.com").first()
+        if third_player is None:
+            third_player = User(
+                login="third_player@email.com",
+                password=generate_password_hash("password"),
+            )
+
         commit()
 
         if select(game for game in Game if first_player in game.human_players and second_player in game.human_players).first() is None:

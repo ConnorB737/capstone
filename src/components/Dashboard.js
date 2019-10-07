@@ -44,7 +44,7 @@ export class Dashboard extends Component {
     }
 
     createGame(event) {
-        this.props.createGame(this.props.main.socket, this.state.number, this.state.hasAI ? 1: 0);
+        this.props.createGame(this.props.main.socket, parseInt(this.state.number), this.state.hasAI ? 1: 0);
     }
 
     render() {
