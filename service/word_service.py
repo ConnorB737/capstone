@@ -4,10 +4,9 @@ from pony.orm import commit, db_session, select
 
 from models.board import BoardState
 from models.game import Game
-from models.round import PlacedWord, Round
+from models.round import RoundAction, Round
 from models.user import User
 import service.gameplay_service as gps
-import AI.AIWordPlacer
 
 
 @db_session
@@ -18,16 +17,39 @@ def place_word(game: Game, player: Union[User, int], placed_tiles: List[Dict]):
     game.board = board.serialize()
     current_round = game.current_round_as_round_type()
     score = gps.calculate_word_score(game.id, placed_tiles)
-    PlacedWord(
+    RoundAction(
         human_player=player if isinstance(player, User) else None,
         ai_player=player if isinstance(player, int) else None,
         round=current_round,
         word=''.join([tile['value'] for tile in placed_tiles]),
         score_gained=score,
+        clicked_pass=False,
     )
 
     # If this is the last word placed for this round, create another round
-    if len(current_round.placed_words) == game.ai_player_count:
+    if len(current_round.round_actions) == game.total_player_count():
+        Round(
+           round_number=current_round.round_number + 1,
+           game=game,
+        )
+
+    commit()
+
+
+@db_session
+def pass_round(game: Game, player: Union[User, int]):
+    current_round = game.current_round()
+    RoundAction(
+        human_player=player if isinstance(player, User) else None,
+        ai_player=player if isinstance(player, int) else None,
+        round=current_round,
+        word=None,
+        score_gained=0,
+        clicked_pass=True,
+    )
+
+    # If this is the last word placed for this round, create another round
+    if len(current_round.round_actions) == game.total_player_count():
         Round(
            round_number=current_round.round_number + 1,
            game=game,

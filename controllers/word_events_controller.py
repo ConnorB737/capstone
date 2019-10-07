@@ -6,8 +6,7 @@ from flask_login import current_user
 from models.types import EventType
 from pony.orm import select, db_session, commit
 from models.game import Game
-from models.user import User
-from service.word_service import place_word
+from service.word_service import place_word, pass_round
 
 
 def attach_controller(socketio):
@@ -22,16 +21,12 @@ def attach_controller(socketio):
         #game to the next currently.
 
         game = Game[session['game_id']]
-        place_word(game, current_user, message["startingPosition"])
+        place_word(game, current_user._get_current_object(), message["startingPosition"])
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
         tile_bag = game.tile_bag
-        history = game.words_history
         word = message["word"]
 
-        ##
-        history.append(word)
-
-        for tile in message["temp_rack"]: 
+        for tile in message["temp_rack"]:
             for i in range(len(rack.tiles)):
                 if rack.tiles[i] == tile:
                     rack.tiles.pop(i)
@@ -40,10 +35,7 @@ def attach_controller(socketio):
 
         commit()
 
-        socketio.emit(EventType.WORD_ACCEPTED.value, room=session['game_id'])
-        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles), room=request.sid)
-        socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()), room=request.sid)
-        socketio.emit(EventType.GET_HISTORY.value, json.dumps(history.words), room=request.sid)
+        socketio.emit(EventType.GAMES_UPDATED.value, room=session['game_id'])
 
     @socketio.on(EventType.GET_RACK.value)
     @db_session
@@ -91,3 +83,11 @@ def attach_controller(socketio):
         history = game.words_history
 
         socketio.emit(EventType.GET_HISTORY.value, json.dumps(history), room=request.sid)
+
+    @socketio.on(EventType.PASS_ROUND.value)
+    @db_session
+    def pass_round_view():
+        game = Game.select().first()
+        pass_round(game, current_user._get_current_object())
+
+        socketio.emit(EventType.GAMES_UPDATED.value, room=session['game_id'])

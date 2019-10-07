@@ -7,6 +7,7 @@ from flask_login import current_user
 from flask_socketio import SocketIO, join_room
 from pony.orm import db_session
 
+from models.database import db
 from models.game import Game
 from models.types import EventType
 from service.game_service import build_game, join_existing_game
@@ -74,7 +75,7 @@ def attach_controller(socketio: SocketIO):
         game = Game[session['game_id']]
         scores_by_player: DefaultDict[Dict] = defaultdict(dict)
         for game_round in game.rounds:
-            for placed_word in game_round.placed_words:
+            for placed_word in game_round.round_actions:
                 if placed_word.human_player is not None:
                     score_for_player: Dict = scores_by_player[placed_word.human_player]
                     score_for_player['is_ai'] = False
@@ -94,7 +95,10 @@ def attach_controller(socketio: SocketIO):
         current_round = game.current_round()
         if current_round:
             response = json.dumps({
-                "roundNumber": current_round,
+                "roundNumber": current_round.round_number,
+                "currentRound": {
+                    "actions": [round_action.to_dict() for round_action in current_round.round_actions],
+                },
             })
         else:
             response = {}

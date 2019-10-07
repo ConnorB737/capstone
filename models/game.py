@@ -4,7 +4,7 @@ from pony import orm
 
 from models.database import db
 from models.tile_bag import TileBag, Rack
-from models.round import Round, PlacedWord
+from models.round import Round, RoundAction
 from models.user import User
 
 
@@ -41,7 +41,7 @@ class Game(db.Entity):
 
     def current_round(self):
         if self.is_ready():
-            return max(round.round_number for round in self.rounds)
+            return max(self.rounds, key=lambda round: round.round_number)
         else:
             return None
 
@@ -66,9 +66,10 @@ class Game(db.Entity):
     @property
     def words_history(self) -> List[str]:
         return [
-            placed_word
+            round_action.word
             for game_round in self.rounds.order_by(Round.round_number)
-            for placed_word in game_round.placed_words.order_by(PlacedWord.placed_at)
+            for round_action in game_round.round_actions.order_by(RoundAction.occurred_at)
+            if round_action.word is not None
         ]
 
     def total_player_count(self):
