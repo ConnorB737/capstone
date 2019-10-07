@@ -57,6 +57,13 @@ const mainReducer = (state, action) => {
                 ...state,
                 roundStatus: action.roundStatus,
             };
+        case types.UPDATE_PLAYERS_LEFT:
+            return{
+                ...state,
+                playersLeft: action.playersLeft,
+                playersNeeded: action.playersNeeded,
+                playersInGame: action.playersInGame,
+            };
         default:
             return state || null;
     }

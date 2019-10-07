@@ -9,7 +9,8 @@ import {
     updateTilesLeft,
     updateHistory,
     updateRoundStatus,
-    getRack, getScores, getEverything
+    getRack, getScores, getEverything,
+    updatePlayersLeft
 } from "./actions";
 
 export const socketEvents = {
@@ -30,6 +31,7 @@ export const socketEvents = {
     GET_TILES_LEFT: "get_tiles_left",
     GET_HISTORY: "get_history",
     GET_ROUND_STATUS: "get_round_status",
+    GET_PLAYERS_LEFT: "get_players_left",
     ROUND_STATUS: "round_status",
     CREATE_GAME: "create_game",
 };
@@ -101,6 +103,12 @@ const handleRoundStatus = (dispatch) => {
     };
 };
 
+const handlePlayersLeft = (dispatch) => {
+    return data => {
+        dispatch(updatePlayersLeft(JSON.parse(data)));
+    };
+};
+
 
 export const dispatchFromSocket = (store) => {
     store.getState().main.socket.on(socketEvents.GAMES_LIST, handleGamesList(store.dispatch));
@@ -124,6 +132,8 @@ export const dispatchFromSocket = (store) => {
     store.getState().main.socket.on(socketEvents.GET_HISTORY, handleGetHistory(store.dispatch));
 
     store.getState().main.socket.on(socketEvents.ROUND_STATUS, handleRoundStatus(store.dispatch));
+    
+    store.getState().main.socket.on(socketEvents.GET_PLAYERS_LEFT, handlePlayersLeft(store.dispatch));
 };
 
 

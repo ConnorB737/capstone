@@ -15,5 +15,5 @@ class User(db.Entity, UserMixin):
     password = Required(str)
     last_login = Optional(datetime)
     games = Set('Game', reverse="human_players")
-    placed_words = Set('PlacedWord', reverse='human_player')
+    round_actions = Set('RoundAction', reverse='human_player')
     racks = Set('Rack', reverse='human_player')
