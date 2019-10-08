@@ -45,9 +45,7 @@ class Board extends Component {
     onDrop(ev, coordinate) {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
-        console.log("this.props.main.roundStatus: ", this.props.main.roundStatus)
         let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
-
         let droppedTileY = coordinate[0];
         let droppedTileX = coordinate[1];
 
@@ -149,11 +147,11 @@ class Board extends Component {
             <Popup trigger={<button>Swap</button>} modal>
                 {
                     close=> (
-                        <div>
-                            <div>
+                        <div className="swapPop">
+                            <div className="swapPopNav">
                                 Choose One tile to swap
                             </div>
-                            <div id="selectrack">
+                            <div className="selectrack">
                                 <table>
                                     <tbody>
                                         <tr>
@@ -253,7 +251,6 @@ class Board extends Component {
                         </div>
                         <div>
                             <button onClick={this.play.bind(this)}>Play</button>
-                            {/* <button onClick={this.pass.bind(this)}>Pass</button> */}
                             <button onClick={this.clear.bind(this)}>Clear</button>
                             { swapPopUp }
                         </div>

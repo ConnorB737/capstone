@@ -18,7 +18,6 @@ export class Game extends Component {
     }
 
     handlePass = () => {
-        // this.props.main.roundStatus.currentRound.actions[0].clickedPass = true
         this.props.passRound(this.props.main.socket);
     }
 
@@ -27,7 +26,7 @@ export class Game extends Component {
             <Popup trigger={<button id="passButton">Pass</button>}>
                 {
                     close=> (
-                        <div>
+                        <div className="passPopup">
                             <button 
                                 onClick={() => {
                                     this.handlePass();

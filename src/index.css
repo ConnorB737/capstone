@@ -242,8 +242,33 @@ button {
   border-radius: 10%;
   border: 2px solid red;
 }
-#selectrack{
-  position: absolute;
-  right: 750px;
-  top:10px;
+
+
+.popup-content {
+  border-radius: 20px;
+  min-height: 100px;
+  max-width: 800px;
+  align-items: center;
+}
+
+.swapPop {
+  width: 100%;
+  height: 100%;
+  align-content: center;
+}
+
+.swapPopNav {
+  display: block;
+  align-content: center;
+}
+
+.selectrack{
+  display: block;
+  align-content: center;
+
+}
+
+.swapPopFunction {
+  display: block;
+  align-content: center;
 }

@@ -43,7 +43,7 @@ def pass_round(game: Game, player: Union[User, int]):
         human_player=player if isinstance(player, User) else None,
         ai_player=player if isinstance(player, int) else None,
         round=current_round,
-        word=None,
+        word="",
         score_gained=0,
         clicked_pass=True,
     )
