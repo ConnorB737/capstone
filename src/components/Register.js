@@ -50,8 +50,7 @@ export class Register extends Component {
                                     top:'10px',
                                     marginTop: '0px',
                                     fontSize:'20px',
-                                    borderRadius: '10px', 
-                                    color: 'black',
+                                    borderRadius: '10px',
                                     boxShadow: '2px 2px gray',
                                     }}
                                 type="text"
@@ -78,7 +77,6 @@ export class Register extends Component {
                                     fontSize:'20px',
                                     borderRadius: '10px',                                    
                                     marginBottom:'10px',
-                                    color: 'black',
                                     boxShadow: '2px 2px gray',
                                     }}
                                 type="password"
