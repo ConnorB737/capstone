@@ -34,6 +34,7 @@ export const socketEvents = {
     GET_PLAYERS_LEFT: "get_players_left",
     ROUND_STATUS: "round_status",
     CREATE_GAME: "create_game",
+    PASS_ROUND: "pass_round",
 };
 
 

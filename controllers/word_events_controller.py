@@ -24,7 +24,6 @@ def attach_controller(socketio):
         place_word(game, current_user._get_current_object(), message["startingPosition"])
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
         tile_bag = game.tile_bag
-        word = message["word"]
 
         for tile in message["temp_rack"]:
             for i in range(len(rack.tiles)):

@@ -21,6 +21,7 @@ export const types = {
     UPDATE_HISTORY: "update_history",
     UPDATE_ROUND_STATUS: "update_round_status",
     UPDATE_PLAYERS_LEFT: "update_players_left",
+    PASS_ROUND: "pass_round",
 };
 
 
@@ -149,6 +150,12 @@ export const swapTile = (socket, tile) => {
         socket.emit(socketEvents.SWAP_TILE, {"tiles": tile});
     }
 };
+
+export const passRound = (socket) => {
+    return dispatch => {
+        socket.emit(socketEvents.PASS_ROUND)
+    }
+}
 
 export const wordAccepted = (socket) => {
     return dispatch => {

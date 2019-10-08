@@ -162,6 +162,10 @@ button {
   left: 20px;
   width: 200px;
 }
+
+#leftButton #passButton {
+  background-color: lightsalmon;
+}
 #leftButton button{
   margin: 15px;
   height:60px ;

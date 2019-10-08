@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from '../image/logo.png';
 import BoardContainer from '../containers/BoardContainer';
 import {Link} from "react-router-dom";
+import Popup from "reactjs-popup";
 
 export class Game extends Component {
 
@@ -14,6 +15,37 @@ export class Game extends Component {
         this.props.getHistory(this.props.main.socket);
         this.props.getRoundStatus(this.props.main.socket);
         this.props.getPlayersLeft(this.props.main.socket);
+    }
+
+    handlePass = () => {
+        // this.props.main.roundStatus.currentRound.actions[0].clickedPass = true
+        this.props.passRound(this.props.main.socket);
+    }
+
+    pass = () => {
+        return (
+            <Popup trigger={<button id="passButton">Pass</button>}>
+                {
+                    close=> (
+                        <div>
+                            <button 
+                                onClick={() => {
+                                    this.handlePass();
+                                    close()}}
+                                id="passButton"
+                                >
+                                Confirm
+                            </button>
+                            <button 
+                                onClick={ () => {close()}}>
+                                Cancel
+                            </button>
+                        </div>
+                    )
+                }
+            </Popup>
+        )
+
     }
 
     render() {
@@ -45,8 +77,8 @@ export class Game extends Component {
                 </div>
                 <div id="leftButton">
                     <Link to="/"><button className="main">Main Menu</button></Link>
-                    <button className="stop">Stop Game</button>
                     <Link to="/Help"><button className="help">Help</button></Link>
+                    {this.pass()}
 
                 </div>
 

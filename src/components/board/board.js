@@ -45,7 +45,7 @@ class Board extends Component {
     onDrop(ev, coordinate) {
         ev.preventDefault();
         let value = ev.dataTransfer.getData("value");
-
+        console.log("this.props.main.roundStatus: ", this.props.main.roundStatus)
         let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
 
         let droppedTileY = coordinate[0];
@@ -53,39 +53,43 @@ class Board extends Component {
 
         // this part handles the remove tile from rack once it been placed on the board
         let temp_rack = this.state.temp_rack;
-        if (tempBoardState[droppedTileY][droppedTileX] === null) {
-            for (let i = 0; i < this.props.main.rack.length; i++) {
-                if (this.props.main.rack[i] === value) {
-                    temp_rack.push(this.props.main.rack.splice(i, 1)[0]);
-                    break;
+        if (this.props.main.roundStatus.currentRound.currentUserHasPlayed != true) {
+            if (tempBoardState[droppedTileY][droppedTileX] === null) {
+                for (let i = 0; i < this.props.main.rack.length; i++) {
+                    if (this.props.main.rack[i] === value) {
+                        temp_rack.push(this.props.main.rack.splice(i, 1)[0]);
+                        break;
+                    }
+                }
+                this.setState({temp_rack:temp_rack});
+
+                //this part of the code handles the checking of whether you're placing tiles in a logical order
+                //it won't let you place tiles randomly,
+                //but instead enforces that tiles are inline horizontally or vertically
+                //and all touching
+
+                var placedTiles = this.state.word.placedTiles;
+                function placeTileOnBoard(placedTile) {
+                    placedTiles.push(placedTile);
+                    this.props.placeTile(placedTile);
+                }
+                placeTileOnBoard = placeTileOnBoard.bind(this);
+
+                const word = this.state.word;
+                const lasts = handleOnDrop(word, value, droppedTileX, droppedTileY, placeTileOnBoard, tempBoardState, placedTiles);
+
+                this.setState({
+                    ...this.state,
+                    ...lasts,
+                });
+                
+                if (tempBoardState[droppedTileY][droppedTileX] === null) {
+                    this.props.main.rack.push(this.state.temp_rack.splice(this.state.temp_rack.length-1, 1)[0])
                 }
             }
-            this.setState({temp_rack:temp_rack});
-
-            //this part of the code handles the checking of whether you're placing tiles in a logical order
-            //it won't let you place tiles randomly,
-            //but instead enforces that tiles are inline horizontally or vertically
-            //and all touching
-
-            var placedTiles = this.state.word.placedTiles;
-            function placeTileOnBoard(placedTile) {
-                placedTiles.push(placedTile);
-                this.props.placeTile(placedTile);
-            }
-            placeTileOnBoard = placeTileOnBoard.bind(this);
-
-            const word = this.state.word;
-            const lasts = handleOnDrop(word, value, droppedTileX, droppedTileY, placeTileOnBoard, tempBoardState, placedTiles);
-
-            this.setState({
-                ...this.state,
-                ...lasts,
-            });
-            
-            if (tempBoardState[droppedTileY][droppedTileX] === null) {
-                this.props.main.rack.push(this.state.temp_rack.splice(this.state.temp_rack.length-1, 1)[0])
-            }
-        } 
+        } else (
+            alert ("Please wait for next round")
+        ) 
     }
 
     _tile_class_name(i, j) {
@@ -199,9 +203,7 @@ class Board extends Component {
         this.setState({temp_rack:[]});
     }
 
-    pass() {
 
-    }
 
 
     render() {
@@ -251,7 +253,7 @@ class Board extends Component {
                         </div>
                         <div>
                             <button onClick={this.play.bind(this)}>Play</button>
-                            <button onClick={this.pass.bind(this)}>Pass</button>
+                            {/* <button onClick={this.pass.bind(this)}>Pass</button> */}
                             <button onClick={this.clear.bind(this)}>Clear</button>
                             { swapPopUp }
                         </div>
