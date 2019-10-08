@@ -14,7 +14,7 @@ CONFIG = {
         'FLASK': dict(
             static_folder="build",
             template_folder="build",
-            static_url_path="/"
+            static_url_path="/",
         ),
     },
     "production": {
