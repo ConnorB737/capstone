@@ -1,8 +1,4 @@
 
-code {
-  font-family: 'Consolas', 'source-code-pro', 'Menlo', 'Monaco',  "Courier New",
-  monospace;
-}
 html {
   height: 100%;
   background-color: #bf3a30;
@@ -27,6 +23,7 @@ body {
 button {
   cursor: pointer;
   box-shadow: 2px 2px gray;
+  font-weight: bold;
 }
 
 .logo{
@@ -40,9 +37,8 @@ button {
 
 .FormContainer {
   position: relative;
-  width: 700px;
-  height: 400px;
-  margin: 0 auto;
+  width: 40vw;
+  height: 25vw;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, .15);
   backdrop-filter: blur(20px) contrast(.8);
@@ -51,7 +47,7 @@ button {
 
 .game {
   width: 70vw;
-  height: 45vw; 
+  height: 40vw; 
   border-radius: 10px;
   background-color: rgba(255, 255, 255, .15);  
   backdrop-filter: blur(20px);
@@ -67,26 +63,33 @@ button {
 
 .board {
   width: 55vw;
-  height: 45vw;
+  height: 40vw;
+}
+
+.boardMain {
+  width: 43vw;
+  height: 40vw;
+  float: left;
+  position: relative;
 }
 
 .squareDiv {
-  width: 45vw;
-  height: 45vw;
-  float: left;
+  width: 40vw;
+  height: 40vw;
+  margin: 0 auto;
+  position: relative;
 }
 
 .squareDiv table {
-  width: 45vw;
-  height: 45vw;
+  width: 40vw;
+  height: 40vw;
   border-spacing: 0;
-  display: block;
   margin: 0 auto;
 }
 
 .squareDiv td {
-  width: 3vw;
-  height: 2.9vw;
+  width: 2.5vw;
+  height: 2.5vw;
   line-height: 0;
   padding: 0;
   margin: 0;
@@ -95,99 +98,35 @@ button {
   background-color: seashell;
 }
 
-.normaltr {
-  align-content: center;
-}
-
-.normaltd {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background-color:lightgoldenrodyellow;
-  line-height: 0;
-}
-
 .ST2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/ST.jpg") no-repeat;
-  line-height: 0;
+  background-image: url("../src/bonus/ST.jpg");
+  background-size: cover;
 }
-.DL {
-  align-content: center;
-}
+
 
 .DL2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/DL.jpg") no-repeat;
-  line-height: 0;
-}
-
-.DW {
-  align-content: center;
+  background-image: url("../src/bonus/DL.jpg");
+  background-size: cover;
 }
 
 .DW2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/DW.jpg") no-repeat;
-  line-height: 0;
-}
-
-.TL {
-  align-content: center;
+  background-image: url("../src/bonus/DW.jpg");
+  background-size: cover;
 }
 
 .TL2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/TL.jpg") no-repeat;
-  line-height: 0;
+  background-image: url("../src/bonus/TL.jpg");
+  background-size: cover;
 }
 
-.TW {
-  align-content: center;
-}
 
 .TW2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/TW.jpg") no-repeat;
-  line-height: 0;
-} 
+  background-image: url("../src/bonus/TW.jpg");
+  background-size: cover;
+}
 
 .leftBar {
-  width: 9vw;
+  width: 12vw;
   height: 100%;
   float: left;
   position: relative;
@@ -204,7 +143,7 @@ button {
 }
 
 .leftButton button{
-  margin-top: 1vw;
+  margin-top: 0.5vw;
   height: 2.5vw;
   width: 6vw;
   text-align: center;
@@ -223,32 +162,34 @@ button {
 
 .wordsPlayedNav {
   text-align: center;
+  font-size: 1vw;
+  font-weight: bold;
 }
 
 .wordsPlayed {
   height: 60%;
   text-align: start;
-  font-size: 80%;
+  font-size: 1vw;
 }
 
 #roundStatus {
   height: 10%;
   margin-left: 1vw; 
-  font-size: 80%;
+  font-size: 1vw;
 
 }
 
 .score {
   height: 10%;
   margin-left: 1vw; 
-  font-size: 80%;
+  font-size: 1vw;
 
 }
 
 .bag {
   height: 10%;
   margin-left: 1vw; 
-  font-size: 80%;
+  font-size: 1vw;
 
 }
 
@@ -256,28 +197,28 @@ button {
   width: 6vw;
   height: auto;
   position: relative;
-  margin: 2vw auto;
+  margin: 1vw auto;
 }
 
 .functionBar td {
   width: 2.5vw;
-  height: 2.4vw;
+  height: 2.5vw;
   line-height: 0;
   padding: 0;
   margin: 0;
   border-radius: 5px;
   border: 1px solid black;
-  background-color: seashell;
+  background-color: oldlace;
   
 }
 
 .rackButton {
-  margin: 1vw auto;
+  margin: 0.5vw auto;
   position: relative;
 }
 
 .rackButton button{
-  margin-top: 1vw;
+  margin-top: 0.5vw;
   height: 2.5vw;
   width: 6vw;
   text-align: center;
@@ -287,7 +228,7 @@ button {
 }
 
 .rackBar {
-  margin: 1vw auto;
+  margin: 0.5vw auto;
   position: relative;
 }
 
@@ -296,16 +237,16 @@ button {
 }
 
 .tile {
-  width: 100%;
-  height: 100%;
-  border-radius: 10%;
+  width: 2.5vw;
+  height: 2.5vw;
+  border-radius: 5px;
 }
 
 .newTile {
-  width: 29px;
-  height: 29px;
-  border-radius: 10%;
-  border: 2px solid red;
+  width: 2.5vw;
+  height: 2.5vw;
+  border-radius: 5px;
+  border: 1px solid red;
 }
 
 
@@ -323,17 +264,17 @@ button {
 }
 
 .swapPopNav {
-  display: block;
-  align-content: center;
+  width: 20vw;
+  margin-left: 18vw;
 }
 
 .selectrack{
-  display: block;
-  align-content: center;
+  width: 30vw;
+  margin-left: 14vw;
 
 }
 
 .swapPopFunction {
-  display: block;
-  align-content: center;
+  width: 20vw;
+  margin-left: 18vw;
 }

@@ -54,7 +54,7 @@ export class Dashboard extends Component {
                     <div style={{positive:'relative'}}>
                         {/* <img className="DB_logo" src={logo}/> */}
                         <div className="dashboard_head">
-                            <h1 className="DB_h1">Join an existing game</h1>
+                            <p className="DB_h1">Join an existing game</p>
                             <div className="login_area">
                                 <label className="DB_l">Welcome!</label>
                                 <button className="DB_a" onClick={this.props.logout}>Logout</button>
@@ -74,7 +74,7 @@ export class Dashboard extends Component {
                         </div>
                             
                         <div className="dashboard_head">
-                            <h1 className="DB_h1"> Make your own game </h1>
+                            <p className="DB_h1"> Make your own game </p>
                         </div>
                         
                         <div className="DB_content">

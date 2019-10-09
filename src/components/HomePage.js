@@ -13,14 +13,14 @@ export class HomePage extends Component {
                         <Link to="/dashboard">
                             <button
                                 style={{
-                                    width: '300px',
-                                    height: '150px',
-                                    fontSize: '70px',
+                                    width: '15vw',
+                                    height: '10vw',
+                                    fontSize: '5vw',
                                     fontWeight: 'bold',
                                     backgroundColor: 'wheat',
-                                    marginLeft: '200px',
-                                    marginTop: '60px',
-                                    borderRadius: '30px',
+                                    marginLeft: '12.5vw',
+                                    marginTop: '2vw',
+                                    borderRadius: '40px',
                                     }}
                                 id="play">
                                 Start
@@ -29,13 +29,12 @@ export class HomePage extends Component {
                         <Link to="/Help">
                             <button
                                 style={{
-                                    width: '400px',
-                                    height: '60px',
-                                    fontSize: '40px',
-                                    backgroundColor: 'wheat',
-                                    marginLeft: '150px',
-                                    marginTop: '80px',
-                                    borderRadius: '20px',
+                                    width: '20vw',
+                                    height: '5vw',
+                                    fontSize: '2vw',
+                                    marginLeft: '10vw',
+                                    marginTop: '5vw',
+                                    borderRadius: '40px',
                                     backgroundColor: 'lightgrey',
                                     }}
                                 id="check">

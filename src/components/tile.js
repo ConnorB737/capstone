@@ -21,9 +21,9 @@ export class Tile extends Component {
             {canDrag: false}
         )
     }
-    onDrag = (e) => {
-        e.preventDefault();
-    }
+    // onDrag = (e) => {
+    //     e.preventDefault();
+    // }
 
     preventDragHandler = (e) => {
         e.preventDefault();

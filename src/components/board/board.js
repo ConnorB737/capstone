@@ -214,18 +214,21 @@ class Board extends Component {
                 {
                     close=> (
                         <div className="passPopup">
-                            <button 
-                                onClick={() => {
-                                    this.handlePass();
-                                    close()}}
-                                className="passButton"
-                                >
-                                Confirm
-                            </button>
-                            <button 
-                                onClick={ () => {close()}}>
-                                Cancel
-                            </button>
+                            <div className="passPopButtons">
+                                <button 
+                                    onClick={() => {
+                                        this.handlePass();
+                                        close()}}
+                                    className="passButton"
+                                    >
+                                    Confirm
+                                </button>
+                                <button 
+                                    onClick={ () => {close()}}>
+                                    Cancel
+                                </button>
+                            </div>
+
                         </div>
                     )
                 }
@@ -285,12 +288,14 @@ class Board extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="squareDiv">
-                        <table>
-                            <tbody>
-                                {boardState}
-                            </tbody>
-                        </table>
+                    <div className="boardMain">
+                        <div className="squareDiv">
+                            <table>
+                                <tbody>
+                                    {boardState}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             )
