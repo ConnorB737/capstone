@@ -10,7 +10,7 @@ import service.gameplay_service as gps
 
 
 @db_session
-def place_word(game: Game, player: Union[User, int], placed_tiles: List[Dict]):
+def place_word(game: Game, player: Union[User, int], word, placed_tiles: List[Dict]):
     board = BoardState.deserialize(game.board)
     for tile_position in placed_tiles:
         board.place_tile(tile_position["x"], tile_position['y'], tile_position['value'])
@@ -21,7 +21,7 @@ def place_word(game: Game, player: Union[User, int], placed_tiles: List[Dict]):
         human_player=player if isinstance(player, User) else None,
         ai_player=player if isinstance(player, int) else None,
         round=current_round,
-        word=''.join([tile['value'] for tile in placed_tiles]),
+        word=word,
         score_gained=score,
         clicked_pass=False,
     )

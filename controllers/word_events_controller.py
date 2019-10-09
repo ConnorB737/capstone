@@ -21,7 +21,7 @@ def attach_controller(socketio):
         #game to the next currently.
 
         game = Game[session['game_id']]
-        place_word(game, current_user._get_current_object(), message["startingPosition"])
+        place_word(game, current_user._get_current_object(), message["word"], message["startingPosition"])
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
         tile_bag = game.tile_bag
 
