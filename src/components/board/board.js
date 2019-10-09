@@ -269,7 +269,7 @@ class Board extends Component {
                 <div className="board">
                     <div className="leftBar">
                         <div className="leftButton">
-                            <Link to="/dashboard"><button className="main">Dash Board</button></Link>
+                            <Link to="/dashboard"><button className="main">Dashboard</button></Link>
                             <Link to="/Help"><button className="help">Help</button></Link>
                             {this.pass()}
                         </div>
