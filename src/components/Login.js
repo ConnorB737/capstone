@@ -21,11 +21,11 @@ export class Login extends Component {
 
     render() {
         return (
-            <div className="bgimg">
+            <div>
                 <div 
                     style={{positive:'relative'}}>
                     <img 
-                        src={logo} 
+                        // src={logo} 
                         style={{
                             positive:'relative',
                             marginLeft: '555px'
@@ -53,7 +53,6 @@ export class Login extends Component {
                                     positive:'relative',
                                     width: '400px',
                                     height: '45px',
-                                    backgroundColor: 'transparent',
                                     marginLeft: '150px',
                                     top:'10px',
                                     marginTop: '0px',
@@ -80,7 +79,6 @@ export class Login extends Component {
                                     positive:'relative',
                                     width: '400px',
                                     height: '45px',
-                                    backgroundColor: 'transparent',
                                     marginLeft: '150px',
                                     Top: '0px',
                                     fontSize:'20px',

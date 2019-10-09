@@ -6,6 +6,8 @@ import Popup from "reactjs-popup";
 import playTile from "./playTile";
 import handleOnDrop from "./drag";
 import DIRECTION from "../../types";
+import {Link} from "react-router-dom";
+
 
 const SPECIAL_TILE_PLACEMENT = specialTiles["specialTiles"];
 
@@ -35,7 +37,7 @@ class Board extends Component {
                 return <Tile value={tile['value']} />
            }
         });
-        return <Tile value={cell} />
+        if (cell != null) {return <Tile value={cell} />}
     }
 
     onDragOver(ev) {
@@ -110,13 +112,13 @@ class Board extends Component {
     handleSwapClick = (event, value) => {
         let temp = this.state.swapList;
 
-        if (event.target.id === "tile") {
-            event.target.id = "newTile";
+        if (event.target.className === "tile") {
+            event.target.className = "newTile";
             temp.push(value);
             this.setState({swapList:temp})
         }
         else {
-            event.target.id = "tile";
+            event.target.className = "tile";
             for(let i = 0; i < temp.length; i++){
                 if (temp[i] === value) {
                     temp.splice(i, 1)
@@ -202,6 +204,36 @@ class Board extends Component {
     }
 
 
+    handlePass = () => {
+        this.props.passRound(this.props.main.socket);
+    }
+
+    pass = () => {
+        return (
+            <Popup trigger={<button className="passButton">Pass</button>}>
+                {
+                    close=> (
+                        <div className="passPopup">
+                            <button 
+                                onClick={() => {
+                                    this.handlePass();
+                                    close()}}
+                                className="passButton"
+                                >
+                                Confirm
+                            </button>
+                            <button 
+                                onClick={ () => {close()}}>
+                                Cancel
+                            </button>
+                        </div>
+                    )
+                }
+            </Popup>
+        )
+
+    }
+
 
 
     render() {
@@ -221,7 +253,7 @@ class Board extends Component {
             let rackList = [];
             if (this.props.main.rack != null) {
                 rackList = this.props.main.rack.map(tile => {
-                    return <td>{this.renderTile(tile)}</td>
+                    return (<tr><td>{this.renderTile(tile)}</td></tr>)
                 })
             }
 
@@ -231,29 +263,34 @@ class Board extends Component {
             }
 
             return (
-                <div id="board">
-
-                        <table >
+                <div className="board">
+                    <div className="leftBar">
+                        <div className="leftButton">
+                            <Link to="/dashboard"><button className="main">Dash Board</button></Link>
+                            <Link to="/Help"><button className="help">Help</button></Link>
+                            {this.pass()}
+                        </div>
+                        <div className="functionBar">
+                            <div className="rackButton">
+                                <button onClick={this.play.bind(this)}>Play</button>
+                                <button onClick={this.clear.bind(this)}>Clear</button>
+                                { swapPopUp }
+                            </div>
+                            <div className="rackBar">
+                                <table>
+                                    <tbody>
+                                        {rackList}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="squareDiv">
+                        <table>
                             <tbody>
                                 {boardState}
                             </tbody>
                         </table>
-
-
-                    <div id="functionBar">
-                        <div>
-                            <table>
-                                <tbody>
-                                    <tr>{rackList}
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div>
-                            <button onClick={this.play.bind(this)}>Play</button>
-                            <button onClick={this.clear.bind(this)}>Clear</button>
-                            { swapPopUp }
-                        </div>
                     </div>
                 </div>
             )

@@ -11,7 +11,7 @@ export class Help extends Component {
 
     render() {
         return (
-            <div className="bgimg">
+            <div>
                 <div 
                     style={{ 
                         width: '1000px',
@@ -22,7 +22,7 @@ export class Help extends Component {
                             width: '100%',
                             textAlign: 'center'
                             }}>                
-                        <img src={logo}/>
+                        {/* <img src={logo}/> */}
                     </div>
                     <div
                         style={{

@@ -16,7 +16,6 @@ const mapDispatchToProps = dispatch => ({
   getHistory: (socket) => dispatch(getHistory(socket)),
   getRoundStatus: (socket) => dispatch(getRoundStatus(socket)),
   getPlayersLeft: (socket) => dispatch(getPlayersLeft(socket)),
-  passRound: (socket) => dispatch(passRound(socket)),
 });
 
 export default connect(
