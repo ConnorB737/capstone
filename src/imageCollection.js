@@ -26,7 +26,6 @@ const Images={
     "X": require("./letter/X.jpg"),
     "Y": require("./letter/Y.jpg"),
     "Z": require("./letter/Z.jpg"),
-    "blank": require("./letter/blank.jpg")
 }
 
 export default Images;

@@ -275,7 +275,7 @@ class Board extends Component {
                         </div>
                         <div className="functionBar">
                             <div className="rackButton">
-                                <button onClick={this.play.bind(this)}>Play</button>
+                                <button id="rackBarPlay" onClick={this.play.bind(this)}>Play</button>
                                 <button onClick={this.clear.bind(this)}>Clear</button>
                                 { swapPopUp }
                             </div>
