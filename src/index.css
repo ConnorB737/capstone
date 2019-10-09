@@ -243,8 +243,8 @@ button {
 }
 
 .newTile {
-  width: 2.5vw;
-  height: 2.5vw;
+  width: 2.4vw;
+  height: 2.4vw;
   border-radius: 5px;
   border: 1px solid red;
 }
