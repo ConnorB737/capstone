@@ -1,6 +1,6 @@
 import { Game } from "../components/Game";
 import { connect } from "react-redux";
-import {getGames, getBoard, getScores, getRack, getTilesLeft, getHistory, getRoundStatus, getPlayersLeft} from "../actions";
+import {getGames, getBoard, getScores, getRack, getTilesLeft, getHistory, getRoundStatus, getPlayersLeft, passRound} from "../actions";
 
 
 const mapStateToProps = state => ({

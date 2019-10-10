@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../image/logo.png';
 import BoardContainer from '../containers/BoardContainer';
-import {Link} from "react-router-dom";
+import Popup from "reactjs-popup";
 
 export class Game extends Component {
 
@@ -36,23 +36,14 @@ export class Game extends Component {
         }
         
         return (
-            <div className="bgimg">
-            <div className="logo"><img src={logo} alt="" /></div>
             <div className="game">
-
+                {/* <div className="logo"><img src={logo} alt="" /></div> */}
                 <div className="game-board">
                     <BoardContainer serverBoard={sBoard} />
                 </div>
-                <div id="leftButton">
-                    <Link to="/"><button className="main">Main Menu</button></Link>
-                    <button className="stop">Stop Game</button>
-                    <Link to="/Help"><button className="help">Help</button></Link>
-
-                </div>
-
-                <div id="rightBar">
-                    <div id="wordsPlayed">
-                        <div id="wordsPlayedNav">
+                <div className="rightBar">
+                    <div className="wordsPlayed">
+                        <div className="wordsPlayedNav">
                             <h3>Words Played</h3>
                         </div>
                         <ul>{wordsPlayedList}</ul>
@@ -63,22 +54,21 @@ export class Game extends Component {
                         {roundStatus}
                     </div>
                     <hr/>
-                    <div id="score">
+                    <div className="score">
                         {
                             Object.keys(this.props.main.scores).map(score => {
                                 return (<p key={score}>{score}: {this.props.main.scores[score]}</p>);
                             })
                         }
                     </div>
-
-                    <div id="bag">
-                        <div id="bagNav"><hr/>
+                    <hr/>
+                    <div className="bag">
+                        <div className="bagNav">
                             <p>Tiles Left: {this.props.main.tiles_left}</p>
                         </div>
                     </div>
 
                 </div>
-            </div>
             </div>
         );
     }

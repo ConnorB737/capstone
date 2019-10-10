@@ -1,31 +1,28 @@
 
-code {
-  font-family: 'Consolas', 'source-code-pro', 'Menlo', 'Monaco',  "Courier New",
-  monospace;
+html {
+  height: 100%;
+  background-color: lightslategrey;  
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 button {
   cursor: pointer;
   box-shadow: 2px 2px gray;
 }
 
-.bgimg{
-      position:absolute;
-       top: 0;
-       left: 0;
-       width:100%;
-       height:100%;
-       /*min-width: 1000px;*/
-       z-index:-10;
-       zoom: 1;
-       /* background: url(../src/image/background.jpg) no-repeat; */
-       background-color: firebrick;
-       background-size: cover;
-       -webkit-background-size: cover;
-       -o-background-size: cover;
-       background-position: center 0;
-   }
 .logo{
   position: absolute;
   left: 0px;
@@ -34,11 +31,11 @@ button {
   width: 100px;
 }
 
+
 .FormContainer {
   position: relative;
-  width: 700px;
-  height: 400px;
-  margin: 0 auto;
+  width: 40vw;
+  height: 25vw;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, .15);
   backdrop-filter: blur(20px) contrast(.8);
@@ -46,200 +43,236 @@ button {
 }
 
 .game {
-  z-index: 10;
-  width: 1000px;
-  height: 700px;
+  width: 70vw;
+  height: 40vw; 
   border-radius: 10px;
   background-color: rgba(255, 255, 255, .15);  
   backdrop-filter: blur(20px);
-  margin: 20px auto;
-  padding: 20px;
-  padding-top: 0px;  border: 1px solid gray;
+  margin: auto;
+  border: 1px solid gray;
 }
 
-#board table {
-  position: absolute;
-  border: 1px solid black;
-  top:50px;
-  margin-left: 210px;
+.game-board {
+  width: 55vw;
+  height: 100%;
+  float: left;
 }
 
-.normaltr {
-  align-content: center;
+.board {
+  width: 55vw;
+  height: 40vw;
 }
 
-.normaltd {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background-color:lightgoldenrodyellow;
-  line-height: 0;
-}
-
-.ST2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/ST.jpg") no-repeat;
-  line-height: 0;
-}
-.DL {
-  align-content: center;
-}
-
-.DL2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/DL.jpg") no-repeat;
-  line-height: 0;
-}
-
-.DW {
-  align-content: center;
-}
-
-.DW2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/DW.jpg") no-repeat;
-  line-height: 0;
-}
-
-.TL {
-  align-content: center;
-}
-
-.TL2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/TL.jpg") no-repeat;
-  line-height: 0;
-}
-
-.TW {
-  align-content: center;
-}
-
-.TW2 {
-  border: 1px solid black;
-  padding:0;
-  margin:0;
-  width: 31px;
-  height: 30px;
-  vertical-align: bottom;
-  border-radius: 10%;
-  background: url("../src/bonus/TW.jpg") no-repeat;
-  line-height: 0;
-}
-
-#leftButton{
-  top: 150px;
+.boardMain {
+  width: 43vw;
+  height: 40vw;
+  float: left;
   position: relative;
-  bottom:32px;
-  left: 20px;
-  width: 200px;
-}
-#leftButton button{
-  margin: 15px;
-  height:60px ;
-  width: 130px;
-  text-align: center;
-  border-radius: 20px;
-  font-size: 20px;
-  font-weight: bold;
 }
 
-#rightBar {
-  border-radius: 5px;
-  margin-top: 0px;
-  margin-left: 750px;
-  width: 220px;
-  height: 505px;
-  border: 1px solid black;
-  background-color: wheat;
-  top:50px;
-  position: absolute;
-}
-
-#wordsPlayedNav {
-  text-align: center;
-}
-
-#wordsPlayed {
-  height: 350px;
-  text-align: start;
-}
-
-#scoreBar {
-  height: 150px;
-}
-
-#functionBar {
+.squareDiv {
+  width: 40vw;
+  height: 40vw;
+  margin: 0 auto;
   position: relative;
-  top: 600px;
-  left: 200px;
-}
-#tile {
-  width: 31px;
-  height: 30px;
-  border-radius: 10%;
 }
 
-#functionBar table {
-  position: absolute;
-  top: 0px;
-  left:300px;
+.squareDiv table {
+  width: 40vw;
+  height: 40vw;
+  border-spacing: 0;
   margin: 0 auto;
 }
 
-#functionBar th, #functionBar td {
-  width: 31px;
-  height: 30px;
-  text-align: center;
-  border-radius: 10%;
+.squareDiv td {
+  width: 2.5vw;
+  height: 2.5vw;
   line-height: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
   border: 1px solid black;
+  background-color: seashell;
 }
 
-#functionBar button {
-  background-color: burlywood;
-  border-radius: 25%;
-  margin: 2px;
-  font-size: 18px;
-  width: 69px;
-  height: 35px;
+.ST2 {
+  background-image: url("../src/bonus/ST.jpg");
+  background-size: cover;
 }
-#newTile {
-  width: 29px;
-  height: 29px;
-  border-radius: 10%;
-  border: 2px solid red;
+
+
+.DL2 {
+  background-image: url("../src/bonus/DL.jpg");
+  background-size: cover;
 }
-#selectrack{
-  position: absolute;
-  right: 750px;
-  top:10px;
+
+.DW2 {
+  background-image: url("../src/bonus/DW.jpg");
+  background-size: cover;
+}
+
+.TL2 {
+  background-image: url("../src/bonus/TL.jpg");
+  background-size: cover;
+}
+
+
+.TW2 {
+  background-image: url("../src/bonus/TW.jpg");
+  background-size: cover;
+}
+
+.leftBar {
+  width: 10vw;
+  height: 100%;
+  float: left;
+  position: relative;
+}
+
+.leftButton{
+  width: 6vw;
+  height: auto;
+  margin: 0 auto;
+}
+
+.leftButton .passButton {
+  background-color: lightsalmon;
+}
+
+.leftButton button{
+  margin-top: 0.5vw;
+  height: 2.5vw;
+  width: 6vw;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 80%;
+
+}
+
+.rightBar {
+  width: 12vw;
+  height: 100%;
+  border-radius: 5px;
+  background-color: transparent;
+  float: left;
+}
+
+.wordsPlayedNav {
+  text-align: center;
+  font-size: 1vw;
+  font-weight: bold;
+}
+
+.wordsPlayed {
+  height: 60%;
+  text-align: start;
+  font-size: 1vw;
+}
+
+#roundStatus {
+  height: 10%;
+  font-size: 1vw;
+
+}
+
+.score {
+  height: 10%;
+  font-size: 1vw;
+
+}
+
+.bag {
+  height: 10%;
+  font-size: 1vw;
+
+}
+
+.functionBar {
+  width: 6vw;
+  height: auto;
+  position: relative;
+  margin: 1vw auto;
+}
+
+.functionBar td {
+  width: 2.5vw;
+  height: 2.5vw;
+  line-height: 0;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: oldlace;
+  
+}
+
+.rackButton {
+  margin: 0.5vw auto;
+  position: relative;
+}
+
+.rackButton button{
+  margin-top: 0.5vw;
+  height: 2.5vw;
+  width: 6vw;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 80%;
+  background-color: wheat;
+}
+
+#rackBarPlay {
+  background-color: lightgreen;
+}
+
+.rackBar {
+  margin: 0.5vw auto;
+  position: relative;
+}
+
+.rackBar table {
+  margin: 0 auto;
+}
+
+.tile {
+  width: 2.5vw;
+  height: 2.5vw;
+  border-radius: 5px;
+}
+
+.newTile {
+  width: 2.4vw;
+  height: 2.4vw;
+  border-radius: 5px;
+  border: 1px solid red;
+}
+
+
+.popup-content {
+  border-radius: 20px;
+  min-height: 100px;
+  max-width: 800px;
+  align-items: center;
+}
+
+.swapPop {
+  width: 100%;
+  height: 100%;
+  align-content: center;
+}
+
+.swapPopNav {
+  width: 20vw;
+  margin-left: 18vw;
+}
+
+.selectrack{
+  width: 30vw;
+  margin-left: 14vw;
+
+}
+
+.swapPopFunction {
+  width: 20vw;
+  margin-left: 18vw;
 }

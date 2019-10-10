@@ -21,43 +21,38 @@ export class Login extends Component {
 
     render() {
         return (
-            <div className="bgimg">
+            <div>
                 <div 
                     style={{positive:'relative'}}>
-                    <img 
+                    {/* <img 
                         src={logo} 
                         style={{
                             positive:'relative',
                             marginLeft: '555px'
-                            }}/>
+                            }}/> */}
                     <div className="FormContainer">
                         <h1 
                             style={{ 
-                                positive:'relative',
-                                marginTop:'20px',
-                                marginLeft: '300px'}} >
+                                marginTop:'1vw',
+                                marginLeft: '17vw'}} >
                             Login
                         </h1>
                         <form action="#" method="post">
                             <p 
                                 style={{
-                                    positive:'relative',
-                                    marginLeft: '150px',
-                                    marginTop: '0px',
-                                    fontSize:'24px',
+                                    marginLeft: '5vw',
+                                    marginTop: '0vw',
+                                    fontSize:'1.5vw',
                                     }}>
                                 Email
                             </p>
                             <input 
                                 style={{
-                                    positive:'relative',
-                                    width: '400px',
-                                    height: '45px',
-                                    backgroundColor: 'transparent',
-                                    marginLeft: '150px',
-                                    top:'10px',
-                                    marginTop: '0px',
-                                    fontSize:'20px',
+                                    width: '30vw',
+                                    height: '2vw',
+                                    marginLeft: '5vw',
+                                    marginTop: '0vw',
+                                    fontSize:'1.5vw',
                                     borderRadius: '10px',
                                     boxShadow: '2px 2px gray',
                                     }}
@@ -67,25 +62,20 @@ export class Login extends Component {
                                 onChange={(event) => this.setState({email: event.target.value})}/>
                             <p 
                                 style={{
-                                    positive:'relative',
-                                    marginLeft: '150px',
-                                    marginTop:'10px',
-                                    Top: '8px',
-                                    fontSize:'24px'
+                                    marginLeft: '5vw',
+                                    marginTop: '1vw',
+                                    fontSize:'1.5vw',
                                     }}>
                                 Password
                             </p>
                             <input 
                                 style={{
-                                    positive:'relative',
-                                    width: '400px',
-                                    height: '45px',
-                                    backgroundColor: 'transparent',
-                                    marginLeft: '150px',
-                                    Top: '0px',
-                                    fontSize:'20px',
-                                    borderRadius: '10px',                                    
-                                    marginBottom:'10px',
+                                    width: '30vw',
+                                    height: '2vw',
+                                    marginLeft: '5vw',
+                                    marginTop: '0vw',
+                                    fontSize:'1.5vw',
+                                    borderRadius: '10px',
                                     boxShadow: '2px 2px gray',
                                     }}
                                 type="password"
@@ -95,13 +85,13 @@ export class Login extends Component {
                             <br/>
                             <input 
                                 style={{
-                                    positive:'relative',
-                                    width: '200px',
-                                    height: '50px',
+                                    width: '8vw',
+                                    height: '3vw',
                                     backgroundColor: 'wheat',
-                                    marginLeft: '250px',
-                                    marginTop: '20px',
-                                    fontSize:'20px',
+                                    marginLeft: '15.5vw',
+                                    marginTop: '3vw',
+                                    fontSize:'1.5vw',
+                                    fontWeight: 'bold',
                                     borderRadius: '20px',
                                     cursor: 'pointer',
                                     boxShadow: '2px 2px gray',
@@ -113,14 +103,14 @@ export class Login extends Component {
                         <Link to="/register">
                             <button
                                 style={{
-                                    positive:'relative',
-                                    width: '200px',
-                                    height: '50px',
+                                    width: '8vw',
+                                    height: '3vw',
                                     backgroundColor: 'wheat',
-                                    marginLeft: '250px',
-                                    marginTop:'10px',
-                                    fontSize:'20px',
+                                    marginLeft: '15.5vw',
+                                    marginTop: '1vw',
+                                    fontSize:'1.5vw',
                                     borderRadius: '20px',
+                                    boxShadow: '2px 2px gray',
                                     }}>
                                 Register
                             </button>
