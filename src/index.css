@@ -1,7 +1,7 @@
 
 html {
   height: 100%;
-  background-color: lightslategrey;  
+  background-color: darkred;
 }
 body {
   height: 100%;
@@ -23,6 +23,10 @@ button {
   box-shadow: 2px 2px gray;
 }
 
+input {
+  color: black;
+}
+
 .logo{
   position: absolute;
   left: 0px;
@@ -37,8 +41,7 @@ button {
   width: 40vw;
   height: 25vw;
   border-radius: 20px;
-  background-color: rgba(255, 255, 255, .15);
-  backdrop-filter: blur(20px) contrast(.8);
+  background-color: rosybrown;
   border: 1px solid gray;
 }
 
@@ -46,8 +49,7 @@ button {
   width: 70vw;
   height: 40vw; 
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, .15);  
-  backdrop-filter: blur(20px);
+  background-color: rosybrown;  
   margin: auto;
   border: 1px solid gray;
 }
@@ -92,7 +94,7 @@ button {
   margin: 0;
   border-radius: 5px;
   border: 1px solid black;
-  background-color: seashell;
+  background-color: lightyellow;
 }
 
 .ST2 {
@@ -223,6 +225,7 @@ button {
 
 #rackBarPlay {
   background-color: lightgreen;
+  font-weight: bold;
 }
 
 .rackBar {
