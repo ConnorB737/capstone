@@ -11,19 +11,21 @@ export class Help extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{
+                position: 'relative',
+            }}>
                 <div 
                     style={{ 
                         width: '1000px',
                         margin: '0 auto',
                         }}>
-                    <div 
+                    {/* <div 
                         style={{
                             width: '100%',
                             textAlign: 'center'
                             }}>                
-                        {/* <img src={logo}/> */}
-                    </div>
+                        <img src={logo}/>
+                    </div> */}
                     <div
                         style={{
                             width: '900px',
@@ -31,7 +33,7 @@ export class Help extends Component {
                             }}>
                         <img 
                             style={{
-                                margin: '10px',
+                                marginLeft: '35px',
                                 width:'400px',
                                 height:'500px',
                                 float: 'left',
@@ -41,7 +43,7 @@ export class Help extends Component {
                             src={rule1}/>
                         <img 
                             style={{
-                                margin: '10px',
+                                marginLeft: '15px',
                                 width:'400px',
                                 height:'500px',
                                 borderRadius:'10%',

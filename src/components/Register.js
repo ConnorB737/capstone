@@ -87,7 +87,7 @@ export class Register extends Component {
                                     boxShadow: '2px 2px gray',
                                     }} 
                                 type="submit" 
-                                value="register" 
+                                value="Register" 
                                 onClick={this.register}/>
                         </form>
                         <Link to="/login">
