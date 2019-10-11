@@ -1,7 +1,8 @@
 
 html {
   height: 100%;
-  background-color: darkred;
+  /*background-color:  lightslategrey;*/
+ background-color: cadetblue;
 }
 body {
   height: 100%;
@@ -41,7 +42,8 @@ input {
   width: 40vw;
   height: 25vw;
   border-radius: 20px;
-  background-color: rosybrown;
+  background-color: lightsteelblue;
+
   border: 1px solid gray;
 }
 
@@ -49,7 +51,7 @@ input {
   width: 70vw;
   height: 40vw; 
   border-radius: 10px;
-  background-color: rosybrown;  
+  background-color: lightsteelblue;
   margin: auto;
   border: 1px solid gray;
 }

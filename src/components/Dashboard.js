@@ -49,10 +49,10 @@ export class Dashboard extends Component {
 
     render() {
         return (
-            <div>
+            <div> <img className="DB_logo" src={logo} style={{width:'520px',height:'170px',marginLeft:'130px'}}/>
                 <div className="dashboard_container">
                     <div style={{positive:'relative'}}>
-                        {/* <img className="DB_logo" src={logo}/> */}
+
                         <div className="dashboard_head">
                             <p className="DB_h1">Join an existing game</p>
                             <div className="login_area">

@@ -22,14 +22,11 @@ export class Login extends Component {
     render() {
         return (
             <div>
+
                 <div 
                     style={{positive:'relative'}}>
-                    {/* <img 
-                        src={logo} 
-                        style={{
-                            positive:'relative',
-                            marginLeft: '555px'
-                            }}/> */}
+                    <img src={logo} style={{width:'520px',height:'170px'}}/>
+
                     <div className="FormContainer">
                         <h1 
                             style={{ 
@@ -89,7 +86,7 @@ export class Login extends Component {
                                     height: '3vw',
                                     backgroundColor: 'wheat',
                                     marginLeft: '15.5vw',
-                                    marginTop: '3vw',
+                                    marginTop: '1vw',
                                     fontSize:'1.5vw',
                                     fontWeight: 'bold',
                                     borderRadius: '20px',
