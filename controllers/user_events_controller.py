@@ -28,6 +28,8 @@ def attach_controller(socketio: SocketIO):
             print(f"Sending response: {response}")
             socketio.emit(EventType.USER_LOGGED_IN.value, response, room=request.sid)
             return
+        else:
+            print(f"Could not check user: {check_user}")
 
     @socketio.on(EventType.REGISTER.value)
     @db_session
