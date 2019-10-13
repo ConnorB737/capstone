@@ -213,7 +213,7 @@ class Board extends Component {
                 close=> (
                     <div className="passPopup">
                         <div className="passPopButtons">
-                            <p style={{ fontSize:'13px'}}>Are you sure to exit game?</p>
+                            <p style={{ fontSize:'13px',marginLeft:'7px'}}>Are you sure to exit game?</p>
                             <Link to="/dashboard"><button
                                 className="passButton"
                             >

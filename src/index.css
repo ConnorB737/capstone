@@ -255,14 +255,17 @@ input {
 
 .popup-content {
   border-radius: 20px;
-  height: 70px;
-  max-width: 180px;
+  min-height: 100px;
+  /*max-width: 800px;*/
+  /*max-height: 130px;*/
+  max-width: 300px;
   align-items: center;
 }
 
 .passPopButtons button{
-  margin-top: 15px;
+  margin-top: 30px;
   margin-right: 2px;
+  margin-left: 8px;
 }
 
 .swapPop {
@@ -273,16 +276,17 @@ input {
 
 .swapPopNav {
   width: 20vw;
-  margin-left: 18vw;
+  margin-left: 5vw;
 }
 
 .selectrack{
   width: 30vw;
-  margin-left: 14vw;
+  margin-left: 1vw;
 
 }
 
 .swapPopFunction {
   width: 20vw;
-  margin-left: 18vw;
+  margin-left: 5vw;
+  margin-right: 1vm;
 }

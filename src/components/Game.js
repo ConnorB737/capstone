@@ -36,7 +36,6 @@ export class Game extends Component {
         
         return (
             <div className="game">
-                {/* <div className="logo"><img src={logo} alt="" /></div> */}
                 <div className="game-board">
                     <BoardContainer serverBoard={sBoard} />
                 </div>
