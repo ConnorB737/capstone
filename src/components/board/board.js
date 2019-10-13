@@ -168,7 +168,7 @@ class Board extends Component {
             <Popup trigger={<button>Swap</button>} modal>
                 {
                     close=> (
-                        <div className="swapPop">
+                        <div id="swapPop">
                             <div className="swapPopNav">
                                 Choose One tile to swap
                             </div>
@@ -225,7 +225,7 @@ class Board extends Component {
 
     exitgame = () => {
         return(
-            <Popup trigger={<button className="exitButton">Exit Game</button>}>{
+            <Popup trigger={<button id="exitButton">Exit Game</button>}>{
                 close=> (
                     <div className="passPopup">
                         <div className="passPopButtons">
@@ -248,7 +248,7 @@ class Board extends Component {
     };
     pass = () => {
         return (
-            <Popup trigger={<button className="passButton">Pass</button>}>
+            <Popup trigger={<button id="passButton">Pass</button>}>
                 {
                     close=> (
                         <div className="passPopup">
