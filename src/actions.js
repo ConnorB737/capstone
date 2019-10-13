@@ -194,6 +194,7 @@ export const logout = () => {
 
 export const login = (socket, email, password) => {
     return dispatch => {
+        console.log(`Sending login message over socket for: ${email}:${password}`);
         socket.emit(socketEvents.LOGIN, buildLoginMessage(email, password));
     }
 };
