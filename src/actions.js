@@ -34,6 +34,7 @@ export const getEverything = (socket) => {
         socket.emit(socketEvents.GET_HISTORY);
         socket.emit(socketEvents.GET_ROUND_STATUS);
         socket.emit(socketEvents.GET_TILES_LEFT);
+        socket.emit(socketEvents.GET_PLAYERS_LEFT);
     };
 };
 
