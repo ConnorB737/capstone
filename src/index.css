@@ -120,7 +120,6 @@ input {
   background-size: cover;
 }
 
-
 .TW2 {
   background-image: url("../src/bonus/TW.jpg");
   background-size: cover;
@@ -142,6 +141,7 @@ input {
 .leftButton .passButton {
   background-color: lightsalmon;
 }
+
 
 .leftButton button{
   margin-top: 0.5vw;
@@ -255,15 +255,14 @@ input {
 
 .popup-content {
   border-radius: 20px;
-  height: 39px;
-  /*width: 180px;*/
-  /*min-height: 100px;*/
+  height: 70px;
   max-width: 180px;
   align-items: center;
 }
 
 .passPopButtons button{
-  margin: 2px;
+  margin-top: 15px;
+  margin-right: 2px;
 }
 
 .swapPop {
