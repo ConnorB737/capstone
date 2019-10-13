@@ -77,8 +77,9 @@ def attach_controller(socketio: SocketIO):
         players_and_scores = {}
         if current_round:
             for player in game.human_players:
-                players_and_scores[player.login] = 0
-                players_and_scores[player.login + "_acted"] = False
+                player_identifier = player.login
+                players_and_scores[player_identifier] = 0
+                players_and_scores[player_identifier + "_acted"] = False
                 for action in current_round.round_actions:
                     if action.human_player.login == player.login:
                         players_and_scores[player.login + "_acted"] = True

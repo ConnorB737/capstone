@@ -11,6 +11,21 @@ import {Link} from "react-router-dom";
 
 const SPECIAL_TILE_PLACEMENT = specialTiles["specialTiles"];
 
+
+const arraysEqual = (a, b) => {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    a.sort();
+    b.sort();
+    for (let i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
+};
+
+
 class Board extends Component {
 
     constructor(props) {
@@ -21,22 +36,33 @@ class Board extends Component {
                 direction: [DIRECTION.NOT_PLACED], 
                 placedTiles: [], //contains the coords of each tile
             },
-            temp_rack: [],
+            localRack: [],
             wordList: words["wordList"],
         }
     }
-    
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // If the rack changes on the server, update our version of the rack
+        const oldRack = prevProps.main.rack;
+        if (!arraysEqual(oldRack, this.props.main.rack)) {
+            this.setState({
+                localRack: this.props.main.rack,
+            });
+        }
+    }
+
     renderTile(cell){
         return <Tile value={cell} />
     }
     
     renderTileIJ(tileIndexY, tileIndexX, cell) {
         let placedTiles = this.state.word.placedTiles;
-        placedTiles.forEach(tile => {
+        for (let tileIndex = 0; tileIndex < placedTiles.length; tileIndex++) {
+            const tile = placedTiles[tileIndex];
             if (tileIndexY === tile['y'] && tileIndexX === tile['x']){
                 return <Tile value={tile['value']} />
            }
-        });
+        }
         if (cell != null) {return <Tile value={cell} />}
     }
 
@@ -52,23 +78,20 @@ class Board extends Component {
         let droppedTileX = coordinate[1];
 
         // this part handles the remove tile from rack once it been placed on the board
-        let temp_rack = this.state.temp_rack;
+        const localRack = this.state.localRack;
         if (this.props.main.roundStatus.currentRound.currentUserHasPlayed != true) {
             if (tempBoardState[droppedTileY][droppedTileX] === null) {
-                for (let i = 0; i < this.props.main.rack.length; i++) {
-                    if (this.props.main.rack[i] === value) {
-                        temp_rack.push(this.props.main.rack.splice(i, 1)[0]);
-                        break;
-                    }
-                }
-                this.setState({temp_rack:temp_rack});
+                const rackIndex = localRack.indexOf(value);
+                if (rackIndex !== -1) localRack.splice(rackIndex, 1);
+
+                this.setState({localRack:localRack});
 
                 //this part of the code handles the checking of whether you're placing tiles in a logical order
                 //it won't let you place tiles randomly,
                 //but instead enforces that tiles are inline horizontally or vertically
                 //and all touching
 
-                var placedTiles = this.state.word.placedTiles;
+                const placedTiles = this.state.word.placedTiles;
                 function placeTileOnBoard(placedTile) {
                     placedTiles.push(placedTile);
                     this.props.placeTile(placedTile);
@@ -82,10 +105,6 @@ class Board extends Component {
                     ...this.state,
                     ...lasts,
                 });
-                
-                if (tempBoardState[droppedTileY][droppedTileX] === null) {
-                    this.props.main.rack.push(this.state.temp_rack.splice(this.state.temp_rack.length-1, 1)[0])
-                }
             }
         } else (
             alert ("Please wait for next round")
@@ -199,7 +218,7 @@ class Board extends Component {
         const wordList = this.state.wordList;
         const placeWord = this.props.placeWord.bind(this);
         const socket = this.props.main.socket;
-        const tempRack = this.state.temp_rack;
+        const tempRack = this.state.localRack;
         const word = this.state.word;
 
         playTile(placedTiles, direction, board, wordList, placeWord, socket, tempRack, word);
@@ -211,10 +230,7 @@ class Board extends Component {
         this.state.word.direction[0] = DIRECTION.NOT_PLACED;
         this.state.word.placedTiles.length = 0; //delete all tiles
         this.props.main.serverBoard = this.props.getBoard(this.props.main.socket);
-        for (let i=0; i<this.state.temp_rack.length; i++) {
-            this.props.main.rack.push(this.state.temp_rack[i])
-        };
-        this.setState({temp_rack:[]});
+        this.setState({localRack:this.props.main.rack});
     }
 
     handlePass = () => {
@@ -300,8 +316,8 @@ class Board extends Component {
             });
 
             let rackList = [];
-            if (this.props.main.rack != null) {
-                rackList = this.props.main.rack.map(tile => {
+            if (this.state.localRack != null) {
+                rackList = this.state.localRack.map(tile => {
                     return (<tr><td>{this.renderTile(tile)}</td></tr>)
                 })
             }

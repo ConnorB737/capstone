@@ -74,3 +74,8 @@ class Game(db.Entity):
 
     def total_player_count(self):
         return self.human_player_count + self.ai_player_count
+
+    @property
+    def players(self):
+        yield from self.human_players
+        yield from range(1, self.ai_player_count + 1)
