@@ -8,6 +8,7 @@ from pony.orm import db_session, commit, OptimisticCheckError
 
 from AI.AIWordPlacer import AIWordPlacer
 from models.board import BoardState
+from models.database import db
 from models.game import Game
 from models.tile_bag import Rack
 from service.ai_lock import ai_lock
@@ -48,6 +49,11 @@ def ai_play_word_decision():
 
 
 def ai_scheduler():
+    if os.name == 'nt':
+        # Only need to do this on Windows
+        db.generate_mapping(create_tables=False)
+
+    sleep(10)
     while True:
         with ai_lock:
             ai_play_word_decision()
