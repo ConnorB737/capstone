@@ -147,10 +147,23 @@ class Board extends Component {
         }
     };
 
+    _roundActionForCurrentPlayer() {
+        const actions = (this.props.main.roundStatus.currentRound.actions;
+        if (actions.length !== 0) {
+            for (let actionIndex = 0; actionIndex < actions.length; actionIndex++) {
+                if (actions[actionIndex].humanPlayer === this.props.main.user.id) {
+                    return actions[actionIndex];
+                }
+            }
+        }
+        return null;
+    }
+
     handleSwapSend = () => {
         console.log("this.props.main.roundStatus: ",this.props.main.roundStatus)
         if (this.props.main.roundStatus.currentRound.actions.length !== 0) {
-            if (this.props.main.roundStatus.currentRound.actions[0].clickedSwap === true ) {
+            const currentAction = this._roundActionForCurrentPlayer();
+            if (currentAction !== null) {
                 alert("You can only swap once in one round")
             }
             else {
