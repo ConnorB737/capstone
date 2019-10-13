@@ -34,7 +34,8 @@ def ai_play_word_decision():
                             print(f"AI #{ai_number} has not played yet for game #{game.id}")
                             ai_rack = Rack.select().filter(lambda rack: rack.game == game and rack.ai_player == ai_number).first()
                             word_tiles = AIWordPlacer(ai_rack.tiles).place_word(BoardState.deserialize(game.board).state)
-                            place_word(game=game, player=ai_number, placed_tiles=word_tiles)
+                            word = ','.join([tile['value'] for tile in word_tiles])
+                            place_word(game=game, player=ai_number, word=word, placed_tiles=word_tiles)
                             commit()
                         except IntegrityError:
                             pass

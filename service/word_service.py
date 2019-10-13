@@ -10,7 +10,7 @@ import service.gameplay_service as gps
 
 
 @db_session
-def place_word(game: Game, player: Union[User, int], word, placed_tiles: List[Dict]):
+def place_word(game: Game, player: Union[User, int], word: str, placed_tiles: List[Dict]):
     board = BoardState.deserialize(game.board)
     for tile_position in placed_tiles:
         board.place_tile(tile_position["x"], tile_position['y'], tile_position['value'])
