@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../image/logo.png';
 import BoardContainer from '../containers/BoardContainer';
 import Popup from "reactjs-popup";
 
