@@ -32,6 +32,7 @@ def attach_controller(socketio: SocketIO):
     @socketio.on(EventType.REGISTER.value)
     @db_session
     def handle_register(message):
+        print(f"Received {EventType.REGISTER.value} event")
         user = User(login=message["email"], password=generate_password_hash(message["password"]))
         commit()
         login_user(user)
