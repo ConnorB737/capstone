@@ -36,13 +36,20 @@ export class Game extends Component {
             }
         }
         
+        let gameIdentification;
+        if(this.props.main.readyGame){
+            gameIdentification = "#" + this.props.main.readyGame.id;
+        } else {
+            gameIdentification = "Loading...";
+        }
+        
         return (
             <div className="game">
                 <div className="game-board">
                     <BoardContainer serverBoard={sBoard} />
                 </div>
                 <div className="rightBar">
-                    <h2 style={{margin:0}}>Game #{this.props.main.readyGame.id}</h2>
+                    <h2 style={{margin:0}}>Game {gameIdentification}</h2>
                     <div id="roundStatus">
                         {this.props.main.user.login}
                         {roundStatus}
@@ -51,7 +58,7 @@ export class Game extends Component {
                     <div className="score">
                         <table style={{border:0}}>
                         {
-                            Object.keys(this.props.main.scores).map(score => {
+                            Object.keys(this.props.main.scores).sort().map(score => {
                                 if (score.endsWith("_acted"))
                                     return "";
                                 else if(this.props.main.scores[score + "_acted"])

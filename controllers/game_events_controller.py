@@ -82,10 +82,16 @@ def attach_controller(socketio: SocketIO):
                 for action in current_round.round_actions:
                     if action.human_player.login == player.login:
                         players_and_scores[player.login + "_acted"] = True
+            players_and_scores["Computer_acted"] = False
+            if game.ai_player_count:
+                players_and_scores["Computer"] = 0
         for game_round in game.rounds:
             for placed_word in game_round.round_actions:
                 if placed_word.human_player is not None:
                     players_and_scores[placed_word.human_player.login] = players_and_scores.get(placed_word.human_player.login, 0) + placed_word.score_gained
+                elif placed_word.ai_player:
+                    players_and_scores["Computer"] = players_and_scores.get("Computer", 0) + placed_word.score_gained
+                    players_and_scores["Computer_acted"] = True
 
         response = json.dumps(players_and_scores)
 

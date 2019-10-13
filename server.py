@@ -18,7 +18,6 @@ from service.scheduler import ai_scheduler
 
 socketio = SocketIO()
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return User[user_id]
