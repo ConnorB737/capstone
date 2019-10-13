@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../image/logo.png';
 import BoardContainer from '../containers/BoardContainer';
 import Popup from "reactjs-popup";
 
@@ -37,7 +36,6 @@ export class Game extends Component {
         
         return (
             <div className="game">
-                {/* <div className="logo"><img src={logo} alt="" /></div> */}
                 <div className="game-board">
                     <BoardContainer serverBoard={sBoard} />
                 </div>

@@ -203,11 +203,33 @@ class Board extends Component {
         this.setState({temp_rack:[]});
     }
 
-
     handlePass = () => {
         this.props.passRound(this.props.main.socket);
-    }
+    };
 
+    exitgame = () => {
+        return(
+            <Popup trigger={<button className="exitButton">Exit Game</button>}>{
+                close=> (
+                    <div className="passPopup">
+                        <div className="passPopButtons">
+                            <p style={{ fontSize:'13px',marginLeft:'7px'}}>Are you sure to exit game?</p>
+                            <Link to="/dashboard"><button
+                                className="passButton"
+                            >
+                                Yes
+                            </button></Link>
+                            <button
+                                onClick={ () => {close()}}>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                )
+            }
+            </Popup>
+        )
+    };
     pass = () => {
         return (
             <Popup trigger={<button className="passButton">Pass</button>}>
@@ -234,10 +256,7 @@ class Board extends Component {
                 }
             </Popup>
         )
-
-    }
-
-
+    };
 
     render() {
         if (this.props.main.serverBoard) {
@@ -269,7 +288,7 @@ class Board extends Component {
                 <div className="board">
                     <div className="leftBar">
                         <div className="leftButton">
-                            <Link to="/dashboard"><button className="main">Dashboard</button></Link>
+                            {this.exitgame()}
                             <Link to="/Help"><button className="help">Help</button></Link>
                             {this.pass()}
                         </div>
