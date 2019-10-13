@@ -11,6 +11,7 @@ class Round(db.Entity):
     # The current round of the game, indexed from 1
     round_number = orm.Required(int)
     round_actions = orm.Set("RoundAction", reverse="round")
+    started_at = orm.Optional(datetime.datetime, sql_default='CURRENT_TIMESTAMP')
 
 
 class RoundAction(db.Entity, HasPlayer):
@@ -22,6 +23,7 @@ class RoundAction(db.Entity, HasPlayer):
     score_gained = orm.Optional(int)
     clicked_pass = orm.Optional(bool)
     occurred_at = orm.Optional(datetime.datetime, sql_default='CURRENT_TIMESTAMP')
+    orm.composite_key(round, ai_player, human_player)
 
     @property
     def played_word(self) -> bool:
