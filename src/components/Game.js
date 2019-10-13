@@ -19,9 +19,9 @@ export class Game extends Component {
     render() {
 		const sBoard = this.props.main.serverBoard; //this.props.serverBoard is the board received from the server
         
-        let wordsPlayedList = this.props.main.history.map((word) => 
-            <li key={word.toString()}> {word} </li>
-        );
+        // let wordsPlayedList = this.props.main.history.map((word) => //no longer use a history list
+            // <li key={word.toString()}> {word} </li>
+        // );
         
         console.log(this.props);
         let roundStatus;
@@ -42,24 +42,25 @@ export class Game extends Component {
                     <BoardContainer serverBoard={sBoard} />
                 </div>
                 <div className="rightBar">
-                    <div className="wordsPlayed">
-                        <div className="wordsPlayedNav">
-                            <h3>Words Played</h3>
-                        </div>
-                        <ul>{wordsPlayedList}</ul>
-                    </div>
-                    <hr/>
+                    <h2 style={{margin:0}}>Game #{this.props.main.readyGame.id}</h2>
                     <div id="roundStatus">
                         {this.props.main.user.login}
                         {roundStatus}
                     </div>
-                    <hr/>
+                    <hr style={{margin:0}}/>
                     <div className="score">
+                        <table style={{border:0}}>
                         {
                             Object.keys(this.props.main.scores).map(score => {
-                                return (<p key={score}>{score}: {this.props.main.scores[score]}</p>);
+                                if (score.endsWith("_acted"))
+                                    return "";
+                                else if(this.props.main.scores[score + "_acted"])
+                                    return (<tr> <td style={{color:"darkgreen"}} key={score}>{score}</td> <td>{this.props.main.scores[score]}</td></tr>);
+                                else 
+                                    return (<tr> <td style={{color:"darkred"}} key={score}>{score}</td> <td>{this.props.main.scores[score]}</td></tr>);
                             })
                         }
+                        </table>
                     </div>
                     <hr/>
                     <div className="bag">

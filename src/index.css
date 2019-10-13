@@ -154,6 +154,7 @@ input {
 }
 
 .rightBar {
+  padding-top: 10px;
   width: 12vw;
   height: 100%;
   border-radius: 5px;
@@ -180,7 +181,7 @@ input {
 }
 
 .score {
-  height: 10%;
+  height: 10% auto;
   font-size: 1vw;
 
 }

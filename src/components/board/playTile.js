@@ -21,7 +21,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
                     for (let c = startY; c <= endY; c++){
                         letters.push(board[c][t['x']]);
                     }
-                    console.log(letters.join(""));
                     if (!wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
@@ -42,7 +41,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
                     for (let c = startX; c <= endX; c++){
                         letters.push(board[t['y']][c]);
                     }
-                    console.log(letters.join(""));
                     if (!wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
@@ -63,7 +61,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
                     for (let c = startX; c <= endX; c++){
                         letters.push(board[t['y']][c]);
                     }
-                    console.log(letters.join(""));
                     if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
                         returnVal = false;
                     }
@@ -83,7 +80,6 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
                     for (let c = startY; c <= endY; c++){
                         letters.push(board[c][t['x']]);
                     }
-                    console.log(letters.join(""));
                     if (letters.join("").length > 1 && !wordList.includes(letters.join(""))){
                         returnVal = false;
                     }

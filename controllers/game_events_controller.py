@@ -73,16 +73,21 @@ def attach_controller(socketio: SocketIO):
     def get_scores():
         print(f"Received {EventType.GET_SCORES.value} event")
         game = Game[session['game_id']]
-        scores_by_player: DefaultDict[Dict] = defaultdict(dict)
+        current_round = game.current_round()
+        players_and_scores = {}
+        if current_round:
+            for player in game.human_players:
+                players_and_scores[player.login] = 0
+                players_and_scores[player.login + "_acted"] = False
+                for action in current_round.round_actions:
+                    if action.human_player.login == player.login:
+                        players_and_scores[player.login + "_acted"] = True
         for game_round in game.rounds:
             for placed_word in game_round.round_actions:
                 if placed_word.human_player is not None:
-                    score_for_player: Dict = scores_by_player[placed_word.human_player]
-                    score_for_player['is_ai'] = False
-                    score_for_player['is_human'] = True
-                    score_for_player['score'] = score_for_player.get('score', 0) + placed_word.score_gained
+                    players_and_scores[placed_word.human_player.login] = players_and_scores.get(placed_word.human_player.login, 0) + placed_word.score_gained
 
-        response = json.dumps(scores_by_player)
+        response = json.dumps(players_and_scores)
 
         print(f"Sending response: {response}")
         socketio.emit(EventType.SCORES_LIST.value, response, room=request.sid)
