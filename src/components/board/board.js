@@ -129,9 +129,23 @@ class Board extends Component {
     };
 
     handleSwapSend = () => {
-        this.props.swapTile(this.props.main.socket, this.state.swapList);
-        let temp = [];
-        this.setState({swapList:temp});
+        console.log("this.props.main.roundStatus: ",this.props.main.roundStatus)
+        if (this.props.main.roundStatus.currentRound.actions.length !== 0) {
+            if (this.props.main.roundStatus.currentRound.actions[0].clickedSwap === true ) {
+                alert("You can only swap once in one round")
+            }
+            else {
+                this.props.swapTile(this.props.main.socket, this.state.swapList);
+                let temp = [];
+                this.setState({swapList:temp});
+            }
+        }
+        else {
+            this.props.swapTile(this.props.main.socket, this.state.swapList);
+            let temp = [];
+            this.setState({swapList:temp});
+        }
+
     };
 
     SwapPop = () => {
@@ -204,7 +218,20 @@ class Board extends Component {
     }
 
     handlePass = () => {
-        this.props.passRound(this.props.main.socket);
+        console.log("before this.props.main.roundStatus: ",this.props.main.roundStatus)
+        if (this.props.main.roundStatus.currentRound.actions.length !== 0) {
+            if (this.props.main.roundStatus.currentRound.actions[0].clickedPass === true ) {
+                alert("You can only pass once in one round ")
+            }
+            else {
+                console.log("passed!!!!!!!!!")
+                this.props.passRound(this.props.main.socket);
+            }
+        } 
+        else {
+            console.log("passed!!!!!!!!!")
+            this.props.passRound(this.props.main.socket);
+        }
     };
 
     exitgame = () => {

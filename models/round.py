@@ -22,6 +22,7 @@ class RoundAction(db.Entity, HasPlayer):
     word = orm.Optional(str)
     score_gained = orm.Optional(int)
     clicked_pass = orm.Optional(bool)
+    clicked_swap = orm.Optional(bool)
     occurred_at = orm.Optional(datetime.datetime, sql_default='CURRENT_TIMESTAMP')
     orm.composite_key(round, ai_player, human_player)
 
@@ -36,6 +37,7 @@ class RoundAction(db.Entity, HasPlayer):
             "word": self.word,
             "scoreGained": self.score_gained,
             "clickedPass": self.clicked_pass,
+            "clickedSwap": self.clicked_swap,
 
             # Timestamp in milliseconds since epoch.
             # Convert to JavaScript Date: new Date(<occurred_at>)

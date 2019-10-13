@@ -24,7 +24,7 @@ export class Game extends Component {
             // <li key={word.toString()}> {word} </li>
         // );
         
-        console.log(this.props);
+        // console.log(this.props);
         let roundStatus;
         if (this.props.main.roundStatus) {
             roundStatus = <h3>Round: {this.props.main.roundStatus.roundNumber}</h3>

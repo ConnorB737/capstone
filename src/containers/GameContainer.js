@@ -9,7 +9,6 @@ import {
   getHistory,
   getRoundStatus,
   getPlayersLeft,
-  passRound,
   getEverything
 } from "../actions";
 
