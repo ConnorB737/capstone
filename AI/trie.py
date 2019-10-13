@@ -1,4 +1,6 @@
 import json
+import os
+
 
 class TrieNode:
     def __init__(self):
@@ -9,7 +11,7 @@ class Trie:
     def __init__(self):
         self.root = TrieNode()
         
-        word_list = json.load(open("words.json"))["wordList"]
+        word_list = json.load(open(os.path.abspath(os.path.join(os.path.dirname(__file__), "words.json"))))["wordList"]
         self.build(word_list)
      
     def char_to_index(self, ch):

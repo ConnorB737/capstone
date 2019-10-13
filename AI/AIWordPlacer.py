@@ -1,17 +1,21 @@
+from typing import Dict, List
+
 from AI import trie
 import itertools
 import random
 import time
 
 
+BOARD_SIZE = 15
+
+
 class AIWordPlacer:
-    def __init__(self):
-        self.letters = ["T", "D", "C", "I", "G", "E", "R"]
+    def __init__(self, letters):
+        self.letters = letters
         self.trie = trie.Trie()
     
     def find_valid_word(self, board):
         locations = self.get_placeable_locations(board)
-        location = {'x':0,'y':0,'value':"A"} #need some handling when location doesnt get found
         words = []
         startX = 0
         startY = 0
@@ -74,20 +78,16 @@ class AIWordPlacer:
             words = self.get_words(startX, startY, board, direction, conditions)
         
         w = random.choice(words)
-        print(w)
-        print(conditions)
         return self.word_to_tiles(startX, startY, w, direction)
     
-    def place_word(self, board):
-        word_tiles = self.find_valid_word(board)
-        for tile in word_tiles:
-            board[tile['y']][tile['x']] = tile['value']
+    def place_word(self, board) -> List[Dict]:
+        return self.find_valid_word(board)
     
     def word_to_tiles(self, x, y, word, direction): #only does horizontally atm
         tiles = []
         for letter in word:
             tiles.append({'x':x, 'y':y, 'value':letter})
-            if(direction == 0):
+            if (direction == 0):
                 x += 1
             else:
                 y += 1
@@ -98,10 +98,12 @@ class AIWordPlacer:
         
         locations = []
         
-        for y in range(15): 
-            for x in range(15):
-                if board[y][x] != None:
-                    locations.append({'x':x, 'y':y, 'value':board[y][x] })
+        for y in range(BOARD_SIZE):
+            for x in range(BOARD_SIZE):
+                if board[y][x] is not None:
+                    locations.append({'x': x, 'y': y, 'value': board[y][x]})
+        if not locations:
+            locations.append({'x': int((BOARD_SIZE - 1) / 2), 'y': int((BOARD_SIZE - 1) / 2), 'value': None})
         return locations
     
     def check_word(self, startX, startY, board, direction, word): #checks all adjacent words are valid

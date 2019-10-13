@@ -142,7 +142,6 @@ scoring_info = {
 #include double/triple scored letters before doubling entire word score
 
 def calculate_word_score(game_id, wordArray):
-    print(wordArray)
     doubleWord = False
     tripleWord = False
     score = 0
@@ -151,7 +150,6 @@ def calculate_word_score(game_id, wordArray):
     board = BoardState.deserialize(game.board).get_state()
     direction = 0 if wordArray[0]["x"] != wordArray[1]["x"] else 1
     wordArray += get_adjacent_tiles(wordArray[0]["x"], wordArray[0]["y"], board, direction, wordArray)
-    print(wordArray)
     
     for letter in wordArray:
         score += scoring_info["LETTERS"][letter["value"]]

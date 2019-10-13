@@ -13,6 +13,7 @@ from config import CONFIG
 from models.database import db
 from models.user import login_manager, User
 from seed import seed_database_for_development
+from service.ai_lock import ai_lock
 from service.scheduler import ai_scheduler
 
 socketio = SocketIO()
