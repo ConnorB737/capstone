@@ -38,12 +38,12 @@ def place_word(game: Game, player: Union[User, int], word: str, placed_tiles: Li
 
 @db_session
 def pass_round(game: Game, player: Union[User, int]):
-    current_round = game.current_round()
+    current_round = game.current_round_as_round_type()
     RoundAction(
         human_player=player if isinstance(player, User) else None,
         ai_player=player if isinstance(player, int) else None,
         round=current_round,
-        word="",
+        # word="",
         score_gained=0,
         clicked_pass=True,
     )

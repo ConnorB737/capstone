@@ -2,7 +2,8 @@ import json
 
 from flask import session, request
 from flask_login import current_user
-
+from models.round import RoundAction, Round
+from models.user import User
 from models.types import EventType
 from pony.orm import select, db_session, commit
 from models.game import Game
@@ -52,7 +53,7 @@ def attach_controller(socketio):
         game = Game[session['game_id']]
         tile_bag = game.tile_bag
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
-
+        
         # Remove the tile from the rack
         tiles_to_remove = message['tiles']
         for tile in tiles_to_remove:
@@ -66,6 +67,7 @@ def attach_controller(socketio):
         commit()
 
         socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles), room=request.sid)
+        socketio.emit(EventType.GAMES_UPDATED.value, room=session['game_id'])
 
     @socketio.on(EventType.GET_TILES_LEFT.value)
     @db_session
@@ -86,7 +88,7 @@ def attach_controller(socketio):
     @socketio.on(EventType.PASS_ROUND.value)
     @db_session
     def pass_round_view():
-        game = Game.select().first()
+        game = game = Game[session['game_id']]
         pass_round(game, current_user._get_current_object())
 
         socketio.emit(EventType.GAMES_UPDATED.value, room=session['game_id'])

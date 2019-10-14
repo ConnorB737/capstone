@@ -76,6 +76,8 @@ class Board extends Component {
         let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
         let droppedTileY = coordinate[0];
         let droppedTileX = coordinate[1];
+        console.log("droppedTileY: ", droppedTileY)
+        console.log("droppedTileX: ", droppedTileX)
 
         // this part handles the remove tile from rack once it been placed on the board
         const localRack = this.state.localRack;
@@ -146,6 +148,20 @@ class Board extends Component {
              this.setState({swapList:temp})
         }
     };
+
+    _roundActionForCurrentPlayer() {
+        const actions = (this.props.main.roundStatus.currentRound.actions);
+        console.log("actions: ********", actions)
+        console.log("user id: ********* ", this.props.main.user.id)
+        if (actions.length !== 0) {
+            for (let actionIndex = 0; actionIndex < actions.length; actionIndex++) {
+                if (actions[actionIndex].humanPlayer === this.props.main.user.id) {
+                    return actions[actionIndex];
+                }
+            }
+        }
+        return null;
+    }
 
     handleSwapSend = () => {
         this.props.swapTile(this.props.main.socket, this.state.swapList);
@@ -220,7 +236,21 @@ class Board extends Component {
     }
 
     handlePass = () => {
-        this.props.passRound(this.props.main.socket);
+        console.log("before this.props.main.roundStatus: ",this.props.main.roundStatus)
+        if (this.props.main.roundStatus.currentRound.actions.length !== 0) {
+            const currentAction = this._roundActionForCurrentPlayer();
+            if (currentAction !== null) {
+                alert("You can only pass once in one round ")
+            }
+            else {
+                console.log("passed!!!!!!!!!")
+                this.props.passRound(this.props.main.socket);
+            }
+        } 
+        else {
+            console.log("passed!!!!!!!!!")
+            this.props.passRound(this.props.main.socket);
+        }
     };
 
     exitgame = () => {
