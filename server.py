@@ -41,7 +41,7 @@ def create_app():
     from controllers.user_events_controller import attach_controller as attach_user_controller
     attach_user_controller(socketio)
 
-    set_sql_debug(True)
+    set_sql_debug(False)
     db.generate_mapping(create_tables=True)
 
     login_manager.init_app(app)
@@ -49,7 +49,7 @@ def create_app():
 
     Pony(app)
 
-    seed_database_for_development()
+    #seed_database_for_development()
 
     return app
 
