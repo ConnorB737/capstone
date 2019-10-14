@@ -70,7 +70,7 @@ def attach_controller(socketio):
     @socketio.on(EventType.GET_TILES_LEFT.value)
     @db_session
     def get_tiles_left():
-        game = Game.select().first()
+        game = Game[session['game_id']]
         tile_bag = game.tile_bag
 
         socketio.emit(EventType.GET_TILES_LEFT.value, json.dumps(tile_bag.tiles_left()), room=request.sid)

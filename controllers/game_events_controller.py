@@ -32,6 +32,9 @@ def attach_controller(socketio: SocketIO):
     def handle_join_game(message):
         join_room(message['game_id'])
         session['game_id'] = message['game_id']
+        games = Game.select()
+        for game in games:
+            game.human_players.remove(current_user._get_current_object()) #only part of one game at a time
         join_existing_game(Game[message['game_id']], current_user._get_current_object())
         socketio.emit(EventType.GAMES_UPDATED.value, room=message['game_id'])
 
