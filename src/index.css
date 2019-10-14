@@ -256,34 +256,20 @@ input {
 
 .popup-content {
   border-radius: 20px;
-  min-height: 10vw;
-  /*max-width: 800px;*/
-  /*max-height: 130px;*/
-  min-width: 25vw;
+  max-width: 23vw;
+  max-height: 20vw;
   position: relative;
 }
 
-#passPopup {
-  width: 15vw;
-  height:10vw;
-  margin: 0 auto;
-}
-
 .passPopButtons button{
-  margin-top: 30px;
+  margin-top: 10px;
   margin-right: 2px;
   margin-left: 8px;
 }
 
-#swapPop {
-  width: 20vw;
-  height: 10vw;
-  margin: 0 auto;
-}
-
 .swapPopNav {
   width: 20vw;
-  margin-left: 5vw;
+  margin-left: 4vw;
 }
 
 .selectrack{
