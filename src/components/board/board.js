@@ -150,10 +150,10 @@ class Board extends Component {
                 {
                     close=> (
                         <div className="swapPop">
-                            <div className="swapPopNav">
-                                Choose One tile to swap
+                            <div className="swapPopNav" style={{marginLeft:'10px'}}>
+                                Choose tiles to swap
                             </div>
-                            <div className="selectrack">
+                            <div className="selectrack" style={{marginLeft:'7px'}}>
                                 <table>
                                     <tbody>
                                         <tr>
@@ -162,7 +162,7 @@ class Board extends Component {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="swapPopFunction">
+                            <div className="swapPopFunction" style={{marginLeft:'12px'}}>
                                 <button onClick={() => {
                                     this.handleSwapSend();
                                     close()
