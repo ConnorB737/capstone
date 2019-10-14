@@ -32,6 +32,9 @@ def attach_controller(socketio: SocketIO):
     def handle_join_game(message):
         join_room(message['game_id'])
         session['game_id'] = message['game_id']
+        games = Game.select()
+        for game in games:
+            game.human_players.remove(current_user._get_current_object()) #only part of one game at a time
         join_existing_game(Game[message['game_id']], current_user._get_current_object())
         socketio.emit(EventType.GAMES_UPDATED.value, room=message['game_id'])
 
@@ -81,7 +84,7 @@ def attach_controller(socketio: SocketIO):
                 players_and_scores[player_identifier] = 0
                 players_and_scores[player_identifier + "_acted"] = False
                 for action in current_round.round_actions:
-                    if action.human_player.login == player.login:
+                    if action.human_player is not None and action.human_player.login == player.login:
                         players_and_scores[player.login + "_acted"] = True
             players_and_scores["Computer_acted"] = False
             if game.ai_player_count:
@@ -123,12 +126,18 @@ def attach_controller(socketio: SocketIO):
     @db_session
     def get_players_left():
         print(f"Received {EventType.GET_PLAYERS_LEFT.value} event")
-        game = Game[session['game_id']]
-        current_round = game.current_round()
-        response = json.dumps({
-            "playersLeft": game.human_player_count - len(game.human_players),
-            "playersNeeded": game.human_player_count,
-            "playersInGame": len(game.human_players),
-        })
+        if session.get('game_id', False) != False:
+            game = Game[session['game_id']]
+            response = json.dumps({
+                "playersLeft": game.human_player_count - len(game.human_players),
+                "playersNeeded": game.human_player_count,
+                "playersInGame": len(game.human_players),
+            })
+        else:
+            response = json.dumps({
+                "playersLeft": 0,
+                "playersNeeded": 3,
+                "playersInGame": 0,
+            })
         print(f"Sending response: {response}")
         socketio.emit(EventType.GET_PLAYERS_LEFT.value, response, room=request.sid)

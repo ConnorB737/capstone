@@ -256,11 +256,17 @@ input {
 
 .popup-content {
   border-radius: 20px;
-  min-height: 100px;
+  min-height: 10vw;
   /*max-width: 800px;*/
   /*max-height: 130px;*/
-  max-width: 300px;
-  align-items: center;
+  min-width: 25vw;
+  position: relative;
+}
+
+#passPopup {
+  width: 15vw;
+  height:10vw;
+  margin: 0 auto;
 }
 
 .passPopButtons button{
@@ -269,10 +275,10 @@ input {
   margin-left: 8px;
 }
 
-.swapPop {
-  width: 100%;
-  height: 100%;
-  align-content: center;
+#swapPop {
+  width: 20vw;
+  height: 10vw;
+  margin: 0 auto;
 }
 
 .swapPopNav {
