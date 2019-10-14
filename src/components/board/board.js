@@ -76,6 +76,8 @@ class Board extends Component {
         let tempBoardState = JSON.parse(JSON.stringify(this.props.main.serverBoard)); //cloning the object, as opposed to referencing it
         let droppedTileY = coordinate[0];
         let droppedTileX = coordinate[1];
+        console.log("droppedTileY: ", droppedTileY)
+        console.log("droppedTileX: ", droppedTileX)
 
         // this part handles the remove tile from rack once it been placed on the board
         const localRack = this.state.localRack;
@@ -148,7 +150,9 @@ class Board extends Component {
     };
 
     _roundActionForCurrentPlayer() {
-        const actions = (this.props.main.roundStatus.currentRound.actions;
+        const actions = (this.props.main.roundStatus.currentRound.actions);
+        console.log("actions: ********", actions)
+        console.log("user id: ********* ", this.props.main.user.id)
         if (actions.length !== 0) {
             for (let actionIndex = 0; actionIndex < actions.length; actionIndex++) {
                 if (actions[actionIndex].humanPlayer === this.props.main.user.id) {
@@ -160,24 +164,9 @@ class Board extends Component {
     }
 
     handleSwapSend = () => {
-        console.log("this.props.main.roundStatus: ",this.props.main.roundStatus)
-        if (this.props.main.roundStatus.currentRound.actions.length !== 0) {
-            const currentAction = this._roundActionForCurrentPlayer();
-            if (currentAction !== null) {
-                alert("You can only swap once in one round")
-            }
-            else {
-                this.props.swapTile(this.props.main.socket, this.state.swapList);
-                let temp = [];
-                this.setState({swapList:temp});
-            }
-        }
-        else {
-            this.props.swapTile(this.props.main.socket, this.state.swapList);
-            let temp = [];
-            this.setState({swapList:temp});
-        }
-
+        this.props.swapTile(this.props.main.socket, this.state.swapList);
+        let temp = [];
+        this.setState({swapList:temp});
     };
 
     SwapPop = () => {
@@ -249,7 +238,8 @@ class Board extends Component {
     handlePass = () => {
         console.log("before this.props.main.roundStatus: ",this.props.main.roundStatus)
         if (this.props.main.roundStatus.currentRound.actions.length !== 0) {
-            if (this.props.main.roundStatus.currentRound.actions[0].clickedPass === true ) {
+            const currentAction = this._roundActionForCurrentPlayer();
+            if (currentAction !== null) {
                 alert("You can only pass once in one round ")
             }
             else {
