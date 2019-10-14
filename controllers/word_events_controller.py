@@ -53,14 +53,7 @@ def attach_controller(socketio):
         game = Game[session['game_id']]
         tile_bag = game.tile_bag
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
-        current_round = game.current_round_as_round_type()
-        RoundAction(
-            human_player=current_user._get_current_object() if isinstance(current_user._get_current_object(), User) else None,
-            ai_player=current_user._get_current_object() if isinstance(current_user._get_current_object(), int) else None,
-            round=current_round,
-            clicked_swap=True,
-        )
-
+        
         # Remove the tile from the rack
         tiles_to_remove = message['tiles']
         for tile in tiles_to_remove:
