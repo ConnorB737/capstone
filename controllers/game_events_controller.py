@@ -84,7 +84,7 @@ def attach_controller(socketio: SocketIO):
                 players_and_scores[player_identifier] = 0
                 players_and_scores[player_identifier + "_acted"] = False
                 for action in current_round.round_actions:
-                    if action.human_player.login == player.login:
+                    if action.human_player is not None and action.human_player.login == player.login:
                         players_and_scores[player.login + "_acted"] = True
             players_and_scores["Computer_acted"] = False
             if game.ai_player_count:

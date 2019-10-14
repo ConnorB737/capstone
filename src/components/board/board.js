@@ -275,6 +275,7 @@ class Board extends Component {
     };
 
     render() {
+        console.log(this.state);
         if (this.props.main.serverBoard) {
             const boardState = this.props.main.serverBoard.map((row,i) => {
                 return (<tr className="normaltr" key={i}>{row.map((cell, j) =>{
