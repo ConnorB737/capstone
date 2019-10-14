@@ -126,12 +126,18 @@ def attach_controller(socketio: SocketIO):
     @db_session
     def get_players_left():
         print(f"Received {EventType.GET_PLAYERS_LEFT.value} event")
-        game = Game[session['game_id']]
-        current_round = game.current_round()
-        response = json.dumps({
-            "playersLeft": game.human_player_count - len(game.human_players),
-            "playersNeeded": game.human_player_count,
-            "playersInGame": len(game.human_players),
-        })
+        if session.get('game_id', False) != False:
+            game = Game[session['game_id']]
+            response = json.dumps({
+                "playersLeft": game.human_player_count - len(game.human_players),
+                "playersNeeded": game.human_player_count,
+                "playersInGame": len(game.human_players),
+            })
+        else:
+            response = json.dumps({
+                "playersLeft": 0,
+                "playersNeeded": 3,
+                "playersInGame": 0,
+            })
         print(f"Sending response: {response}")
         socketio.emit(EventType.GET_PLAYERS_LEFT.value, response, room=request.sid)
