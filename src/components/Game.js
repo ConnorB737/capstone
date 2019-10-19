@@ -5,17 +5,15 @@ import Popup from "reactjs-popup";
 export class Game extends Component {
 
     componentDidMount() {
-        this.props.getEverything(this.props.main.socket);
-
-        this.interval = setInterval(() => {
-            this.props.getEverything(this.props.main.socket);
-        }, 2000);
+        this.props.getGames(this.props.main.socket);
+        this.props.getBoard(this.props.main.socket);
+        this.props.getScores(this.props.main.socket);
+        this.props.getRack(this.props.main.socket);
+        this.props.getTilesLeft(this.props.main.socket);
+        this.props.getHistory(this.props.main.socket);
+        this.props.getRoundStatus(this.props.main.socket);
+        this.props.getPlayersLeft(this.props.main.socket);
     }
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
 
     render() {
 		const sBoard = this.props.main.serverBoard; //this.props.serverBoard is the board received from the server

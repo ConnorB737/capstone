@@ -158,14 +158,8 @@ const playTile = (placedTiles, direction, board, wordList, placeWord, socket, te
     //as the word is now in order, we can simply take each letter to construct our word
     
     const combinedWord = allTiles.map(tile => tile['value']).join("");
-    let centerHasBeenPlayed = (board[7][7] != null);
-    placedTiles.forEach((tile) => {
-        if (tile['x'] === 7 && tile['y'] === 7) {
-            centerHasBeenPlayed = true;
-        }
-    });
-
-    if(!centerHasBeenPlayed){
+    
+    if(board[7][7] == null){
         alert("First word needs to be placed in the center");
     } else if (!allTiles.some(tile => tile["x"] == 7 && tile["y"] == 7) && adjacentTiles.length == 0) { //if not placing the first word, and not adjacent to another word
         alert("Your word must come off another word")
