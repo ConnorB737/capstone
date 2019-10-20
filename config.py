@@ -1,7 +1,7 @@
 import os
 
 
-APP_ENV = os.getenv("FLASK_ENV", "development")
+APP_ENV = os.getenv("FLASK_ENV", "production")
 
 
 CONFIG = {
@@ -19,11 +19,14 @@ CONFIG = {
     },
     "production": {
         'DATABASE_SETTINGS': dict(
-            provider='postgres',
-            user='scrabble',
-            password='scrabble',
-            host='localhost',
-            database='scrabble',
+            provider="sqlite",
+            filename="scrabble.sqlite",
+            create_db=True,
+        ),
+        'FLASK': dict(
+            static_folder="build",
+            template_folder="build",
+            static_url_path="/",
         ),
     },
 }.get(APP_ENV)

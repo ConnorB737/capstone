@@ -5,7 +5,7 @@ from flask_socketio import SocketIO
 from pony.flask import Pony
 from pony.orm import set_sql_debug
 
-
+import config
 from config import CONFIG
 from models.database import db
 from models.user import login_manager, User
@@ -40,7 +40,8 @@ def create_app():
     from controllers.user_events_controller import attach_controller as attach_user_controller
     attach_user_controller(socketio)
 
-    set_sql_debug(True)
+    if config.APP_ENV == "development":
+        set_sql_debug(True)
     db.generate_mapping(create_tables=True)
 
     login_manager.init_app(app)
