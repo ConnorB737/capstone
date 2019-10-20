@@ -26,16 +26,20 @@ def attach_controller(socketio):
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
         tile_bag = game.tile_bag
 
-        for tile in message["temp_rack"]:
-            for i in range(len(rack.tiles)):
-                if rack.tiles[i] == tile:
-                    rack.tiles.pop(i)
-                    rack.tiles.append(tile_bag.pop())
-                    break
+        # Remove the tile from the rack
+        tiles_to_remove = message['word'].split()
+        for tile in tiles_to_remove:
+            rack.tiles.remove(tile)
+
+        # Fill rack
+        new_tiles = tile_bag.swap(tiles_to_remove)
+        for tile in new_tiles:
+            rack.tiles.append(tile)
 
         commit()
 
         socketio.emit(EventType.GAMES_UPDATED.value, room=session['game_id'])
+        socketio.emit(EventType.GET_RACK.value, json.dumps(rack.tiles), room=request.sid)
 
     @socketio.on(EventType.GET_RACK.value)
     @db_session
