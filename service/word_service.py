@@ -10,6 +10,7 @@ import service.gameplay_service as gps
 from models.tile_bag import Rack
 from AI.AIWordPlacer import AIWordPlacer
 
+
 @db_session
 def place_word(game: Game, player: Union[User, int], word: str, placed_tiles: List[Dict]):
     board = BoardState.deserialize(game.board)
@@ -27,9 +28,29 @@ def place_word(game: Game, player: Union[User, int], word: str, placed_tiles: Li
         clicked_pass=False,
     )
 
+    # Update racks
+    if isinstance(player, User):
+        rack = game.racks.filter(lambda r: r.human_player == player).first()
+    elif isinstance(player, int):
+        rack = game.racks.filter(lambda r: r.ai_player == player).first()
+    tile_bag = game.tile_bag
+
+    # Remove the tile from the rack
+    tiles_to_remove = list(word)
+    print(f"tiles in rack before: {rack.tiles}")
+    print(f"tiles to remove: {tiles_to_remove}")
+    for tile in tiles_to_remove:
+        rack.tiles.remove(tile)
+
+    # Fill rack
+    new_tiles = tile_bag.swap(tiles_to_remove)
+    for tile in new_tiles:
+        rack.tiles.append(tile)
+    print(f"tiles in rack after: {rack.tiles}")
+
     # If this is the last word placed for this round, create another round
     if len(current_round.round_actions) >= game.human_player_count:
-        if(game.ai_player_count > 0):
+        if game.ai_player_count > 0:
             commit()
             ai_rack = Rack.select().filter(lambda rack: rack.game == game).first()
             word_tiles = AIWordPlacer(ai_rack.tiles).place_word(BoardState.deserialize(game.board).state)

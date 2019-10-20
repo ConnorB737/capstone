@@ -22,21 +22,24 @@ def test_place_word(ponydb):
     rounds = ponydb.Round.select(lambda r: r.game == game)
     assert len(rounds) == 1
 
+    rack = game.racks.select(lambda r: r.human_player == user).first()
+    tiles_before = list(rack.tiles)
+
     tile_positions = [
         {
             "x": 1,
             "y": 1,
-            "value": "A",
+            "value": rack.tiles[0],
         },
         {
             "x": 2,
             "y": 1,
-            "value": "D",
+            "value": rack.tiles[1],
         },
         {
             "x": 3,
             "y": 1,
-            "value": "D",
+            "value": rack.tiles[2],
         },
     ]
     word = ''.join([t["value"] for t in tile_positions])
@@ -49,7 +52,10 @@ def test_place_word(ponydb):
     round_action = round_actions.select().first()
     assert round_action.human_player == user
     assert round_action.word == word
-    assert round_action.score_gained == 14
 
     scores = build_scores(game)
-    assert scores[user.login] == 14
+    assert scores[user.login] > 0
+
+    rack = game.racks.select(lambda r: r.human_player == user).first()
+    tiles_after = list(rack.tiles)
+    assert tiles_before != tiles_after

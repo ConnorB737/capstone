@@ -24,17 +24,6 @@ def attach_controller(socketio):
         game = Game[session['game_id']]
         place_word(game, current_user._get_current_object(), message["word"], message["startingPosition"])
         rack = game.racks.filter(lambda r: r.human_player == current_user).first()
-        tile_bag = game.tile_bag
-
-        # Remove the tile from the rack
-        tiles_to_remove = message['word'].split()
-        for tile in tiles_to_remove:
-            rack.tiles.remove(tile)
-
-        # Fill rack
-        new_tiles = tile_bag.swap(tiles_to_remove)
-        for tile in new_tiles:
-            rack.tiles.append(tile)
 
         commit()
 
