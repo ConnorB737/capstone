@@ -61,13 +61,16 @@ def create_app():
 if __name__ == "__main__":
     app = create_app()
     port = int(os.environ.get('PORT', 5000))
-    background_process = Process(target=ai_scheduler)
-    background_process.start()
 
-    def kill_background_process(signal, frame):
-        background_process.kill()
-        sys.exit(0)
-
-    signal.signal(signal.SIGINT, kill_background_process)
+    ###commented code is previous automated ai code
+    ###causes too many issues currently
+    # background_process = Process(target=ai_scheduler)
+    # background_process.start()
+    #
+    # def kill_background_process(signal, frame):
+    #     background_process.kill()
+    #     sys.exit(0)
+    #
+    # signal.signal(signal.SIGINT, kill_background_process)
     print(f"Application running on port {port} with pid {os.getpid()}!")
     socketio.run(app, debug=True, host='0.0.0.0', port=port)
