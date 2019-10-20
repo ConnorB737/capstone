@@ -17,7 +17,7 @@ import HomePageContainer from "./containers/HomePageContainer";
 import LoginContainer from "./containers/LoginContainer";
 import RegisterContainer from "./containers/RegisterContainer";
 import DashboardContainer from "./containers/DashboardContainer";
-import HelpContainer from "./components/HelpContainer"
+import HelpContainer from "./containers/HelpContainer"
 const socket = openSocket(config['{process.env.NODE_ENV}'], {transports: ['websocket', 'polling']});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

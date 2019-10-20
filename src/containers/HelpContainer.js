@@ -1,4 +1,4 @@
-import { Help } from "./Help";
+import { Help } from "../components/Help";
 import { connect } from "react-redux";
 // import {login} from "./actions";
 
