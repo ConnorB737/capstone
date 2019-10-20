@@ -6,7 +6,8 @@ class TrieNode:
     def __init__(self):
         self.children = [None] * 26
         self.terminating = False #true if end of word
-        
+
+
 class Trie:
     def __init__(self):
         self.root = TrieNode()

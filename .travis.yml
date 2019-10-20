@@ -3,7 +3,7 @@ matrix:
     - language: python
       python: 3.7
       script:
-        - python --version
+        - python -m pytest
     - language: node_js
       node_js: 12
       script:

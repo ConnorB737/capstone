@@ -78,3 +78,30 @@ def pass_round(game: Game, player: Union[User, int]):
         )
 
     commit()
+
+
+@db_session
+def build_scores(game):
+    current_round = game.current_round()
+    players_and_scores = {}
+    if current_round:
+        for player in game.human_players:
+            player_identifier = player.login
+            players_and_scores[player_identifier] = 0
+            players_and_scores[player_identifier + "_acted"] = False
+            for action in current_round.round_actions:
+                if action.human_player is not None and action.human_player.login == player.login:
+                    players_and_scores[player.login + "_acted"] = True
+        players_and_scores["Computer_acted"] = False
+        if game.ai_player_count:
+            players_and_scores["Computer"] = 0
+    for game_round in game.rounds:
+        for placed_word in game_round.round_actions:
+            if placed_word.human_player is not None:
+                players_and_scores[placed_word.human_player.login] = players_and_scores.get(
+                    placed_word.human_player.login, 0) + placed_word.score_gained
+            elif placed_word.ai_player:
+                players_and_scores["Computer"] = players_and_scores.get("Computer", 0) + placed_word.score_gained
+                players_and_scores["Computer_acted"] = True
+
+    return players_and_scores

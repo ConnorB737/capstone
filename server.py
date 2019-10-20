@@ -1,7 +1,4 @@
 import os
-import signal
-import sys
-from multiprocessing import Process
 
 from flask import Flask
 from flask_socketio import SocketIO
@@ -13,8 +10,6 @@ from config import CONFIG
 from models.database import db
 from models.user import login_manager, User
 from seed import seed_database_for_development
-from service.ai_lock import ai_lock
-from service.scheduler import ai_scheduler
 
 socketio = SocketIO()
 
@@ -61,16 +56,5 @@ def create_app():
 if __name__ == "__main__":
     app = create_app()
     port = int(os.environ.get('PORT', 5000))
-
-    ###commented code is previous automated ai code
-    ###causes too many issues currently
-    # background_process = Process(target=ai_scheduler)
-    # background_process.start()
-    #
-    # def kill_background_process(signal, frame):
-    #     background_process.kill()
-    #     sys.exit(0)
-    #
-    # signal.signal(signal.SIGINT, kill_background_process)
     print(f"Application running on port {port} with pid {os.getpid()}!")
     socketio.run(app, debug=True, host='0.0.0.0', port=port)

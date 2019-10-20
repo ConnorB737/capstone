@@ -11,7 +11,7 @@ from models.mixins import HasPlayer
 class TileBag(db.Entity):
 
     bag = orm.Required(StrArray)
-    game = orm.Optional("Game", reverse="tile_bag")
+    game = orm.Optional("Game", reverse="tile_bag", cascade_delete=True)
 
     @classmethod
     def build_bag(cls):
